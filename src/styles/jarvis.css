@@ -1,0 +1,517 @@
+/* =============================================
+   J.A.R.V.I.S. — Styling (Futuristic Hologram)
+   ============================================= */
+
+.jarvis-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+/* Floating Arch Reactor Button */
+.jarvis-trigger {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(10, 25, 47, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  cursor: pointer;
+  box-shadow: 
+    0 0 15px rgba(0, 212, 255, 0.5),
+    inset 0 0 10px rgba(0, 212, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.jarvis-trigger:hover {
+  transform: scale(1.08) rotate(45deg);
+  box-shadow: 
+    0 0 25px rgba(0, 212, 255, 0.8),
+    0 0 50px rgba(122, 0, 255, 0.45),
+    inset 0 0 15px rgba(0, 212, 255, 0.6);
+}
+
+/* Reactor Rings and Core Animations */
+.reactor-ring-outer {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border: 1.5px dashed rgba(0, 212, 255, 0.6);
+  border-radius: 50%;
+  animation: rotateClockwise 12s linear infinite;
+}
+
+.reactor-ring-middle {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border: 1px dotted rgba(122, 0, 255, 0.8);
+  border-radius: 50%;
+  animation: rotateCounterClockwise 8s linear infinite;
+}
+
+.reactor-ring-inner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-left-color: rgba(0, 212, 255, 0.9);
+  border-radius: 50%;
+  animation: rotateClockwise 3s linear infinite;
+}
+
+.reactor-core {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #ffffff 10%, #00d4ff 70%, rgba(0, 212, 255, 0) 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 12px #00d4ff;
+  animation: reactorPulse 2s ease-in-out infinite;
+}
+
+.reactor-core.pulse-fast {
+  animation: reactorPulseFast 0.5s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes rotateClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes reactorPulse {
+  0%, 100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 8px #00d4ff, 0 0 16px rgba(0, 212, 255, 0.4);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 16px #00d4ff, 0 0 32px rgba(0, 212, 255, 0.7);
+    opacity: 1;
+  }
+}
+
+@keyframes reactorPulseFast {
+  0%, 100% {
+    transform: scale(0.85);
+    box-shadow: 0 0 12px #ff3b30, 0 0 24px rgba(255, 59, 48, 0.5);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 20px #ff3b30, 0 0 40px rgba(255, 59, 48, 0.85);
+  }
+}
+
+/* Chat Panel */
+.jarvis-panel {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 360px;
+  height: 480px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 20px;
+  box-shadow: 
+    0 15px 40px rgba(0, 212, 255, 0.15),
+    0 5px 15px rgba(122, 0, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Inter', sans-serif;
+}
+
+.jarvis-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Header */
+.jarvis-header {
+  padding: 16px 20px;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 212, 255, 0) 100%);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jarvis-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reactor-mini {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 212, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.reactor-mini::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1px dashed rgba(122, 0, 255, 0.6);
+  border-radius: 50%;
+  animation: rotateClockwise 6s linear infinite;
+}
+
+.reactor-mini-core {
+  width: 8px;
+  height: 8px;
+  background: #00d4ff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #00d4ff;
+}
+
+.jarvis-name {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-primary, #1e1e24);
+  background: linear-gradient(135deg, var(--text-primary, #1e1e24), var(--accent, #7a00ff));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.jarvis-status {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent, #7a00ff);
+  text-transform: uppercase;
+}
+
+.jarvis-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.jarvis-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--text-secondary, #4a4a52);
+  transition: all 0.2s ease;
+}
+
+.jarvis-ctrl-btn:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.4);
+  color: #00d4ff;
+}
+
+/* Chat Area */
+.jarvis-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.jarvis-msg {
+  display: flex;
+  width: 100%;
+}
+
+.jarvis-msg.user {
+  justify-content: flex-end;
+}
+
+.jarvis-msg.jarvis {
+  justify-content: flex-start;
+}
+
+.msg-bubble {
+  max-width: 82%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.jarvis-msg.user .msg-bubble {
+  background: linear-gradient(135deg, var(--accent, #7a00ff), #a100ff);
+  color: white;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 12px rgba(122, 0, 255, 0.2);
+}
+
+.jarvis-msg.jarvis .msg-bubble {
+  background: white;
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  color: var(--text-secondary, #333333);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.05);
+}
+
+/* Form bubble inside chat */
+.jarvis-form-bubble {
+  background: white;
+  border: 1.5px solid rgba(0, 212, 255, 0.25) !important;
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.08) !important;
+  width: 100%;
+  max-width: 90% !important;
+}
+
+.jarvis-form-group {
+  margin-bottom: 10px;
+}
+
+.jarvis-form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  background: rgba(0, 212, 255, 0.02);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.jarvis-form-input:focus {
+  border-color: #00d4ff;
+  background: white;
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.25);
+}
+
+textarea.jarvis-form-input {
+  resize: none;
+}
+
+.jarvis-form-submit-btn {
+  width: 100%;
+  padding: 9px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #00d4ff, var(--accent, #7a00ff));
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.jarvis-form-submit-btn:hover {
+  opacity: 0.95;
+}
+
+.jarvis-form-status {
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Input Row */
+.jarvis-input-row {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0, 212, 255, 0.15);
+  display: flex;
+  gap: 10px;
+  background: white;
+  align-items: center;
+}
+
+.jarvis-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 13px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.02);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.jarvis-input:focus {
+  background: white;
+  border-color: var(--accent, #7a00ff);
+  box-shadow: 0 0 8px rgba(122, 0, 255, 0.15);
+}
+
+.jarvis-action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent-gradient, linear-gradient(135deg, #7a00ff, #a100ff));
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.jarvis-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.jarvis-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mic-btn {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.mic-btn:hover {
+  background: rgba(0, 212, 255, 0.15);
+}
+
+.mic-btn.listening {
+  background: #ff3b30 !important;
+  color: white !important;
+  border-color: #ff3b30 !important;
+  animation: micListenPulse 1s ease-in-out infinite;
+}
+
+@keyframes micListenPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@media (max-width: 480px) {
+  .jarvis-panel {
+    width: calc(100vw - 32px);
+    right: -8px;
+    height: 420px;
+  }
+}
+
+/* First-visit interactive announcement note */
+.jarvis-announcement {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 260px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 
+    0 10px 25px rgba(0, 212, 255, 0.15),
+    0 4px 12px rgba(122, 0, 255, 0.08);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-secondary, #333333);
+  z-index: 1000;
+  text-align: left;
+  animation: announcementBounce 4s ease-in-out infinite, announcementFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+.announcement-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text-muted, #888);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.announcement-close:hover {
+  color: #ff3b30;
+}
+
+@keyframes announcementFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes announcementBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Autocomplete Suggestions Panel */
+.jarvis-autocomplete {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(0, 212, 255, 0.12);
+  align-items: center;
+}
+
+.autocomplete-tag {
+  background: rgba(122, 0, 255, 0.05);
+  border: 1px solid rgba(122, 0, 255, 0.15);
+  border-radius: 14px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.autocomplete-tag:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.35);
+  color: #00d4ff;
+  transform: translateY(-1px);
+}
