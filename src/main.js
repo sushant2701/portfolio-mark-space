@@ -434,8 +434,13 @@ function boot() {
       }
       navRecognition = new SpeechRecognition();
       navRecognition.continuous = true;
-      navRecognition.lang = 'en-US';
+      
+      // Dynamic accent optimization based on geolocated country
+      const visitorCountry = sessionStorage.getItem('visitor_country') || '';
+      navRecognition.lang = (visitorCountry.toLowerCase() === 'india') ? 'en-IN' : 'en-US';
+      
       navRecognition.interimResults = true;
+      navRecognition.maxAlternatives = 3;
 
       navRecognition.onstart = () => {
         isNavigating = true;
@@ -450,7 +455,29 @@ function boot() {
       
       for (let i = e.resultIndex; i < e.results.length; ++i) {
         if (e.results[i].isFinal) {
-          finalTranscript += e.results[i][0].transcript;
+          let selectedTranscript = e.results[i][0].transcript;
+          
+          // Multi-alternative keyword scanning to match voice intents accurately
+          const boostWordList = [
+            'grahak', 'otp', 'genai', 'disease', 'churn', 'gps', 'sla', 'sales',
+            'linkedin', 'github', 'guthub', 'source code', 'repository', 'repo',
+            'control space', 'controlspace', 'guide', 'instructions', 'commands',
+            'mute', 'unmute', 'refresh', 'restart', 'reboot', 'education', 'cgpa', 'gpa',
+            'college', 'experience', 'internship', 'qspiders', 'aicte', 'skills', 'skill',
+            'projects', 'project', 'about sushant', 'who is sushant', 'yourself',
+            'contact', 'hire', 'send email', 'send mail'
+          ];
+          
+          for (let j = 0; j < e.results[i].length; ++j) {
+            const altText = e.results[i][j].transcript.toLowerCase();
+            const hasBoost = boostWordList.some(kw => altText.includes(kw));
+            if (hasBoost) {
+              selectedTranscript = e.results[i][j].transcript;
+              break;
+            }
+          }
+          
+          finalTranscript += (finalTranscript ? ' ' : '') + selectedTranscript;
         } else {
           interimTranscript += e.results[i][0].transcript;
         }
@@ -925,6 +952,30 @@ function boot() {
       let bestIntent = null;
       let highestScore = 0;
 
+      const intentBoostMap = {
+        'grahak': ['grahak'],
+        'otp': ['otp'],
+        'genai': ['genai'],
+        'disease': ['disease'],
+        'churn': ['churn'],
+        'gps': ['gps'],
+        'sla': ['sla'],
+        'sales': ['sales'],
+        'linkedin': ['linkedin'],
+        'github_portfolio': ['source code', 'repository', 'repo'],
+        'github_profile': ['github', 'guthub'],
+        'control_space': ['control space', 'controlspace'],
+        'toggle_guide': ['guide', 'instructions', 'commands', 'voice guide'],
+        'toggle_speaker': ['mute', 'unmute'],
+        'refresh_assistant': ['refresh', 'restart', 'reboot', 'reinitialize'],
+        'education': ['education', 'cgpa', 'gpa', 'college'],
+        'experience': ['experience', 'internship', 'qspiders', 'aicte'],
+        'skills': ['skills', 'skill'],
+        'projects': ['projects', 'project'],
+        'about': ['about sushant', 'who is sushant', 'introduce sushant', 'yourself'],
+        'contact': ['contact', 'hire', 'reach sushant', 'send email', 'send mail']
+      };
+
       voiceIntents.forEach(intent => {
         let bestPhraseScore = 0;
         intent.phrases.forEach(phrase => {
@@ -949,6 +1000,41 @@ function boot() {
         const keywordScore = keywordMatches / intent.keywords.length;
 
         let finalScore = (bestPhraseScore * 0.7) + (keywordScore * 0.3);
+
+        // Direct Keyword Boosting with score overrides
+        const boostKws = intentBoostMap[intent.key];
+        if (boostKws) {
+          let hasBoostKeyword = boostKws.some(kw => {
+            if (kw.includes(' ')) {
+              return clean.includes(kw);
+            }
+            return tokenSet.has(kw) || clean.includes(kw);
+          });
+          
+          // Exclusion rules for general intents to avoid conflicts
+          if (hasBoostKeyword) {
+            if (intent.key === 'projects') {
+              const specificProjectKeywords = ['grahak', 'otp', 'genai', 'disease', 'churn', 'gps', 'sla', 'sales'];
+              const hasSpecificProject = specificProjectKeywords.some(sp => clean.includes(sp));
+              if (hasSpecificProject) {
+                hasBoostKeyword = false;
+              }
+            } else if (intent.key === 'skills') {
+              if (matchedSkill) {
+                hasBoostKeyword = false;
+              }
+            } else if (intent.key === 'github_profile') {
+              const hasPortfolioRepo = ['source code', 'repository', 'repo'].some(kw => clean.includes(kw));
+              if (hasPortfolioRepo) {
+                hasBoostKeyword = false;
+              }
+            }
+          }
+          
+          if (hasBoostKeyword) {
+            finalScore = 1.0;
+          }
+        }
 
         // Hijack prevention for 'about' intent
         if (intent.key === 'about') {
@@ -1398,6 +1484,10 @@ async function trackVisitor() {
       longitude: 75.9064
     };
   }
+  
+  if (locationData && locationData.country_name) {
+    sessionStorage.setItem('visitor_country', locationData.country_name);
+  }
 
   // Initialize J.A.R.V.I.S. with location data
   initJarvis(locationData);
@@ -1411,11 +1501,99 @@ async function trackVisitor() {
       const lon = locationData.longitude;
       const mapsUrl = (lat && lon) ? `https://www.google.com/maps?q=${lat},${lon}` : 'No Coordinates Available';
 
+      // Helper to detect device type
+      const getDeviceType = () => {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+          return "Tablet";
+        }
+        if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+          return "Mobile";
+        }
+        return "Desktop";
+      };
+
+      // Helper to parse OS and Browser
+      const getBrowserAndOS = () => {
+        const ua = navigator.userAgent;
+        let browser = "Unknown Browser";
+        let os = "Unknown OS";
+
+        // Detect OS
+        if (ua.indexOf("Win") !== -1) os = "Windows";
+        else if (ua.indexOf("Mac") !== -1) os = "MacOS";
+        else if (ua.indexOf("X11") !== -1) os = "UNIX";
+        else if (ua.indexOf("Linux") !== -1) os = "Linux";
+        else if (/Android/.test(ua)) os = "Android";
+        else if (/iPhone|iPad|iPod/.test(ua)) os = "iOS";
+
+        // Detect Browser
+        if (ua.indexOf("Chrome") !== -1 && ua.indexOf("Chromium") === -1) {
+          browser = "Google Chrome";
+        } else if (ua.indexOf("Safari") !== -1 && ua.indexOf("Chrome") === -1) {
+          browser = "Safari";
+        } else if (ua.indexOf("Firefox") !== -1) {
+          browser = "Mozilla Firefox";
+        } else if (ua.indexOf("MSIE") !== -1 || !!document.documentMode === true) {
+          browser = "Internet Explorer";
+        } else if (ua.indexOf("Edge") !== -1) {
+          browser = "Microsoft Edge";
+        } else if (ua.indexOf("Chromium") !== -1) {
+          browser = "Chromium";
+        }
+        
+        return { browser, os };
+      };
+
+      const { browser, os } = getBrowserAndOS();
+      const deviceType = getDeviceType();
+
+      // Get connection details if supported
+      let networkType = 'N/A';
+      let networkSpeed = 'N/A';
+      if (navigator.connection) {
+        networkType = navigator.connection.effectiveType || 'N/A';
+        networkSpeed = navigator.connection.downlink ? `${navigator.connection.downlink} Mbps` : 'N/A';
+      }
+
       const payload = {
-        _subject: `Portfolio View: Visitor in ${city}`,
+        _subject: `Portfolio View: Visitor in ${city} (${deviceType})`,
+        
+        // Location Info
+        ip_address: locationData.ip || 'N/A',
         city: city,
+        region: locationData.region || 'N/A',
+        country: locationData.country_name || 'N/A',
+        isp_organization: locationData.org || 'N/A',
         coordinates: (lat && lon) ? `${lat}, ${lon}` : 'N/A',
-        google_maps_link: mapsUrl
+        geolocation_method: locationData.gps ? 'GPS (High Accuracy)' : 'IP Geolocation',
+        google_maps_link: mapsUrl,
+
+        // Device Info
+        device_type: deviceType,
+        operating_system: os,
+        browser: browser,
+        user_agent: navigator.userAgent,
+        platform: navigator.platform || 'N/A',
+        cpu_cores: navigator.hardwareConcurrency || 'N/A',
+        device_memory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'N/A',
+
+        // Screen Specs
+        screen_resolution: `${window.screen.width}x${window.screen.height}`,
+        viewport_dimensions: `${window.innerWidth}x${window.innerHeight}`,
+        device_pixel_ratio: window.devicePixelRatio || 1,
+        color_depth: window.screen.colorDepth ? `${window.screen.colorDepth}-bit` : 'N/A',
+
+        // Browser Context
+        referrer: document.referrer || 'Direct Visit / Bookmark',
+        system_language: navigator.language || 'N/A',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'N/A',
+        timestamp_local: new Date().toString(),
+        timestamp_utc: new Date().toUTCString(),
+
+        // Network Profile
+        network_type: networkType,
+        network_speed: networkSpeed
       };
 
       await fetch('https://formsubmit.co/ajax/sushantshrimal08@gmail.com', {

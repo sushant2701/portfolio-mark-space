@@ -222,7 +222,11 @@ function setupSpeechRecognition() {
 
   recognition = new SpeechRecognition();
   recognition.continuous = false;
-  recognition.lang = 'en-US';
+  
+  // Dynamic accent optimization based on geolocated country
+  const visitorCountry = sessionStorage.getItem('visitor_country') || '';
+  recognition.lang = (visitorCountry.toLowerCase() === 'india') ? 'en-IN' : 'en-US';
+  
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
