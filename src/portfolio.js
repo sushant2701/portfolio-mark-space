@@ -89,6 +89,11 @@ function renderNavbar() {
           </button>
           <button class="nav-navigator-speaker-btn" id="nav-navigator-speaker-btn" title="Mute/Unmute Voice Assistant Speaker Feedback" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">🔇</button>
           <button class="nav-navigator-help-btn" id="nav-navigator-help-btn" title="Show Voice Command Guide" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">❓</button>
+          <div class="nav-music-control" style="display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); padding: 0 8px; height: 32px; border-radius: 8px; transition: all 0.2s ease;">
+            <button id="nav-music-toggle-btn" title="Play/Pause Background Music" style="border: none; background: transparent; cursor: pointer; font-size: 14px; padding: 0; display: flex; align-items: center; justify-content: center; transition: transform 0.1s ease;">🎵</button>
+            <input type="range" id="nav-music-volume-slider" min="0" max="100" value="2" title="Background Music Volume" style="width: 45px; height: 4px; cursor: pointer; accent-color: var(--accent); opacity: 0.8; transition: opacity 0.2s ease; padding: 0;" />
+            <span id="nav-music-volume-label" style="font-size: 9px; min-width: 20px; font-weight: 600; opacity: 0.7; user-select: none;">2%</span>
+          </div>
           <div class="nav-voice-instr" id="nav-voice-instr">
             <div style="font-weight: 700; margin-bottom: 4px; color: var(--accent);">🎙️ Alexa "Mark" Voice Guide</div>
             <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 6px;">Say <b>"Mark"</b> or <b>"Hey Mark"</b> followed by:</div>

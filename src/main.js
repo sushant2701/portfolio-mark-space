@@ -24,6 +24,10 @@ function initBackgroundMusic() {
   let music = null;
   let hasStarted = false;
   
+  const volumeSlider = document.getElementById('nav-music-volume-slider');
+  const volumeLabel = document.getElementById('nav-music-volume-label');
+  const toggleBtn = document.getElementById('nav-music-toggle-btn');
+
   const tryPlaySource = () => {
     if (currentSourceIndex >= sources.length) {
       console.warn("No background music sources loaded successfully.");
@@ -33,10 +37,15 @@ function initBackgroundMusic() {
     const src = sources[currentSourceIndex];
     music = new Audio(src);
     music.loop = true;
-    music.volume = 0.02; // Very silent, non-intrusive low volume
+    
+    const currentSliderVol = volumeSlider ? (parseFloat(volumeSlider.value) / 100) : 0.02;
+    music.volume = currentSliderVol;
     
     music.play().then(() => {
-      console.log(`Background ambient music started playing from: ${src}`);
+      console.log(`Background ambient music started playing from: ${src} at volume ${music.volume}`);
+      if (toggleBtn) {
+        toggleBtn.textContent = music.volume === 0 ? '🔇' : (music.volume < 0.3 ? '🎵' : '🔊');
+      }
     }).catch(err => {
       console.warn(`Failed to play music source: ${src}, trying next...`, err);
       currentSourceIndex++;
@@ -54,6 +63,41 @@ function initBackgroundMusic() {
       document.removeEventListener(evt, startMusic);
     });
   };
+
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', (e) => {
+      const vol = parseFloat(e.target.value) / 100;
+      if (music) {
+        music.volume = vol;
+      }
+      if (volumeLabel) {
+        volumeLabel.textContent = `${e.target.value}%`;
+      }
+      if (toggleBtn) {
+        toggleBtn.textContent = vol === 0 ? '🔇' : (vol < 0.3 ? '🎵' : '🔊');
+      }
+    });
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (!hasStarted) {
+        startMusic();
+        return;
+      }
+      if (music) {
+        if (music.paused) {
+          music.play().then(() => {
+            const vol = music.volume;
+            toggleBtn.textContent = vol === 0 ? '🔇' : (vol < 0.3 ? '🎵' : '🔊');
+          }).catch(err => console.warn(err));
+        } else {
+          music.pause();
+          toggleBtn.textContent = '🔇';
+        }
+      }
+    });
+  }
   
   ['click', 'touchstart', 'keydown'].forEach(evt => {
     document.addEventListener(evt, startMusic, { once: true, passive: true });
