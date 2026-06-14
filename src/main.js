@@ -920,14 +920,18 @@ function boot() {
       }
 
       // Check if this is a direct skill explanation query
-      const isSkillQuery = matchedSkill && (
-        clean.includes('explain') || 
-        clean.includes('what is') || 
-        clean.includes('tell about') || 
-        clean.includes('definition') || 
-        clean.includes('info') || 
-        tokens.length <= 3
-      );
+      const isSkillQuery = matchedSkill && 
+        !clean.includes('open') && 
+        !clean.includes('go to') && 
+        !clean.includes('visit') && 
+        !clean.includes('link') && (
+          clean.includes('explain') || 
+          clean.includes('what is') || 
+          clean.includes('tell about') || 
+          clean.includes('definition') || 
+          clean.includes('info') || 
+          tokens.length <= 3
+        );
 
       if (isSkillQuery) {
         const skillsSection = document.getElementById('skills');
