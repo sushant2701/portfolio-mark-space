@@ -312,11 +312,7 @@ function getGreetingText() {
   else if (hour < 17) greeting = "Good afternoon";
   else greeting = "Good evening";
 
-  let locationStr = "";
-  if (currentVisitorLocation && currentVisitorLocation.city) {
-    locationStr = ` from ${currentVisitorLocation.city}, ${currentVisitorLocation.country_name || currentVisitorLocation.country}`;
-  }
-  return `${greeting}${locationStr}! I am MARK27, Sushant's virtual assistant. Ask me anything, or type to see predicted search questions.`;
+  return `${greeting}! I am MARK27, Sushant's virtual assistant. Ask me anything, or type to see predicted search questions.`;
 }
 
 function hideAnnouncement() {
