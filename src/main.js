@@ -33,7 +33,7 @@ function initBackgroundMusic() {
     const src = sources[currentSourceIndex];
     music = new Audio(src);
     music.loop = true;
-    music.volume = 0.02; // Very silent, non-intrusive fixed low volume
+    music.volume = 0.5; // Fixed volume at 50 percent
     
     music.play().then(() => {
       console.log(`Background ambient music started playing from: ${src} at fixed volume ${music.volume}`);
@@ -344,9 +344,9 @@ function boot() {
     utterance.onend = onSpeechEnd;
     utterance.onerror = onSpeechEnd;
 
-    // Watchdog safeguard: force restart if speech engine hangs
+    // Expanded watchdog safeguard: give generous minimum (20s) and buffer to prevent premature cuts
     const wordCount = text.split(/\s+/).length;
-    const estimatedMs = Math.max(3000, (wordCount / 2.5) * 1000 + 2000);
+    const estimatedMs = Math.max(20000, (wordCount / 1.5) * 1000 + 10000);
     speechTimeoutId = setTimeout(() => {
       console.warn("Speech synthesis took too long or got stuck. Forcing reset.");
       window.speechSynthesis.cancel();
@@ -990,21 +990,8 @@ function boot() {
       });
     }
 
-    // Wire up Voice Speaker Volume Slider
-    const voiceSlider = document.getElementById('nav-voice-volume-slider');
-    const voiceLabel = document.getElementById('nav-voice-volume-label');
-    if (voiceSlider) {
-      voiceSlider.addEventListener('input', (e) => {
-        const vol = parseFloat(e.target.value) / 100;
-        window.speechVolume = vol;
-        if (voiceLabel) {
-          voiceLabel.textContent = `${e.target.value}%`;
-        }
-      });
-      window.speechVolume = parseFloat(voiceSlider.value) / 100;
-    } else {
-      window.speechVolume = 0.8;
-    }
+    // Initialize global voice volume statically at 80% fixed
+    window.speechVolume = 0.8;
 
     const navHelpBtn = document.getElementById('nav-navigator-help-btn');
     const navInstr = document.getElementById('nav-voice-instr');
