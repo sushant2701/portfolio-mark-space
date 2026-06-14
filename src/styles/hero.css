@@ -708,9 +708,41 @@
 }
 
 @media (max-width: 768px) {
-  /* Hide navbar completely on mobile */
+  /* Restore navbar but hide navigation links and hamburger toggle */
   .navbar {
+    display: flex !important;
+    height: var(--nav-height) !important;
+  }
+  
+  .nav-links {
     display: none !important;
+  }
+  
+  .nav-toggle {
+    display: none !important; /* Hide hamburger menu toggle */
+  }
+
+  /* Compact Navbar Actions */
+  .nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--space-xs) !important;
+  }
+  
+  /* Hide Voice Command Text on mobile */
+  .nav-navigator-btn .nav-btn-text {
+    display: none;
+  }
+  .nav-navigator-btn {
+    padding: 8px 10px !important;
+    margin-right: 4px !important;
+    border-radius: var(--radius-full) !important;
+  }
+  
+  /* Resize contact CTA button */
+  .nav-cta {
+    padding: 8px 14px !important;
+    font-size: var(--text-xs) !important;
   }
 
   /* Compact and display all floating cards around the portrait */
@@ -720,11 +752,11 @@
   }
 
   .float-card {
-    padding: 8px 12px !important;
-    font-size: 11px !important;
+    padding: 8px 14px !important;
+    font-size: 11.5px !important;
     border-radius: var(--radius-md) !important;
     box-shadow: 0 6px 20px rgba(30, 17, 53, 0.08) !important;
-    max-width: 165px !important;
+    max-width: 170px !important;
     white-space: nowrap !important;
   }
   
@@ -759,19 +791,19 @@
   }
 
   .float-card .float-name {
-    font-size: 10px !important;
+    font-size: 10.5px !important;
     line-height: 1.1 !important;
   }
 
   .float-card .float-role {
-    font-size: 8px !important;
+    font-size: 8.5px !important;
     line-height: 1 !important;
   }
   
-  /* Positions */
+  /* Positions - brought closer to hug the circular portrait */
   .float-available {
     display: flex !important;
-    top: -30px !important;
+    top: -15px !important;
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
@@ -780,7 +812,7 @@
   .float-location {
     display: flex !important;
     top: 15px !important;
-    right: -35px !important;
+    right: -10px !important;
     left: auto !important;
     bottom: auto !important;
     transform: none !important;
@@ -788,8 +820,8 @@
 
   .float-linkedin {
     display: flex !important;
-    top: 85px !important;
-    left: -35px !important;
+    top: 80px !important;
+    left: -10px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -797,8 +829,8 @@
 
   .float-github {
     display: flex !important;
-    top: 155px !important;
-    left: -35px !important;
+    top: 145px !important;
+    left: -10px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -808,8 +840,8 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    top: 95px !important;
-    right: -35px !important;
+    top: 90px !important;
+    right: -10px !important;
     bottom: auto !important;
     left: auto !important;
     transform: none !important;
@@ -819,8 +851,8 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    bottom: -20px !important;
-    left: -15px !important;
+    bottom: -10px !important;
+    left: -5px !important;
     top: auto !important;
     right: auto !important;
     transform: none !important;
@@ -830,8 +862,8 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    bottom: -20px !important;
-    right: -15px !important;
+    bottom: -10px !important;
+    right: -5px !important;
     top: auto !important;
     left: auto !important;
     transform: none !important;
@@ -839,7 +871,7 @@
   
   /* Hero typography and padding */
   .hero {
-    padding-top: var(--space-2xl) !important;
+    padding-top: calc(var(--nav-height) + var(--space-xl)) !important;
     padding-bottom: var(--space-2xl);
   }
   .hero-heading {
