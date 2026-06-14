@@ -9,7 +9,82 @@ import { initState, SKILL_DEFINITIONS } from './state.js';
 import { renderPortfolio } from './portfolio.js';
 import { initDrawer, openDrawer } from './drawer.js';
 import { initAnimations } from './animations.js';
-import { initJarvis } from './jarvis.js';
+import { initJarvis, getJarvisVoiceResponse } from './jarvis.js';
+
+// Background Ambient Music Manager
+function initBackgroundMusic() {
+  const music = new Audio('/audio/ambient.mp3');
+  music.loop = true;
+  music.volume = 0.02; // Very silent, non-intrusive low volume
+  
+  let hasStarted = false;
+  const startMusic = () => {
+    if (hasStarted) return;
+    hasStarted = true;
+    music.play().then(() => {
+      console.log("Background ambient music started playing at low volume.");
+    }).catch(err => {
+      console.warn("Background ambient music autoplay prevented or file missing:", err);
+      hasStarted = false; // allow retry
+    });
+    
+    // Clean up events
+    ['click', 'touchstart', 'keydown'].forEach(evt => {
+      document.removeEventListener(evt, startMusic);
+    });
+  };
+  
+  ['click', 'touchstart', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, startMusic, { once: true, passive: true });
+  });
+}
+
+// Dynamically Synthesized Ping Sound Pluck
+function playPingSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.06);
+    
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+  } catch (e) {
+    console.warn("Failed to play synthesized ping sound:", e);
+  }
+}
+
+// Global click event catcher to play ping sound on interactive elements
+if (typeof window !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!target) return;
+    const isInteractive = target.closest('button') || 
+                          target.closest('a') || 
+                          target.closest('.skill-pill') || 
+                          target.closest('.project-card') || 
+                          target.closest('.reactor-core') || 
+                          target.closest('.voice-mic-orb') ||
+                          target.closest('.help-guide-btn') ||
+                          target.closest('.nav-btn') ||
+                          target.closest('#control-trigger');
+    if (isInteractive) {
+      playPingSound();
+    }
+  }, { capture: true, passive: true });
+}
 
 // Global contact redirection helper (Desktop: compose in Gmail; Mobile: launch native Mail app)
 window.triggerContactRedirect = function() {
@@ -47,6 +122,9 @@ async function init() {
 
   // 5. Run visitor tracking and load J.A.R.V.I.S.
   trackVisitor();
+
+  // 6. Initialize background ambient music
+  initBackgroundMusic();
 }
 
 /**
@@ -376,6 +454,8 @@ function boot() {
       const voiceIntents = [
         {
           key: 'grahak',
+          label: 'check the Grahak CRM project',
+          samplePhrase: 'grahak project',
           keywords: ['grahak', 'crm', 'ticketing', 'whatsapp'],
           phrases: ['grahak project', 'tell me about grahak', 'show grahak project', 'explain grahak', 'grahak crm'],
           action: () => {
@@ -387,6 +467,8 @@ function boot() {
         },
         {
           key: 'otp',
+          label: 'view the Student OTP Authentication project',
+          samplePhrase: 'otp auth project',
           keywords: ['otp', 'auth', 'authentication', 'login', 'student login', 'problem solver'],
           phrases: ['otp auth system', 'student problem solver project', 'one time password authentication', 'show otp auth'],
           action: () => {
@@ -398,6 +480,8 @@ function boot() {
         },
         {
           key: 'genai',
+          label: 'see the GenAI CSV Analysis Assistant',
+          samplePhrase: 'genai assistant',
           keywords: ['genai', 'csv', 'analysis', 'assistant', 'streamlit', 'natural language query'],
           phrases: ['genai analysis assistant', 'data analysis assistant', 'query csv in natural language', 'streamlit assistant'],
           action: () => {
@@ -409,6 +493,8 @@ function boot() {
         },
         {
           key: 'disease',
+          label: 'open the Disease Risk Scoring system',
+          samplePhrase: 'disease prediction',
           keywords: ['disease', 'healthcare', 'medical', 'risk', 'scoring', 'prediction', 'classifier'],
           phrases: ['disease prediction project', 'healthcare prediction risk scoring', 'risk scoring system', 'disease classifier'],
           action: () => {
@@ -420,6 +506,8 @@ function boot() {
         },
         {
           key: 'churn',
+          label: 'check the Customer Churn model',
+          samplePhrase: 'churn prediction',
           keywords: ['churn', 'retention', 'segmentation', 'customer churn', 'customer segmentation'],
           phrases: ['customer churn prediction', 'churn analytics segmentation', 'churn prediction model', 'retention dashboard'],
           action: () => {
@@ -431,6 +519,8 @@ function boot() {
         },
         {
           key: 'gps',
+          label: 'check the GPS Emergency SOS band project',
+          samplePhrase: 'gps sos band',
           keywords: ['gps', 'sos', 'wearable', 'distress', 'band', 'emergency', 'coordinates', 'tracking'],
           phrases: ['gps enabled sos band', 'wearable distress band', 'emergency communication coordinates', 'sos tracker'],
           action: () => {
@@ -442,6 +532,8 @@ function boot() {
         },
         {
           key: 'sla',
+          label: 'view the Support SLA Operations dashboard',
+          samplePhrase: 'sla dashboard',
           keywords: ['sla', 'service level agreement', 'ticket', 'operations', 'etl'],
           phrases: ['support sla operations dashboard', 'ticket operations compliance', 'sla tracking dashboard', 'ticket etl pipeline'],
           action: () => {
@@ -453,6 +545,8 @@ function boot() {
         },
         {
           key: 'sales',
+          label: 'view the Sales Revenue MIS dashboard',
+          samplePhrase: 'sales dashboard',
           keywords: ['sales', 'revenue', 'mis', 'reporting', 'target', 'targets'],
           phrases: ['automated sales revenue mis', 'sales pipeline analytics dashboard', 'sales targets performance', 'mis reporting dashboard'],
           action: () => {
@@ -464,6 +558,8 @@ function boot() {
         },
         {
           key: 'education',
+          label: 'view my education details',
+          samplePhrase: 'education',
           keywords: ['education', 'college', 'study', 'grades', 'cgpa', 'gpa', 'academic', 'degree', 'qualification', 'engineering', 'nkocet', 'orchid'],
           phrases: ['education details', 'where did sushant study', 'what is sushants cgpa', 'orchid college solapur', 'academic credentials'],
           action: () => {
@@ -475,6 +571,8 @@ function boot() {
         },
         {
           key: 'experience',
+          label: 'view my professional experience',
+          samplePhrase: 'experience',
           keywords: ['experience', 'work', 'job', 'internship', 'qspiders', 'aicte', 'internships', 'working', 'career', 'role'],
           phrases: ['work experience', 'professional experience', 'where does sushant work', 'qspiders internship details', 'aicte internship details'],
           action: () => {
@@ -486,6 +584,8 @@ function boot() {
         },
         {
           key: 'skills',
+          label: 'see my programming languages and skills',
+          samplePhrase: 'skills',
           keywords: ['skills', 'skill', 'expertise', 'know', 'toolkit', 'programming', 'languages', 'python', 'sql', 'stack', 'technologies', 'tools'],
           phrases: ['what are sushants skills', 'show technical skills matrix', 'programming languages sushant knows', 'technical expertise toolkits'],
           action: () => {
@@ -497,6 +597,8 @@ function boot() {
         },
         {
           key: 'projects',
+          label: 'show my engineering projects list',
+          samplePhrase: 'projects',
           keywords: ['projects', 'project', 'works', 'creations', 'built', 'made', 'developed', 'portfolio list', 'list projects', 'all projects'],
           phrases: ['what projects has sushant built', 'show all featured projects list', 'tell about projects', 'projects portfolio show', 'creations and implementations'],
           action: () => {
@@ -508,6 +610,8 @@ function boot() {
         },
         {
           key: 'about',
+          label: 'learn about my background',
+          samplePhrase: 'about sushant',
           keywords: ['about', 'who is sushant', 'introduce sushant', 'bio', 'yourself', 'background', 'identity', 'creator', 'person', 'sushant shrimal'],
           phrases: ['tell about sushant', 'who is sushant shrimal', 'introduce sushant shrimal', 'creator bio details', 'background profile summary'],
           action: () => {
@@ -519,6 +623,8 @@ function boot() {
         },
         {
           key: 'contact',
+          label: 'contact me or email sushant',
+          samplePhrase: 'contact',
           keywords: ['contact', 'email', 'reach', 'hire', 'send mail', 'send email', 'message', 'connect', 'mail', 'write email', 'email sushant'],
           phrases: ['how to contact sushant', 'send an email to sushant', 'connect with sushant email', 'reach out message hire', 'send mail options'],
           action: () => {
@@ -531,6 +637,8 @@ function boot() {
         },
         {
           key: 'github_portfolio',
+          label: 'open the source code for this site',
+          samplePhrase: 'source code',
           keywords: ['source code', 'repository', 'repo', 'of this', 'this project', 'this portfolio', 'source code portfolio'],
           phrases: ['show source code of this website', 'open repository of this project', 'this portfolio repository git', 'where is the code for this'],
           action: () => {
@@ -549,6 +657,8 @@ function boot() {
         },
         {
           key: 'github_profile',
+          label: 'visit my GitHub profile',
+          samplePhrase: 'open github',
           keywords: ['github', 'git', 'repo', 'guthub', 'gut hub'],
           phrases: ['open sushants github profile', 'show github projects list', 'sushant git repository url', 'github page link'],
           action: () => {
@@ -567,6 +677,8 @@ function boot() {
         },
         {
           key: 'linkedin',
+          label: 'visit my LinkedIn profile',
+          samplePhrase: 'open linkedin',
           keywords: ['linkedin', 'linked in', 'limked', 'limkedin'],
           phrases: ['open sushants linkedin profile', 'connect on linkedin url', 'linkedin network page', 'show linkedin info'],
           action: () => {
@@ -585,6 +697,8 @@ function boot() {
         },
         {
           key: 'control_space',
+          label: 'open the Control Space admin drawer',
+          samplePhrase: 'open control space',
           keywords: ['control space', 'controlspace', 'admin', 'drawer', 'login', 'management'],
           phrases: ['open control space login drawer', 'admin panel credentials screen', 'admin drawer database credentials', 'open management dashboard'],
           action: () => {
@@ -718,7 +832,43 @@ function boot() {
         return;
       }
 
-      // Unrecognized commands
+      // 3. Fallback to Chatbot Voice Response (Dynamic Knowledge Speaking Model)
+      const chatbotResult = getJarvisVoiceResponse(clean);
+      if (chatbotResult) {
+        speakNavigator(chatbotResult.response);
+        showToast(`Mark: Speaking details`);
+        
+        // Auto scroll based on chatbot intent key
+        const key = chatbotResult.key;
+        let scrollTarget = null;
+        if (key === 'education' || key === 'cgpa' || key === 'certifications') {
+          scrollTarget = document.getElementById('education');
+        } else if (key === 'skills' || key.startsWith('skills_')) {
+          scrollTarget = document.getElementById('skills');
+        } else if (key === 'projects' || key === 'grahak' || key.startsWith('project_')) {
+          scrollTarget = document.getElementById('projects');
+        } else if (key === 'about' || key.startsWith('experience') || key === 'gdg' || key === 'awards') {
+          scrollTarget = document.getElementById('about');
+        } else if (key === 'contact') {
+          if (typeof window.triggerContactRedirect === 'function') {
+            window.triggerContactRedirect();
+          }
+        }
+        
+        if (scrollTarget) {
+          scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+
+      // 4. Predictive Overlap Matching Fallback ("Did you mean...?")
+      if (highestScore >= 0.05 && bestIntent) {
+        speakNavigator(`I didn't quite catch that. Did you mean to ${bestIntent.label}? Try saying: ${bestIntent.samplePhrase}.`);
+        showToast(`Did you mean: "${bestIntent.samplePhrase}"?`);
+        return;
+      }
+
+      // 5. Final Unrecognized Commands Fallback
       if (hasWakeWord || wasAwaiting) {
         speakNavigator("Sorry, command not recognized. Try saying 'go to projects' or 'tell about sushant'.");
         showToast("Command unrecognized. Try: 'go to projects' or 'tell about sushant'");

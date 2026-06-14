@@ -515,221 +515,211 @@ function expandTokens(tokenSet) {
   return expanded;
 }
 
-function processQuery(query) {
+// Sushant's detailed portfolio knowledge base (short and direct)
+const intentsConfig = [
+  {
+    key: 'about',
+    phrases: ['who are you', 'tell me about yourself', 'introduce yourself', 'about sushant', 'who is sushant', 'your name', 'sushant shrimal', 'background', 'identity', 'creator'],
+    keywords: ['about', 'yourself', 'who', 'bio', 'introduce', 'profile', 'name', 'identity', 'creator', 'person', 'background'],
+    response: KNOWLEDGE_BASE.about
+  },
+  {
+    key: 'education',
+    phrases: ['where did you study', 'your education', 'academic background', 'college details', 'your btech', 'what is your cgpa', 'cgpa score', 'where is your college', 'which college'],
+    keywords: ['education', 'college', 'degree', 'qualification', 'btech', 'orchid', 'nkocet', 'university', 'academics', 'study', 'school'],
+    response: KNOWLEDGE_BASE.education
+  },
+  {
+    key: 'cgpa',
+    phrases: ['what is your cgpa', 'cgpa score', 'gpa score', 'your cgpa', 'how much cgpa', 'cgpa details'],
+    keywords: ['cgpa', 'gpa', 'grades', 'score', 'percentage', 'marks'],
+    response: KNOWLEDGE_BASE.cgpa
+  },
+  {
+    key: 'contact',
+    phrases: ['how to contact sushant', 'send an email', 'your email', 'linkedin profile', 'connect with you', 'how to reach you', 'contact details', 'github url', 'social links', 'reach sushant'],
+    keywords: ['contact', 'email', 'linkedin', 'github', 'phone', 'reach', 'message', 'connect', 'mail', 'hire', 'socials', 'links'],
+    response: KNOWLEDGE_BASE.contact
+  },
+  {
+    key: 'experience',
+    phrases: ['your experience', 'work history', 'your internships', 'where did you work', 'professional experience', 'milestones', 'where are you working'],
+    keywords: ['experience', 'work', 'job', 'internship', 'qspiders', 'aicte', 'role', 'milestone', 'career', 'internships', 'working'],
+    response: KNOWLEDGE_BASE.experience
+  },
+  {
+    key: 'experience_qspiders',
+    phrases: ['about qspiders', 'what did you do at qspiders', 'qspiders internship', 'qspiders experience'],
+    keywords: ['qspiders', 'qspider', 'fullstack', 'etl', 'sla'],
+    response: KNOWLEDGE_BASE.experience_qspiders
+  },
+  {
+    key: 'experience_aicte',
+    phrases: ['about aicte', 'aicte internship', 'aicte experience', 'what did you do at aicte'],
+    keywords: ['aicte', 'internship', 'healthcare', 'ml'],
+    response: KNOWLEDGE_BASE.experience_aicte
+  },
+  {
+    key: 'certifications',
+    phrases: ['your certifications', 'credentials list', 'what certificates do you have', 'show certifications', 'verified credentials'],
+    keywords: ['certifications', 'certification', 'certificates', 'certificate', 'credentials', 'hackerrank', 'cisco', 'postman', 'forage'],
+    response: KNOWLEDGE_BASE.certifications
+  },
+  {
+    key: 'awards',
+    phrases: ['your awards', 'achievements list', 'best research paper', 'iccss 2025', 'what awards did you win', 'vice president aexs'],
+    keywords: ['awards', 'award', 'achievements', 'achievement', 'honors', 'honor', 'iccss', 'aexs', 'paper', 'winner', 'won'],
+    response: KNOWLEDGE_BASE.awards
+  },
+  {
+    key: 'gdg',
+    phrases: ['gdg on campus', 'cloud lead role', 'google developer group', 'gdg lead', 'google developer groups'],
+    keywords: ['gdg', 'cloud', 'lead', 'campus', 'google', 'developer', 'groups', 'community'],
+    response: KNOWLEDGE_BASE.gdg
+  },
+  {
+    key: 'skills',
+    phrases: ['what are your skills', 'show me your skills', 'technical skills', 'skills matrix', 'your expertise', 'what languages', 'programming languages', 'what technologies'],
+    keywords: ['skills', 'skill', 'toolkit', 'programming', 'languages', 'python', 'sql', 'ml', 'ai', 'cloud', 'technology', 'expert', 'expertise'],
+    response: KNOWLEDGE_BASE.skills
+  },
+  {
+    key: 'skills_ai',
+    phrases: ['generative ai skills', 'llm skills', 'prompt engineering expertise', 'rag knowledge', 'openai api experience'],
+    keywords: ['genai', 'generative', 'llm', 'llms', 'prompt', 'rag', 'openai', 'anthropic', 'claude', 'gpt'],
+    response: KNOWLEDGE_BASE.skills_ai
+  },
+  {
+    key: 'skills_ml',
+    phrases: ['machine learning skills', 'scikit learn experience', 'tensorflow projects', 'regression models', 'random forest expertise'],
+    keywords: ['ml', 'machine', 'learning', 'tensorflow', 'scikit', 'regression', 'classification', 'clustering', 'ensemble', 'forest'],
+    response: KNOWLEDGE_BASE.skills_ml
+  },
+  {
+    key: 'skills_python',
+    phrases: ['python programming skills', 'sql database skills', 'coding in python', 'python query'],
+    keywords: ['python', 'sql', 'databases', 'programming', 'languages', 'scripting'],
+    response: KNOWLEDGE_BASE.skills_python
+  },
+  {
+    key: 'skills_data',
+    phrases: ['data analytics skills', 'pandas and numpy', 'data cleaning experience', 'exploratory data analysis', 'ab testing experience'],
+    keywords: ['pandas', 'numpy', 'eda', 'wrangling', 'cleaning', 'testing', 'hypothesis', 'stats', 'statistics', 'statistical'],
+    response: KNOWLEDGE_BASE.skills_data
+  },
+  {
+    key: 'skills_viz',
+    phrases: ['power bi visualization', 'streamlit deployment', 'git and github skills', 'google cloud skills'],
+    keywords: ['powerbi', 'bi', 'visualization', 'matplotlib', 'seaborn', 'streamlit', 'git', 'github', 'gcp', 'cloud', 'colab', 'jupyter'],
+    response: KNOWLEDGE_BASE.skills_viz
+  },
+  {
+    key: 'projects',
+    phrases: ['what projects have you built', 'show me your projects', 'show projects', 'view projects', 'projects lists', 'what did you build', 'your works', 'your projects', 'tell me about your projects'],
+    keywords: ['project', 'projects', 'built', 'made', 'develop', 'portfolio', 'list', 'works', 'creations'],
+    response: KNOWLEDGE_BASE.projects
+  },
+  {
+    key: 'grahak',
+    phrases: ['tell me about grahak', 'grahak project', 'what is grahak', 'grahak crm', 'whatsapp ticketing'],
+    keywords: ['grahak', 'crm', 'ticketing', 'whatsapp', 'server', 'grahak-server'],
+    response: KNOWLEDGE_BASE.grahak
+  },
+  {
+    key: 'project_genai',
+    phrases: ['genai data analysis assistant', 'genai assistant project', 'natural language query on csv', 'streamlit analysis app'],
+    keywords: ['genai', 'csv', 'analysis', 'assistant', 'streamlit', 'queries', 'openai'],
+    response: KNOWLEDGE_BASE.project_genai
+  },
+  {
+    key: 'project_disease',
+    phrases: ['disease prediction system', 'healthcare prediction project', 'risk scoring system', 'disease prediction details'],
+    keywords: ['disease', 'prediction', 'healthcare', 'risk', 'scoring', 'classification'],
+    response: KNOWLEDGE_BASE.project_disease
+  },
+  {
+    key: 'project_churn',
+    phrases: ['customer churn prediction', 'churn segmentation dashboard', 'churn prediction details'],
+    keywords: ['churn', 'customer', 'segmentation', 'retention', 'dashboard'],
+    response: KNOWLEDGE_BASE.project_churn
+  },
+  {
+    key: 'project_sla',
+    phrases: ['support sla operations dashboard', 'sla compliance tracking', 'ticket etl pipeline', 'support ticket details'],
+    keywords: ['sla', 'compliance', 'ticket', 'tickets', 'etl', 'dax', 'dashboard'],
+    response: KNOWLEDGE_BASE.project_sla
+  },
+  {
+    key: 'project_sales',
+    phrases: ['sales revenue mis dashboard', 'automated sales reporting', 'sales pipeline analytics'],
+    keywords: ['sales', 'revenue', 'mis', 'reporting', 'target', 'targets'],
+    response: KNOWLEDGE_BASE.project_sales
+  },
+  {
+    key: 'project_otp',
+    phrases: ['otp auth system', 'lightweight student login auth', 'verification frontend'],
+    keywords: ['otp', 'auth', 'authentication', 'verification', 'login'],
+    response: KNOWLEDGE_BASE.project_otp
+  },
+  {
+    key: 'project_gps',
+    phrases: ['gps enabled sos band', 'wearable distress band', 'emergency communication gps gsm'],
+    keywords: ['gps', 'sos', 'gsm', 'wearable', 'distress', 'band', 'emergency'],
+    response: KNOWLEDGE_BASE.project_gps
+  },
+  {
+    key: 'project_dispenser',
+    phrases: ['smart ingredient dispensing system', 'raspberry pi esp32 dispenser', 'conveyor positioning dispenser'],
+    keywords: ['dispenser', 'dispensing', 'conveyor', 'loadcell', 'raspberry', 'esp32'],
+    response: KNOWLEDGE_BASE.project_dispenser
+  },
+  {
+    key: 'project_shoes',
+    phrases: ['branded shoes ecommerce website', 'shoes catalog prototype', 'e-commerce shoes portal'],
+    keywords: ['shoes', 'ecommerce', 'retail', 'cart', 'catalog'],
+    response: KNOWLEDGE_BASE.project_shoes
+  },
+  {
+    key: 'project_portfolio',
+    phrases: ['tell me about this website', 'portfolio website details', 'how was this built', 'glassmorphic portfolio details'],
+    keywords: ['portfolio', 'glassmorphic', 'trails', 'typing', 'mark27', 'jarvis'],
+    response: KNOWLEDGE_BASE.project_portfolio
+  }
+];
+
+export function getJarvisVoiceResponse(query) {
   const rawClean = query.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
   const clean = correctSpelling(rawClean);
-  
-  if (!clean) return;
+  if (!clean) return null;
 
-  // 1. Standard greetings
   if (clean === 'hello' || clean === 'hi' || clean === 'hey' || clean === 'greetings') {
-    addSystemMessage("Hello! How can I assist you today?");
-    return;
+    return { response: "Hello! How can I assist you today?", key: 'greeting', score: 1.0 };
   }
 
-  // 2. Tokenize and expand query terms using synonyms
-  const words = clean.split(/\s+/);
   const queryTokens = tokenize(clean);
   const expandedQueryTokens = expandTokens(queryTokens);
 
-  // 3. Advanced semantic similarity scoring
   let matchedIntent = null;
   let maxScore = 0;
 
-  const intentsConfig = [
-    {
-      key: 'about',
-      phrases: ['who are you', 'tell me about yourself', 'introduce yourself', 'about sushant', 'who is sushant', 'your name', 'sushant shrimal', 'background', 'identity', 'creator'],
-      keywords: ['about', 'yourself', 'who', 'bio', 'introduce', 'profile', 'name', 'identity', 'creator', 'person', 'background'],
-      response: KNOWLEDGE_BASE.about
-    },
-    {
-      key: 'education',
-      phrases: ['where did you study', 'your education', 'academic background', 'college details', 'your btech', 'what is your cgpa', 'cgpa score', 'where is your college', 'which college'],
-      keywords: ['education', 'college', 'degree', 'qualification', 'btech', 'orchid', 'nkocet', 'university', 'academics', 'study', 'school'],
-      response: KNOWLEDGE_BASE.education
-    },
-    {
-      key: 'cgpa',
-      phrases: ['what is your cgpa', 'cgpa score', 'gpa score', 'your cgpa', 'how much cgpa', 'cgpa details'],
-      keywords: ['cgpa', 'gpa', 'grades', 'score', 'percentage', 'marks'],
-      response: KNOWLEDGE_BASE.cgpa
-    },
-    {
-      key: 'contact',
-      phrases: ['how to contact sushant', 'send an email', 'your email', 'linkedin profile', 'connect with you', 'how to reach you', 'contact details', 'github url', 'social links', 'reach sushant'],
-      keywords: ['contact', 'email', 'linkedin', 'github', 'phone', 'reach', 'message', 'connect', 'mail', 'hire', 'socials', 'links'],
-      response: KNOWLEDGE_BASE.contact
-    },
-    {
-      key: 'experience',
-      phrases: ['your experience', 'work history', 'your internships', 'where did you work', 'professional experience', 'milestones', 'where are you working'],
-      keywords: ['experience', 'work', 'job', 'internship', 'qspiders', 'aicte', 'role', 'milestone', 'career', 'internships', 'working'],
-      response: KNOWLEDGE_BASE.experience
-    },
-    {
-      key: 'experience_qspiders',
-      phrases: ['about qspiders', 'what did you do at qspiders', 'qspiders internship', 'qspiders experience'],
-      keywords: ['qspiders', 'qspider', 'fullstack', 'etl', 'sla'],
-      response: KNOWLEDGE_BASE.experience_qspiders
-    },
-    {
-      key: 'experience_aicte',
-      phrases: ['about aicte', 'aicte internship', 'aicte experience', 'what did you do at aicte'],
-      keywords: ['aicte', 'internship', 'healthcare', 'ml'],
-      response: KNOWLEDGE_BASE.experience_aicte
-    },
-    {
-      key: 'certifications',
-      phrases: ['your certifications', 'credentials list', 'what certificates do you have', 'show certifications', 'verified credentials'],
-      keywords: ['certifications', 'certification', 'certificates', 'certificate', 'credentials', 'hackerrank', 'cisco', 'postman', 'forage'],
-      response: KNOWLEDGE_BASE.certifications
-    },
-    {
-      key: 'awards',
-      phrases: ['your awards', 'achievements list', 'best research paper', 'iccss 2025', 'what awards did you win', 'vice president aexs'],
-      keywords: ['awards', 'award', 'achievements', 'achievement', 'honors', 'honor', 'iccss', 'aexs', 'paper', 'winner', 'won'],
-      response: KNOWLEDGE_BASE.awards
-    },
-    {
-      key: 'gdg',
-      phrases: ['gdg on campus', 'cloud lead role', 'google developer group', 'gdg lead', 'google developer groups'],
-      keywords: ['gdg', 'cloud', 'lead', 'campus', 'google', 'developer', 'groups', 'community'],
-      response: KNOWLEDGE_BASE.gdg
-    },
-    {
-      key: 'skills',
-      phrases: ['what are your skills', 'show me your skills', 'technical skills', 'skills matrix', 'your expertise', 'what languages', 'programming languages', 'what technologies'],
-      keywords: ['skills', 'skill', 'toolkit', 'programming', 'languages', 'python', 'sql', 'ml', 'ai', 'cloud', 'technology', 'expert', 'expertise'],
-      response: KNOWLEDGE_BASE.skills
-    },
-    {
-      key: 'skills_ai',
-      phrases: ['generative ai skills', 'llm skills', 'prompt engineering expertise', 'rag knowledge', 'openai api experience'],
-      keywords: ['genai', 'generative', 'llm', 'llms', 'prompt', 'rag', 'openai', 'anthropic', 'claude', 'gpt'],
-      response: KNOWLEDGE_BASE.skills_ai
-    },
-    {
-      key: 'skills_ml',
-      phrases: ['machine learning skills', 'scikit learn experience', 'tensorflow projects', 'regression models', 'random forest expertise'],
-      keywords: ['ml', 'machine', 'learning', 'tensorflow', 'scikit', 'regression', 'classification', 'clustering', 'ensemble', 'forest'],
-      response: KNOWLEDGE_BASE.skills_ml
-    },
-    {
-      key: 'skills_python',
-      phrases: ['python programming skills', 'sql database skills', 'coding in python', 'python query'],
-      keywords: ['python', 'sql', 'databases', 'programming', 'languages', 'scripting'],
-      response: KNOWLEDGE_BASE.skills_python
-    },
-    {
-      key: 'skills_data',
-      phrases: ['data analytics skills', 'pandas and numpy', 'data cleaning experience', 'exploratory data analysis', 'ab testing experience'],
-      keywords: ['pandas', 'numpy', 'eda', 'wrangling', 'cleaning', 'testing', 'hypothesis', 'stats', 'statistics', 'statistical'],
-      response: KNOWLEDGE_BASE.skills_data
-    },
-    {
-      key: 'skills_viz',
-      phrases: ['power bi visualization', 'streamlit deployment', 'git and github skills', 'google cloud skills'],
-      keywords: ['powerbi', 'bi', 'visualization', 'matplotlib', 'seaborn', 'streamlit', 'git', 'github', 'gcp', 'cloud', 'colab', 'jupyter'],
-      response: KNOWLEDGE_BASE.skills_viz
-    },
-    {
-      key: 'projects',
-      phrases: ['what projects have you built', 'show me your projects', 'show projects', 'view projects', 'projects lists', 'what did you build', 'your works', 'your projects', 'tell me about your projects'],
-      keywords: ['project', 'projects', 'built', 'made', 'develop', 'portfolio', 'list', 'works', 'creations'],
-      response: KNOWLEDGE_BASE.projects
-    },
-    {
-      key: 'grahak',
-      phrases: ['tell me about grahak', 'grahak project', 'what is grahak', 'grahak crm', 'whatsapp ticketing'],
-      keywords: ['grahak', 'crm', 'ticketing', 'whatsapp', 'server', 'grahak-server'],
-      response: KNOWLEDGE_BASE.grahak
-    },
-    {
-      key: 'project_genai',
-      phrases: ['genai data analysis assistant', 'genai assistant project', 'natural language query on csv', 'streamlit analysis app'],
-      keywords: ['genai', 'csv', 'analysis', 'assistant', 'streamlit', 'queries', 'openai'],
-      response: KNOWLEDGE_BASE.project_genai
-    },
-    {
-      key: 'project_disease',
-      phrases: ['disease prediction system', 'healthcare prediction project', 'risk scoring system', 'disease prediction details'],
-      keywords: ['disease', 'prediction', 'healthcare', 'risk', 'scoring', 'classification'],
-      response: KNOWLEDGE_BASE.project_disease
-    },
-    {
-      key: 'project_churn',
-      phrases: ['customer churn prediction', 'churn segmentation dashboard', 'churn prediction details'],
-      keywords: ['churn', 'customer', 'segmentation', 'retention', 'dashboard'],
-      response: KNOWLEDGE_BASE.project_churn
-    },
-    {
-      key: 'project_sla',
-      phrases: ['support sla operations dashboard', 'sla compliance tracking', 'ticket etl pipeline', 'support ticket details'],
-      keywords: ['sla', 'compliance', 'ticket', 'tickets', 'etl', 'dax', 'dashboard'],
-      response: KNOWLEDGE_BASE.project_sla
-    },
-    {
-      key: 'project_sales',
-      phrases: ['sales revenue mis dashboard', 'automated sales reporting', 'sales pipeline analytics'],
-      keywords: ['sales', 'revenue', 'mis', 'reporting', 'target', 'targets'],
-      response: KNOWLEDGE_BASE.project_sales
-    },
-    {
-      key: 'project_otp',
-      phrases: ['otp auth system', 'lightweight student login auth', 'verification frontend'],
-      keywords: ['otp', 'auth', 'authentication', 'verification', 'login'],
-      response: KNOWLEDGE_BASE.project_otp
-    },
-    {
-      key: 'project_gps',
-      phrases: ['gps enabled sos band', 'wearable distress band', 'emergency communication gps gsm'],
-      keywords: ['gps', 'sos', 'gsm', 'wearable', 'distress', 'band', 'emergency'],
-      response: KNOWLEDGE_BASE.project_gps
-    },
-    {
-      key: 'project_dispenser',
-      phrases: ['smart ingredient dispensing system', 'raspberry pi esp32 dispenser', 'conveyor positioning dispenser'],
-      keywords: ['dispenser', 'dispensing', 'conveyor', 'loadcell', 'raspberry', 'esp32'],
-      response: KNOWLEDGE_BASE.project_dispenser
-    },
-    {
-      key: 'project_shoes',
-      phrases: ['branded shoes ecommerce website', 'shoes catalog prototype', 'e-commerce shoes portal'],
-      keywords: ['shoes', 'ecommerce', 'retail', 'cart', 'catalog'],
-      response: KNOWLEDGE_BASE.project_shoes
-    },
-    {
-      key: 'project_portfolio',
-      phrases: ['tell me about this website', 'portfolio website details', 'how was this built', 'glassmorphic portfolio details'],
-      keywords: ['portfolio', 'glassmorphic', 'trails', 'typing', 'mark27', 'jarvis'],
-      response: KNOWLEDGE_BASE.project_portfolio
-    }
-  ];
-
   intentsConfig.forEach(intent => {
     let bestPhraseScore = 0;
-
-    // Check Jaccard similarity against intent sample phrases
     intent.phrases.forEach(phrase => {
       const phraseTokens = tokenize(phrase);
       const simOriginal = jaccardSimilarity(queryTokens, phraseTokens);
       const simExpanded = jaccardSimilarity(expandedQueryTokens, phraseTokens);
-      // Combined phrase score (favoring original matches)
       const phraseScore = (simOriginal * 0.7) + (simExpanded * 0.3);
       if (phraseScore > bestPhraseScore) {
         bestPhraseScore = phraseScore;
       }
     });
 
-    // Calculate keyword matching score
     let keywordMatches = 0;
     const intentKeywords = new Set(intent.keywords);
     queryTokens.forEach(token => {
       if (intentKeywords.has(token)) {
         keywordMatches += 1.0;
       } else {
-        // Synonym matches
         let isSynonym = false;
         Object.keys(SYNONYMS).forEach(key => {
           if ((key === token || SYNONYMS[key].includes(token)) && intentKeywords.has(key)) {
@@ -743,7 +733,6 @@ function processQuery(query) {
     });
     const keywordScore = queryTokens.size > 0 ? (keywordMatches / queryTokens.size) : 0;
 
-    // Check direct substring matches for high relevance
     let directSubstringMatch = 0;
     intent.phrases.forEach(phrase => {
       if (clean.includes(phrase)) {
@@ -751,13 +740,11 @@ function processQuery(query) {
       }
     });
 
-    // Check intent key as a direct word match in query
     let keyMatch = 0;
     if (clean.includes(intent.key.replace(/_/g, ' '))) {
       keyMatch = 1.0;
     }
 
-    // Blend direct matches, Jaccard similarities, and keyword densities
     const finalScore = (directSubstringMatch * 0.4) + (keyMatch * 0.2) + (bestPhraseScore * 0.3) + (keywordScore * 0.1);
 
     if (finalScore > maxScore) {
@@ -766,12 +753,31 @@ function processQuery(query) {
     }
   });
 
-  // Evaluate matching score against threshold
   if (maxScore >= 0.15 && matchedIntent) {
-    if (matchedIntent.key === 'contact') {
+    return { response: matchedIntent.response, key: matchedIntent.key, score: maxScore };
+  }
+  return null;
+}
+
+function processQuery(query) {
+  const rawClean = query.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
+  const clean = correctSpelling(rawClean);
+  
+  if (!clean) return;
+
+  // 1. Standard greetings
+  if (clean === 'hello' || clean === 'hi' || clean === 'hey' || clean === 'greetings') {
+    addSystemMessage("Hello! How can I assist you today?");
+    return;
+  }
+
+  // 2. Query voice response resolver
+  const result = getJarvisVoiceResponse(query);
+  if (result) {
+    if (result.key === 'contact') {
       renderConnectionPrompt();
     } else {
-      addSystemMessage(matchedIntent.response);
+      addSystemMessage(result.response);
     }
   } else {
     // Advanced fallback answer
