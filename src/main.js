@@ -792,6 +792,88 @@ function boot() {
               showToast("Opening Control Space...");
             }
           }
+        },
+        {
+          key: 'toggle_guide',
+          label: 'show the voice navigator help guide instructions',
+          samplePhrase: 'show help guide',
+          keywords: ['guide', 'help', 'instructions', 'commands', 'voice guide'],
+          phrases: ['show help guide instructions', 'open voice command guide', 'toggle voice guide window', 'show guide commands'],
+          action: () => {
+            const helpBtn = document.getElementById('nav-navigator-help-btn');
+            if (helpBtn) {
+              helpBtn.click();
+              speakNavigator("Toggling voice guide instructions.");
+              showToast("Toggled help guide.");
+            }
+          }
+        },
+        {
+          key: 'toggle_speaker',
+          label: 'mute or unmute the voice speaker feedback',
+          samplePhrase: 'mute voice assistant',
+          keywords: ['mute', 'unmute', 'speaker', 'sound', 'feedback', 'voice feedback'],
+          phrases: ['mute voice assistant feedback', 'unmute voice speaker feedback', 'toggle assistant speaker sound', 'turn off speaker sound', 'turn on assistant feedback'],
+          action: () => {
+            const speakerBtn = document.getElementById('nav-navigator-speaker-btn');
+            if (speakerBtn) {
+              speakerBtn.click();
+              const stateText = isVoiceNavigatorSpeakerEnabled ? "Speaker feedback unmuted." : "Speaker feedback muted.";
+              if (isVoiceNavigatorSpeakerEnabled) {
+                speakNavigator(stateText);
+              }
+              showToast(stateText);
+            }
+          }
+        },
+        {
+          key: 'refresh_assistant',
+          label: 'refresh and restart the voice assistant recognition engine',
+          samplePhrase: 'refresh voice assistant',
+          keywords: ['refresh', 'restart', 'reboot', 'reinitialize', 'fix assistant'],
+          phrases: ['refresh voice assistant engine', 'restart voice recognition', 'reboot speech recognition module', 'fix voice command listener'],
+          action: () => {
+            const refreshBtn = document.getElementById('nav-navigator-refresh-btn');
+            if (refreshBtn) {
+              refreshBtn.click();
+            }
+          }
+        },
+        {
+          key: 'open_chatbot',
+          label: 'open the MARK27 chat assistant console',
+          samplePhrase: 'open chatbot panel',
+          keywords: ['chatbot', 'chat', 'mark27', 'jarvis', 'assistant panel', 'open chatbot'],
+          phrases: ['open mark27 chat console', 'talk to mark27 chatbot', 'open virtual assistant chat window', 'open chat widget', 'start chat conversation'],
+          action: () => {
+            const trigger = document.getElementById('jarvis-trigger');
+            const panel = document.getElementById('jarvis-panel');
+            if (trigger && panel) {
+              if (!panel.classList.contains('open')) {
+                trigger.click();
+              }
+              speakNavigator("Opening MARK27 chat assistant console.");
+              showToast("Opening MARK27 Chatbot...");
+            }
+          }
+        },
+        {
+          key: 'close_chatbot',
+          label: 'minimize the chat assistant console',
+          samplePhrase: 'close chatbot panel',
+          keywords: ['close chatbot', 'minimize chat', 'hide mark27', 'hide assistant panel'],
+          phrases: ['close mark27 chat window', 'minimize chatbot panel', 'hide virtual assistant chat bubble', 'exit chat window'],
+          action: () => {
+            const minimize = document.getElementById('jarvis-minimize');
+            const panel = document.getElementById('jarvis-panel');
+            if (minimize && panel) {
+              if (panel.classList.contains('open')) {
+                minimize.click();
+              }
+              speakNavigator("Minimizing chat assistant console.");
+              showToast("Chatbot minimized.");
+            }
+          }
         }
       ];
 
