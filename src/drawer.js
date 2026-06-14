@@ -457,6 +457,15 @@ function renderDrawer() {
       </div>
 
       <div class="drawer-body">
+        <!-- ── Visitor Analytics ── -->
+        <div class="drawer-section" style="background: rgba(122, 0, 255, 0.04); border: 1px solid rgba(122, 0, 255, 0.12); border-radius: var(--radius-md); padding: var(--space-md); margin-bottom: var(--space-lg); display: flex; align-items: center; justify-content: space-between;">
+          <div style="text-align: left;">
+            <h4 style="margin:0; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Total Website Visitors</h4>
+            <div id="cs-visitor-count" style="font-size: 28px; font-weight: 800; color: var(--accent); margin-top: 4px; font-family: 'Poppins', sans-serif;">Loading...</div>
+          </div>
+          <div style="font-size: 32px; filter: drop-shadow(0 2px 8px rgba(122, 0, 255, 0.2));">👥</div>
+        </div>
+
         <!-- ── Projects ── -->
         <div class="drawer-section">
           <h3 class="drawer-section-title">Projects</h3>
@@ -733,6 +742,27 @@ function bindDrawerEvents() {
       }
       localStorage.setItem('cs_music_track_index', index.toString());
     });
+  }
+
+  // ── Fetch Visitor Count from CounterAPI ──
+  const visitorCountEl = document.getElementById('cs-visitor-count');
+  if (visitorCountEl) {
+    fetch('https://api.counterapi.dev/v1/sushantshrimal-portfolio/visits')
+      .then(res => {
+        if (!res.ok) throw new Error('API failed');
+        return res.json();
+      })
+      .then(data => {
+        if (data && typeof data.count === 'number') {
+          visitorCountEl.textContent = data.count.toLocaleString();
+        } else {
+          visitorCountEl.textContent = 'N/A';
+        }
+      })
+      .catch(err => {
+        console.warn("Failed to fetch visitor count:", err);
+        visitorCountEl.textContent = 'Error loading';
+      });
   }
 
   // ── Publish ──

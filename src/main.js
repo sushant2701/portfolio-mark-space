@@ -1719,6 +1719,21 @@ async function trackVisitor() {
       console.error("Failed to transmit visitor notification:", err);
     }
   }
+
+  // 3. Increment CounterAPI visitor count (once per session)
+  try {
+    if (!sessionStorage.getItem('portfolio_hit_incremented')) {
+      sessionStorage.setItem('portfolio_hit_incremented', 'true');
+      fetch('https://api.counterapi.dev/v1/sushantshrimal-portfolio/visits/up')
+        .then(res => res.json())
+        .then(data => {
+          console.log("Visitor counter incremented. Current count:", data.count);
+        })
+        .catch(err => console.warn("Failed to increment CounterAPI:", err));
+    }
+  } catch (err) {
+    console.warn("Failed to trigger counter increment:", err);
+  }
 }
 
 // ── Launch ──
