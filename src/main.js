@@ -742,7 +742,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#about');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Sushant Shrimal is an AI Engineer and Data Scientist, and Former GDG Cloud Lead. He is currently an intern at QSpiders.");
+            speakNavigator("Sushant Shrimal is an AI Engineer and aspiring Data Scientist, and Former GDG Cloud Lead. He is currently an intern at QSpiders.");
             showToast("Navigated to About");
           }
         },
@@ -1119,6 +1119,13 @@ function boot() {
 
     initNavigatorRecognition();
 
+    function getTimeGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 12) return "Good morning";
+      if (hour < 17) return "Good afternoon";
+      return "Good evening";
+    }
+
     navBtn.addEventListener('click', () => {
       if (isVoiceNavigatorEnabled) {
         isVoiceNavigatorEnabled = false;
@@ -1126,6 +1133,11 @@ function boot() {
       } else {
         isVoiceNavigatorEnabled = true;
         navRecognition.start();
+        
+        // Time-based oral greeting on activation
+        const greeting = `${getTimeGreeting()}! Voice assistant active. How can I help you today?`;
+        speakNavigator(greeting);
+        showToast(greeting);
       }
     });
 

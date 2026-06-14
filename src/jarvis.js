@@ -12,7 +12,7 @@ let currentVisitorLocation = null;
 
 // Sushant's detailed portfolio knowledge base (short and direct)
 const KNOWLEDGE_BASE = {
-  about: "Sushant Shrimal is an AI Engineer and Data Scientist, and Former GDG on Campus Cloud Lead (completed tenure). He is currently a Python Full Stack Developer & Data Analytics Intern at QSpiders.",
+  about: "Sushant Shrimal is an AI Engineer and aspiring Data Scientist, and Former GDG on Campus Cloud Lead (completed tenure). He is currently a Python Full Stack Developer & Data Analytics Intern at QSpiders.",
   education: "Sushant is pursuing his B.Tech in Electronics & Telecommunication Engineering at NK Orchid College, Solapur (2022 - 2026) with a CGPA of 7.34.",
   cgpa: "Sushant has a CGPA of 7.34 out of 10 in his B.Tech program.",
   contact: "Reach Sushant via email at sushantshrimal08@gmail.com, LinkedIn (linkedin.com/in/sushant-shrimal-017128251), or GitHub (github.com/sushant2701).",
@@ -302,11 +302,17 @@ function speakVoice(text) {
  * Get customized MARK27 greeting text
  */
 function getGreetingText() {
+  const hour = new Date().getHours();
+  let greeting = "Hello";
+  if (hour < 12) greeting = "Good morning";
+  else if (hour < 17) greeting = "Good afternoon";
+  else greeting = "Good evening";
+
   let locationStr = "";
   if (currentVisitorLocation && currentVisitorLocation.city) {
     locationStr = ` from ${currentVisitorLocation.city}, ${currentVisitorLocation.country_name || currentVisitorLocation.country}`;
   }
-  return `Hello${locationStr}! I am MARK27, Sushant's virtual assistant. Ask me anything, or type to see predicted search questions.`;
+  return `${greeting}${locationStr}! I am MARK27, Sushant's virtual assistant. Ask me anything, or type to see predicted search questions.`;
 }
 
 function hideAnnouncement() {
