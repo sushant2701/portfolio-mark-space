@@ -23,10 +23,6 @@ function initBackgroundMusic() {
   let currentSourceIndex = 0;
   let music = null;
   let hasStarted = false;
-  
-  const volumeSlider = document.getElementById('nav-music-volume-slider');
-  const volumeLabel = document.getElementById('nav-music-volume-label');
-  const toggleBtn = document.getElementById('nav-music-toggle-btn');
 
   const tryPlaySource = () => {
     if (currentSourceIndex >= sources.length) {
@@ -37,15 +33,10 @@ function initBackgroundMusic() {
     const src = sources[currentSourceIndex];
     music = new Audio(src);
     music.loop = true;
-    
-    const currentSliderVol = volumeSlider ? (parseFloat(volumeSlider.value) / 100) : 0.02;
-    music.volume = currentSliderVol;
+    music.volume = 0.02; // Very silent, non-intrusive fixed low volume
     
     music.play().then(() => {
-      console.log(`Background ambient music started playing from: ${src} at volume ${music.volume}`);
-      if (toggleBtn) {
-        toggleBtn.textContent = music.volume === 0 ? '🔇' : (music.volume < 0.3 ? '🎵' : '🔊');
-      }
+      console.log(`Background ambient music started playing from: ${src} at fixed volume ${music.volume}`);
     }).catch(err => {
       console.warn(`Failed to play music source: ${src}, trying next...`, err);
       currentSourceIndex++;
@@ -63,42 +54,25 @@ function initBackgroundMusic() {
       document.removeEventListener(evt, startMusic);
     });
   };
-
-  if (volumeSlider) {
-    volumeSlider.addEventListener('input', (e) => {
-      const vol = parseFloat(e.target.value) / 100;
-      if (music) {
-        music.volume = vol;
-      }
-      if (volumeLabel) {
-        volumeLabel.textContent = `${e.target.value}%`;
-      }
-      if (toggleBtn) {
-        toggleBtn.textContent = vol === 0 ? '🔇' : (vol < 0.3 ? '🎵' : '🔊');
-      }
-    });
-  }
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      if (!hasStarted) {
-        startMusic();
-        return;
-      }
-      if (music) {
-        if (music.paused) {
-          music.play().then(() => {
-            const vol = music.volume;
-            toggleBtn.textContent = vol === 0 ? '🔇' : (vol < 0.3 ? '🎵' : '🔊');
-          }).catch(err => console.warn(err));
-        } else {
-          music.pause();
-          toggleBtn.textContent = '🔇';
-        }
-      }
-    });
-  }
   
+  // Expose global hooks to stop/start the background music when speaking
+  window.notifySpeechStart = () => {
+    if (music && !music.paused) {
+      music.pause();
+      music.wasPlayingBeforeSpeech = true;
+      console.log("Speech started: paused background music.");
+    }
+  };
+
+  window.notifySpeechEnd = () => {
+    if (music && music.wasPlayingBeforeSpeech) {
+      music.wasPlayingBeforeSpeech = false;
+      music.play().then(() => {
+        console.log("Speech ended: resumed background music.");
+      }).catch(err => console.warn("Failed to resume background music:", err));
+    }
+  };
+
   ['click', 'touchstart', 'keydown'].forEach(evt => {
     document.addEventListener(evt, startMusic, { once: true, passive: true });
   });
@@ -341,12 +315,18 @@ function boot() {
           console.warn("Failed to stop recognition on speech start:", e);
         }
       }
+      if (typeof window.notifySpeechStart === 'function') {
+        window.notifySpeechStart();
+      }
     };
 
     const onSpeechEnd = () => {
       if (speechTimeoutId) clearTimeout(speechTimeoutId);
       if (!isAssistantSpeaking) return; // Already cleaned up
       isAssistantSpeaking = false;
+      if (typeof window.notifySpeechEnd === 'function') {
+        window.notifySpeechEnd();
+      }
       if (isVoiceNavigatorEnabled) {
         updateOverlayStatus('listening');
         setTimeout(() => {
@@ -376,6 +356,7 @@ function boot() {
     const voices = window.speechSynthesis.getVoices();
     const voice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural')));
     if (voice) utterance.voice = voice;
+    utterance.volume = typeof window.speechVolume === 'number' ? window.speechVolume : 0.8;
     window.speechSynthesis.speak(utterance);
   }
 
@@ -1007,6 +988,22 @@ function boot() {
           window.speechSynthesis.cancel();
         }
       });
+    }
+
+    // Wire up Voice Speaker Volume Slider
+    const voiceSlider = document.getElementById('nav-voice-volume-slider');
+    const voiceLabel = document.getElementById('nav-voice-volume-label');
+    if (voiceSlider) {
+      voiceSlider.addEventListener('input', (e) => {
+        const vol = parseFloat(e.target.value) / 100;
+        window.speechVolume = vol;
+        if (voiceLabel) {
+          voiceLabel.textContent = `${e.target.value}%`;
+        }
+      });
+      window.speechVolume = parseFloat(voiceSlider.value) / 100;
+    } else {
+      window.speechVolume = 0.8;
     }
 
     const navHelpBtn = document.getElementById('nav-navigator-help-btn');

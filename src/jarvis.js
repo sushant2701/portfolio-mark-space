@@ -269,10 +269,25 @@ function speakVoice(text) {
 
   if (selectedVoice) utterance.voice = selectedVoice;
 
-  // Speak with natural speech speed (rate = 1.0)
+  // Speak with natural speech speed (rate = 1.0) and dynamically set volume
   utterance.pitch = 0.98; 
   utterance.rate = 1.0;  
-  utterance.volume = 1.0;
+  utterance.volume = typeof window.speechVolume === 'number' ? window.speechVolume : 0.8;
+
+  utterance.onstart = () => {
+    if (typeof window.notifySpeechStart === 'function') {
+      window.notifySpeechStart();
+    }
+  };
+
+  const endSpeech = () => {
+    if (typeof window.notifySpeechEnd === 'function') {
+      window.notifySpeechEnd();
+    }
+  };
+
+  utterance.onend = endSpeech;
+  utterance.onerror = endSpeech;
 
   window.speechSynthesis.speak(utterance);
 }
