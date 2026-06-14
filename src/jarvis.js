@@ -198,6 +198,9 @@ function injectJarvisDOM() {
         <button class="jarvis-action-btn mic-btn" id="jarvis-mic" title="Voice Input Mode">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v11a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
         </button>
+        <button class="jarvis-action-btn" id="jarvis-voice-refresh" title="Refresh Voice Recognition" style="margin-left: 4px; background: rgba(122, 0, 255, 0.08); color: var(--accent); border: 1px solid rgba(122, 0, 255, 0.2); display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 12px; cursor: pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        </button>
       </div>
     </div>
   `;
@@ -430,6 +433,51 @@ function bindJarvisEvents() {
       recognition.start();
     }
   });
+
+  // Chatbot voice engine refresh
+  const voiceRefreshBtn = document.getElementById('jarvis-voice-refresh');
+  if (voiceRefreshBtn) {
+    voiceRefreshBtn.addEventListener('click', () => {
+      if (recognition) {
+        try {
+          recognition.abort();
+        } catch (e) {}
+      }
+      setupSpeechRecognition();
+
+      const statusEl = document.getElementById('jarvis-status');
+      if (statusEl) {
+        const originalText = statusEl.textContent;
+        const originalColor = statusEl.style.color;
+
+        statusEl.textContent = "ENGINE REBOOTING...";
+        statusEl.style.color = "#00d4ff";
+        setTimeout(() => {
+          statusEl.textContent = originalText;
+          statusEl.style.color = originalColor;
+        }, 1200);
+      }
+
+      // Pluck audio feedback
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          gain.gain.setValueAtTime(0, ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.12);
+        }
+      } catch (err) {}
+    });
+  }
 }
 
 function submitTextQuery() {

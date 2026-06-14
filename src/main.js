@@ -392,13 +392,19 @@ function boot() {
   }
 
   if (SpeechRecognition && navBtn) {
-    navRecognition = new SpeechRecognition();
-    navRecognition.continuous = true;
-    navRecognition.lang = 'en-US';
-    navRecognition.interimResults = true;
+    const initNavigatorRecognition = () => {
+      if (navRecognition) {
+        try {
+          navRecognition.abort();
+        } catch (e) {}
+      }
+      navRecognition = new SpeechRecognition();
+      navRecognition.continuous = true;
+      navRecognition.lang = 'en-US';
+      navRecognition.interimResults = true;
 
-    navRecognition.onstart = () => {
-      isNavigating = true;
+      navRecognition.onstart = () => {
+        isNavigating = true;
       navBtn.classList.add('active');
       if (navStatus) navStatus.textContent = "ON";
       updateOverlayStatus('listening');
@@ -998,6 +1004,10 @@ function boot() {
       }
     };
 
+    };
+
+    initNavigatorRecognition();
+
     navBtn.addEventListener('click', () => {
       if (isVoiceNavigatorEnabled) {
         isVoiceNavigatorEnabled = false;
@@ -1017,6 +1027,30 @@ function boot() {
         navSpeakerBtn.style.opacity = isVoiceNavigatorSpeakerEnabled ? '1' : '0.5';
         if (!isVoiceNavigatorSpeakerEnabled) {
           window.speechSynthesis.cancel();
+        }
+      });
+    }
+
+    const navRefreshBtn = document.getElementById('nav-navigator-refresh-btn');
+    if (navRefreshBtn) {
+      navRefreshBtn.addEventListener('click', () => {
+        playPingSound();
+        showToast("Voice Assistant engine refreshed.");
+        
+        const wasEnabled = isVoiceNavigatorEnabled;
+        isVoiceNavigatorEnabled = false;
+        
+        initNavigatorRecognition();
+        
+        if (wasEnabled) {
+          setTimeout(() => {
+            isVoiceNavigatorEnabled = true;
+            try {
+              navRecognition.start();
+            } catch (err) {
+              console.warn("Failed to start voice navigator after refresh:", err);
+            }
+          }, 200);
         }
       });
     }

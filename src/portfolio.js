@@ -89,6 +89,9 @@ function renderNavbar() {
           </button>
           <button class="nav-navigator-speaker-btn" id="nav-navigator-speaker-btn" title="Mute/Unmute Voice Assistant Speaker Feedback" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">🔇</button>
           <button class="nav-navigator-help-btn" id="nav-navigator-help-btn" title="Show Voice Command Guide" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">❓</button>
+          <button class="nav-navigator-refresh-btn" id="nav-navigator-refresh-btn" title="Refresh Voice Assistant Recognition" style="padding: 0; width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; pointer-events: none;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          </button>
           <div class="nav-voice-instr" id="nav-voice-instr">
             <div style="font-weight: 700; margin-bottom: 4px; color: var(--accent);">🎙️ Alexa "Mark" Voice Guide</div>
             <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 6px;">Say <b>"Mark"</b> or <b>"Hey Mark"</b> followed by:</div>
