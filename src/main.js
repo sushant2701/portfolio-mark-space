@@ -13,20 +13,41 @@ import { initJarvis, getJarvisVoiceResponse } from './jarvis.js';
 
 // Background Ambient Music Manager
 function initBackgroundMusic() {
-  const music = new Audio('/audio/ambient.mp3');
-  music.loop = true;
-  music.volume = 0.02; // Very silent, non-intrusive low volume
+  const sources = [
+    '/audio/ambient.mp3',
+    '/audio/ambient.mp4',
+    '/audio/music.mp3',
+    '/audio/music.mp4'
+  ];
   
+  let currentSourceIndex = 0;
+  let music = null;
   let hasStarted = false;
+  
+  const tryPlaySource = () => {
+    if (currentSourceIndex >= sources.length) {
+      console.warn("No background music sources loaded successfully.");
+      return;
+    }
+    
+    const src = sources[currentSourceIndex];
+    music = new Audio(src);
+    music.loop = true;
+    music.volume = 0.02; // Very silent, non-intrusive low volume
+    
+    music.play().then(() => {
+      console.log(`Background ambient music started playing from: ${src}`);
+    }).catch(err => {
+      console.warn(`Failed to play music source: ${src}, trying next...`, err);
+      currentSourceIndex++;
+      tryPlaySource();
+    });
+  };
+
   const startMusic = () => {
     if (hasStarted) return;
     hasStarted = true;
-    music.play().then(() => {
-      console.log("Background ambient music started playing at low volume.");
-    }).catch(err => {
-      console.warn("Background ambient music autoplay prevented or file missing:", err);
-      hasStarted = false; // allow retry
-    });
+    tryPlaySource();
     
     // Clean up events
     ['click', 'touchstart', 'keydown'].forEach(evt => {
