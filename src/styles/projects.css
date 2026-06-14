@@ -236,13 +236,21 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .projects-tabs-container {
-    justify-content: flex-start;
-    padding-bottom: var(--space-xs);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+    overflow-x: visible !important;
   }
   .projects-tabs {
-    border-radius: var(--radius-lg);
+    flex-direction: column !important;
+    width: 100% !important;
+    border-radius: var(--radius-lg) !important;
+    padding: var(--space-xs) !important;
+    gap: var(--space-xs) !important;
+  }
+  .project-tab-btn {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 12px var(--space-md) !important;
+    font-size: var(--text-small) !important;
   }
 
   .projects-header {

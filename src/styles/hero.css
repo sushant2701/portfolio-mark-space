@@ -708,74 +708,32 @@
 }
 
 @media (max-width: 768px) {
-  /* Mobile Menu Styles */
-  .navbar.mobile-open .nav-links {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: var(--nav-height);
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-bottom: 1px solid rgba(123, 0, 255, 0.15);
-    padding: var(--space-lg) var(--space-xl);
-    gap: var(--space-lg);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-    z-index: 999;
-    animation: slideDownMenu 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Hide navbar completely on mobile */
+  .navbar {
+    display: none !important;
   }
 
-  @keyframes slideDownMenu {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .nav-links {
-    display: none;
-  }
-  .nav-toggle {
-    display: flex;
-  }
-  
-  /* Compact Navbar Actions */
-  .nav-actions {
-    gap: var(--space-2xs) !important;
-  }
-  
-  /* Hide Voice Command Text on mobile */
-  .nav-navigator-btn .nav-btn-text {
-    display: none;
-  }
-  .nav-navigator-btn {
-    padding: 8px 10px !important;
-    margin-right: 4px !important;
-    border-radius: var(--radius-full) !important;
-  }
-  
-  /* Resize contact CTA button */
-  .nav-cta {
-    padding: 6px 12px !important;
-    font-size: 11px !important;
-  }
-  
   /* Compact and display all floating cards around the portrait */
+  .hero-portrait-container {
+    width: 300px !important;
+    height: 300px !important;
+  }
+
   .float-card {
-    padding: 6px 10px !important;
-    font-size: 10px !important;
-    border-radius: var(--radius-sm) !important;
-    box-shadow: 0 4px 15px rgba(30, 17, 53, 0.05) !important;
-    max-width: 145px !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 6px 20px rgba(30, 17, 53, 0.08) !important;
+    max-width: 165px !important;
     white-space: nowrap !important;
   }
   
+  .float-card.float-key-project,
+  .float-card.float-credential,
+  .float-card.float-testimonial {
+    white-space: normal !important;
+  }
+
   .float-card > div:first-child {
     margin-bottom: 0 !important;
   }
@@ -785,23 +743,23 @@
   }
   
   .float-dot {
-    width: 6px !important;
-    height: 6px !important;
+    width: 8px !important;
+    height: 8px !important;
   }
 
   .float-avatar {
-    width: 24px !important;
-    height: 24px !important;
-    font-size: 8px !important;
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 9px !important;
   }
 
   .float-card .float-avatar svg {
-    width: 12px !important;
-    height: 12px !important;
+    width: 13px !important;
+    height: 13px !important;
   }
 
   .float-card .float-name {
-    font-size: 9px !important;
+    font-size: 10px !important;
     line-height: 1.1 !important;
   }
 
@@ -813,7 +771,7 @@
   /* Positions */
   .float-available {
     display: flex !important;
-    top: -25px !important;
+    top: -30px !important;
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
@@ -821,8 +779,8 @@
 
   .float-location {
     display: flex !important;
-    top: 20px !important;
-    right: -25px !important;
+    top: 15px !important;
+    right: -35px !important;
     left: auto !important;
     bottom: auto !important;
     transform: none !important;
@@ -830,8 +788,8 @@
 
   .float-linkedin {
     display: flex !important;
-    top: 80px !important;
-    left: -25px !important;
+    top: 85px !important;
+    left: -35px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -839,8 +797,8 @@
 
   .float-github {
     display: flex !important;
-    top: 140px !important;
-    left: -25px !important;
+    top: 155px !important;
+    left: -35px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -850,8 +808,8 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    top: 90px !important;
-    right: -25px !important;
+    top: 95px !important;
+    right: -35px !important;
     bottom: auto !important;
     left: auto !important;
     transform: none !important;
@@ -861,7 +819,7 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    bottom: -15px !important;
+    bottom: -20px !important;
     left: -15px !important;
     top: auto !important;
     right: auto !important;
@@ -872,16 +830,16 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    bottom: -15px !important;
+    bottom: -20px !important;
     right: -15px !important;
     top: auto !important;
     left: auto !important;
     transform: none !important;
   }
   
-  /* Hero typography */
+  /* Hero typography and padding */
   .hero {
-    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-top: var(--space-2xl) !important;
     padding-bottom: var(--space-2xl);
   }
   .hero-heading {
