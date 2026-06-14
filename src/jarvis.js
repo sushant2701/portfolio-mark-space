@@ -97,10 +97,12 @@ function correctSpelling(text) {
     'skils': 'skills', 'skil': 'skills', 'sills': 'skills', 'sklls': 'skills',
     'projcts': 'projects', 'pjct': 'projects', 'projets': 'projects', 'projec': 'projects',
     'educaton': 'education', 'educatn': 'education', 'eduation': 'education',
-    'contect': 'contact', 'contac': 'contact', 'githb': 'github', 'gitb': 'github',
+    'contect': 'contact', 'contac': 'contact', 'conatnt': 'contact', 'conatct': 'contact', 'contat': 'contact',
+    'githb': 'github', 'gitb': 'github',
     'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
     'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin',
-    'certificats': 'certifications', 'certif': 'certifications'
+    'certificats': 'certifications', 'certif': 'certifications',
+    'sushamnt': 'sushant'
   };
 
   return clean.split(/\s+/).map(w => corrections[w] || w).join(' ');

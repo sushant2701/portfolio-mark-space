@@ -477,10 +477,12 @@ function boot() {
         'skils': 'skills', 'skil': 'skills', 'sills': 'skills', 'sklls': 'skills',
         'projcts': 'projects', 'pjct': 'projects', 'projets': 'projects', 'projec': 'projects',
         'educaton': 'education', 'educatn': 'education', 'eduation': 'education',
-        'contect': 'contact', 'contac': 'contact', 'githb': 'github', 'gitb': 'github',
+        'contect': 'contact', 'contac': 'contact', 'conatnt': 'contact', 'conatct': 'contact', 'contat': 'contact',
+        'githb': 'github', 'gitb': 'github',
         'guthub': 'github', 'gut': 'github', 'limked': 'linkedin', 'limkedin': 'linkedin',
         'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
-        'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin', 'linked': 'linkedin'
+        'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin', 'linked': 'linkedin',
+        'sushamnt': 'sushant'
       };
 
       clean.split(/\s+/).forEach(w => {
@@ -720,11 +722,14 @@ function boot() {
           keywords: ['contact', 'email', 'reach', 'hire', 'send mail', 'send email', 'message', 'connect', 'mail', 'write email', 'email sushant'],
           phrases: ['how to contact sushant', 'send an email to sushant', 'connect with sushant email', 'reach out message hire', 'send mail options'],
           action: () => {
-            speakNavigator("Opening email compose window.");
-            showToast("Opening email compose...");
-            if (typeof window.triggerContactRedirect === 'function') {
+            const contactBtn = document.getElementById('nav-contact-btn');
+            if (contactBtn) {
+              contactBtn.click();
+            } else if (typeof window.triggerContactRedirect === 'function') {
               window.triggerContactRedirect();
             }
+            speakNavigator("Opening email compose window.");
+            showToast("Opening email compose...");
           }
         },
         {
