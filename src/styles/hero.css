@@ -766,14 +766,22 @@
     font-size: 11px !important;
   }
   
-  /* Floating cards framing the portrait */
+  /* Compact and display all floating cards around the portrait */
   .float-card {
-    padding: 4px 8px !important;
-    font-size: 9px !important;
+    padding: 6px 10px !important;
+    font-size: 10px !important;
     border-radius: var(--radius-sm) !important;
     box-shadow: 0 4px 15px rgba(30, 17, 53, 0.05) !important;
-    max-width: 140px !important;
+    max-width: 145px !important;
     white-space: nowrap !important;
+  }
+  
+  .float-card > div:first-child {
+    margin-bottom: 0 !important;
+  }
+
+  .float-quote {
+    display: none !important;
   }
   
   .float-dot {
@@ -782,50 +790,92 @@
   }
 
   .float-avatar {
-    width: 20px !important;
-    height: 20px !important;
+    width: 24px !important;
+    height: 24px !important;
     font-size: 8px !important;
   }
 
   .float-card .float-avatar svg {
-    width: 10px !important;
-    height: 10px !important;
+    width: 12px !important;
+    height: 12px !important;
   }
 
-  /* Force hide all extra floating cards */
-  .float-credential,
-  .float-testimonial,
-  .float-key-project,
-  .float-location {
-    display: none !important;
+  .float-card .float-name {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .float-card .float-role {
+    font-size: 8px !important;
+    line-height: 1 !important;
   }
   
-  /* Position Available status badge on top center */
+  /* Positions */
   .float-available {
     display: flex !important;
-    top: -10px !important;
+    top: -25px !important;
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
   }
 
-  /* Position LinkedIn on bottom left */
+  .float-location {
+    display: flex !important;
+    top: 20px !important;
+    right: -25px !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+
   .float-linkedin {
     display: flex !important;
-    bottom: 5% !important;
+    top: 80px !important;
+    left: -25px !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  .float-github {
+    display: flex !important;
+    top: 140px !important;
+    left: -25px !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  .float-key-project {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    top: 90px !important;
+    right: -25px !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  .float-credential {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    bottom: -15px !important;
     left: -15px !important;
     top: auto !important;
     right: auto !important;
     transform: none !important;
   }
 
-  /* Position GitHub on bottom right */
-  .float-github {
+  .float-testimonial {
     display: flex !important;
-    bottom: 5% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    bottom: -15px !important;
     right: -15px !important;
-    left: auto !important;
     top: auto !important;
+    left: auto !important;
     transform: none !important;
   }
   

@@ -306,3 +306,10 @@ input, textarea, select {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ── Mobile Spacing Reduction ── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) 0 !important;
+  }
+}

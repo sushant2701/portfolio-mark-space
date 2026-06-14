@@ -107,7 +107,7 @@ function renderNavbar() {
             </ul>
             <div style="font-size: 9px; margin-top: 6px; color: var(--text-muted); font-style: italic;">* Plays double-beep confirmation tone on activation. Turn on speaker (🔊) for voice guide narration.</div>
           </div>
-          <a href="#" id="nav-contact-btn"
+          <a href="mailto:sushantshrimal08@gmail.com?subject=Portfolio%20Connection%20Request&body=Hello%20Sushant%2C%0A%0AI%20saw%20your%20portfolio%20and%20wanted%20to%20reach%20out.%0A%0AMy%20Details%3A%0AName%3A%20%0AContact%20Email%2FPhone%3A%20%0ACompany%2FAffiliation%3A%20%0AMessage%3A%20" id="nav-contact-btn"
              class="nav-cta">
             Contact Me!
           </a>
@@ -152,7 +152,7 @@ function renderHero() {
               </div>
               <div class="rainbow-ring"></div>
             </div>
-            <a href="#" id="hero-available-btn" class="float-card float-available">
+            <a href="mailto:sushantshrimal08@gmail.com?subject=Project%20Collaboration%20Proposal%20%E2%80%94%20Sushant%20Shrimal&body=Hello%20Sushant%2C%0A%0AI%20saw%20that%20you%20are%20available%20for%20projects%20on%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20potential%20collaboration%20%2F%20contract%20role.%0A%0AProject%20%2F%20Opportunity%20Details%3A%0A-%20Project%20Title%20%2F%20Scope%3A%20%0A-%20Organization%20%2F%20Client%3A%20%0A-%20Estimated%20Duration%20%2F%20Timeline%3A%20%0A-%20Key%20Skills%20Needed%3A%20%0A-%20Compensation%20%2F%20Budget%20(Optional)%3A%20%0A%0ALooking%20forward%20to%20discussing%20further%21%0A%0ABest%20regards%2C%0A" id="hero-available-btn" class="float-card float-available">
               <span class="float-dot"></span>
               Available for projects
             </a>
@@ -482,7 +482,7 @@ function renderProjects(state) {
         
         <div class="projects-tabs-container" data-animate data-delay="1">
           <div class="projects-tabs">
-            <button class="project-tab-btn active" data-target="projects-ai-machine-learning">AI &amp; ML</button>
+            <button class="project-tab-btn" data-target="projects-ai-machine-learning">AI &amp; ML</button>
             <button class="project-tab-btn" data-target="projects-data-analytics-bi">Data Analytics &amp; BI</button>
             <button class="project-tab-btn" data-target="projects-web-development-security">Web Dev &amp; Security</button>
             <button class="project-tab-btn" data-target="projects-iot-embedded-systems">IoT &amp; Systems</button>
@@ -526,7 +526,7 @@ function renderFooter() {
                  rel="noopener noreferrer" class="footer-link">GitHub</a>
               <a href="https://www.linkedin.com/in/sushant-shrimal-017128251/"
                  target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
-              <a href="#" id="footer-contact-btn" class="footer-link">Email</a>
+              <a href="mailto:sushantshrimal08@gmail.com?subject=Portfolio%20Connection%20Request&body=Hello%20Sushant%2C%0A%0AI%20saw%20your%20portfolio%20and%20wanted%20to%20reach%20out.%0A%0AMy%20Details%3A%0AName%3A%20%0AContact%20Email%2FPhone%3A%20%0ACompany%2FAffiliation%3A%20%0AMessage%3A%20" id="footer-contact-btn" class="footer-link">Email</a>
             </div>
           </div>
         </div>

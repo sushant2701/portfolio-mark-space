@@ -258,7 +258,7 @@ function boot() {
   const navbarEl = document.getElementById('navbar');
   if (navToggle && navbarEl) {
     const newNavToggle = navToggle.cloneNode(true);
-    navToggle.parentNode.replaceChild(newNavToggle, newNavToggle);
+    navToggle.parentNode.replaceChild(newNavToggle, navToggle);
     
     newNavToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -287,17 +287,24 @@ function boot() {
   const tabButtons = document.querySelectorAll('.project-tab-btn');
   const domainSections = document.querySelectorAll('.project-domain-section');
 
-  const switchTab = (targetId) => {
+  const switchTab = (targetId, forceShow = false) => {
+    let alreadyActive = false;
+
     tabButtons.forEach(btn => {
       if (btn.getAttribute('data-target') === targetId) {
-        btn.classList.add('active');
+        if (btn.classList.contains('active') && !forceShow) {
+          alreadyActive = true;
+          btn.classList.remove('active');
+        } else {
+          btn.classList.add('active');
+        }
       } else {
         btn.classList.remove('active');
       }
     });
 
     domainSections.forEach(section => {
-      if (section.id === targetId) {
+      if (section.id === targetId && !alreadyActive) {
         section.classList.remove('hidden-domain');
         section.style.display = 'block';
       } else {
@@ -308,12 +315,11 @@ function boot() {
   };
 
   if (tabButtons.length > 0) {
-    const activeBtn = document.querySelector('.project-tab-btn.active');
-    if (activeBtn) {
-      switchTab(activeBtn.getAttribute('data-target'));
-    } else {
-      switchTab('projects-ai-machine-learning');
-    }
+    // Hide all sections initially (no tab active)
+    domainSections.forEach(section => {
+      section.classList.add('hidden-domain');
+      section.style.display = 'none';
+    });
 
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -333,7 +339,7 @@ function boot() {
         if (tabBtn) {
           e.preventDefault();
           e.stopPropagation();
-          switchTab(targetId);
+          switchTab(targetId, true); // Force show when clicked from navbar dropdown
           const projectsSection = document.getElementById('projects');
           if (projectsSection) {
             projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1373,35 +1379,7 @@ function boot() {
     if (navBtn) navBtn.style.display = "none";
   }
 
-  // Bind Navbar and Footer Contact redirections to compose redirect helper
-  const navContact = document.getElementById('nav-contact-btn');
-  if (navContact) {
-    navContact.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (typeof window.triggerContactRedirect === 'function') {
-        window.triggerContactRedirect();
-      }
-    });
-  }
-  const footerContact = document.getElementById('footer-contact-btn');
-  if (footerContact) {
-    footerContact.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (typeof window.triggerContactRedirect === 'function') {
-        window.triggerContactRedirect();
-      }
-    });
-  }
-
-  const availableBtn = document.getElementById('hero-available-btn');
-  if (availableBtn) {
-    availableBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (typeof window.triggerContactRedirect === 'function') {
-        window.triggerContactRedirect('project');
-      }
-    });
-  }
+  // REDUNDANT JS MAIL REDIRECTS REMOVED. HTML natively handles standard mailto links.
 }
 
 function showToast(message) {
