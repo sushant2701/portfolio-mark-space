@@ -85,7 +85,7 @@ function renderNavbar() {
             <span style="display:inline-flex; align-items:center; width:13px; height:13px; margin-right:4px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v11a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
             </span>
-            Voice Command: <span id="nav-navigator-status">OFF</span>
+            <span class="nav-btn-text">Voice Command: <span id="nav-navigator-status">OFF</span></span>
           </button>
           <button class="nav-navigator-speaker-btn" id="nav-navigator-speaker-btn" title="Mute/Unmute Voice Assistant Speaker Feedback" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">🔇</button>
           <button class="nav-navigator-help-btn" id="nav-navigator-help-btn" title="Show Voice Command Guide" style="padding: 0 8px; height: 32px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s ease;">❓</button>
@@ -475,10 +475,20 @@ function renderProjects(state) {
             <p class="section-subtitle">Structured by domains spanning AI/ML engineering, data intelligence, and core development.</p>
           </div>
           <a href="https://github.com/sushant2701" target="_blank"
-             rel="noopener noreferrer" class="btn btn-outline">
+             rel="noopener noreferrer" class="btn btn-outline" id="projects-view-all-btn">
             View All on GitHub ${icons.arrow}
           </a>
         </div>
+        
+        <div class="projects-tabs-container" data-animate data-delay="1">
+          <div class="projects-tabs">
+            <button class="project-tab-btn active" data-target="projects-ai-machine-learning">AI &amp; ML</button>
+            <button class="project-tab-btn" data-target="projects-data-analytics-bi">Data Analytics &amp; BI</button>
+            <button class="project-tab-btn" data-target="projects-web-development-security">Web Dev &amp; Security</button>
+            <button class="project-tab-btn" data-target="projects-iot-embedded-systems">IoT &amp; Systems</button>
+          </div>
+        </div>
+
         <div class="projects-sections-container">
           ${sectionsHtml}
         </div>

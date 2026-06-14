@@ -708,14 +708,140 @@
 }
 
 @media (max-width: 768px) {
+  /* Mobile Menu Styles */
+  .navbar.mobile-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-bottom: 1px solid rgba(123, 0, 255, 0.15);
+    padding: var(--space-lg) var(--space-xl);
+    gap: var(--space-lg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    z-index: 999;
+    animation: slideDownMenu 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideDownMenu {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .nav-links {
     display: none;
   }
   .nav-toggle {
     display: flex;
   }
+  
+  /* Compact Navbar Actions */
+  .nav-actions {
+    gap: var(--space-2xs) !important;
+  }
+  
+  /* Hide Voice Command Text on mobile */
+  .nav-navigator-btn .nav-btn-text {
+    display: none;
+  }
+  .nav-navigator-btn {
+    padding: 8px 10px !important;
+    margin-right: 4px !important;
+    border-radius: var(--radius-full) !important;
+  }
+  
+  /* Resize contact CTA button */
+  .nav-cta {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+  }
+  
+  /* Floating cards framing the portrait */
+  .float-card {
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: 0 4px 15px rgba(30, 17, 53, 0.05) !important;
+    max-width: 140px !important;
+    white-space: nowrap !important;
+  }
+  
+  .float-dot {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  .float-avatar {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 8px !important;
+  }
+
+  .float-card .float-avatar svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  /* Force hide all extra floating cards */
+  .float-credential,
+  .float-testimonial,
+  .float-key-project,
+  .float-location {
+    display: none !important;
+  }
+  
+  /* Position Available status badge on top center */
+  .float-available {
+    display: flex !important;
+    top: -10px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  /* Position LinkedIn on bottom left */
+  .float-linkedin {
+    display: flex !important;
+    bottom: 5% !important;
+    left: -15px !important;
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  /* Position GitHub on bottom right */
+  .float-github {
+    display: flex !important;
+    bottom: 5% !important;
+    right: -15px !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+  }
+  
+  /* Hero typography */
   .hero {
-    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: var(--space-2xl);
+  }
+  .hero-heading {
+    font-size: 2.2rem !important;
+  }
+  .hero-subtitle-typing {
+    font-size: 1.4rem !important;
+  }
+  .hero-description {
+    font-size: var(--text-small) !important;
   }
   .hero-cta-group {
     flex-direction: column;
@@ -725,9 +851,18 @@
     width: 100%;
     justify-content: center;
   }
-  .float-available,
-  .float-location {
-    display: none;
+}
+
+@media (max-width: 480px) {
+  /* On extremely narrow screens, hide help and refresh buttons in navbar to fit logo and CTA */
+  #nav-navigator-help-btn,
+  #nav-navigator-refresh-btn,
+  #nav-navigator-speaker-btn {
+    display: none !important;
+  }
+  .nav-logo-text {
+    font-size: 14px !important;
+    letter-spacing: 0.5px !important;
   }
 }
 

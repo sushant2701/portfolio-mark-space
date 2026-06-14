@@ -253,6 +253,96 @@ function boot() {
   // Skills interactive tooltips
   initSkillTooltips();
 
+  // Mobile Hamburger Toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const navbarEl = document.getElementById('navbar');
+  if (navToggle && navbarEl) {
+    const newNavToggle = navToggle.cloneNode(true);
+    navToggle.parentNode.replaceChild(newNavToggle, newNavToggle);
+    
+    newNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navbarEl.classList.toggle('mobile-open');
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-link, .nav-dropdown-item').forEach(link => {
+      link.addEventListener('click', () => {
+        navbarEl.classList.remove('mobile-open');
+      });
+    });
+
+    // Close menu when clicking outside
+    const closeMobileMenu = (e) => {
+      if (!e.target.closest('#navbar')) {
+        navbarEl.classList.remove('mobile-open');
+      }
+    };
+    document.removeEventListener('click', window.closeMobileMenuHandler);
+    window.closeMobileMenuHandler = closeMobileMenu;
+    document.addEventListener('click', closeMobileMenu);
+  }
+
+  // Projects domain switcher tabs
+  const tabButtons = document.querySelectorAll('.project-tab-btn');
+  const domainSections = document.querySelectorAll('.project-domain-section');
+
+  const switchTab = (targetId) => {
+    tabButtons.forEach(btn => {
+      if (btn.getAttribute('data-target') === targetId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    domainSections.forEach(section => {
+      if (section.id === targetId) {
+        section.classList.remove('hidden-domain');
+        section.style.display = 'block';
+      } else {
+        section.classList.add('hidden-domain');
+        section.style.display = 'none';
+      }
+    });
+  };
+
+  if (tabButtons.length > 0) {
+    const activeBtn = document.querySelector('.project-tab-btn.active');
+    if (activeBtn) {
+      switchTab(activeBtn.getAttribute('data-target'));
+    } else {
+      switchTab('projects-ai-machine-learning');
+    }
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        switchTab(targetId);
+      });
+    });
+  }
+
+  // Handle navbar dropdown clicks to switch domain tabs
+  document.querySelectorAll('.nav-dropdown-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      const href = item.getAttribute('href');
+      if (href && href.startsWith('#projects-')) {
+        const targetId = href.substring(1);
+        const tabBtn = document.querySelector(`.project-tab-btn[data-target="${targetId}"]`);
+        if (tabBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          switchTab(targetId);
+          const projectsSection = document.getElementById('projects');
+          if (projectsSection) {
+            projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+    });
+  });
+
   // Control Space trigger → opens drawer
   const trigger = document.getElementById('control-trigger');
   if (trigger) {

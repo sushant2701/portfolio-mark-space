@@ -134,8 +134,11 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .footer-top {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+  .footer-top > div:first-child {
+    grid-column: span 2;
   }
   .footer-bottom {
     flex-direction: column;

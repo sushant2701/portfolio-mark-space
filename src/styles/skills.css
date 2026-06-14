@@ -124,11 +124,13 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .bento-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .bento-card:nth-child(1),
   .bento-card:nth-child(2),
-  .bento-card:nth-child(3) {
-    grid-column: span 1;
+  .bento-card:nth-child(3),
+  .bento-card:nth-child(4),
+  .bento-card:nth-child(5) {
+    grid-column: span 1 !important;
   }
 }
