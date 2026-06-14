@@ -157,7 +157,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Global contact redirection helper (Desktop: compose in Gmail; Mobile: launch native Mail app)
-window.triggerContactRedirect = function(type = 'default') {
+window.triggerContactRedirect = function(type = 'default', isVoiceTrigger = false) {
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
   const recipient = "sushantshrimal08@gmail.com";
   
@@ -177,14 +177,18 @@ window.triggerContactRedirect = function(type = 'default') {
   } else {
     // Desktop Gmail compose tab using active Google profile composing
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
-    let win = null;
-    try {
-      win = window.open(gmailUrl, '_blank');
-    } catch (e) {
-      console.warn("Popup blocked or failed:", e);
-    }
-    if (!win || win.closed || typeof win.closed === 'undefined') {
+    if (isVoiceTrigger) {
       window.location.href = gmailUrl;
+    } else {
+      let win = null;
+      try {
+        win = window.open(gmailUrl, '_blank');
+      } catch (e) {
+        console.warn("Popup blocked or failed:", e);
+      }
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = gmailUrl;
+      }
     }
   }
 };
@@ -552,7 +556,12 @@ function boot() {
           }
         }
       } else {
-        const knownKeywords = ['go to', 'show', 'open', 'view', 'explain', 'click', 'tell', 'introduce', 'who is', 'what', 'grahak', 'otp', 'disease', 'churn', 'gps', 'sla', 'sales', 'experience', 'education', 'skills', 'projects'];
+        const knownKeywords = [
+          'go to', 'show', 'open', 'view', 'explain', 'click', 'tell', 'introduce', 'who is', 'what', 
+          'grahak', 'otp', 'disease', 'churn', 'gps', 'sla', 'sales', 'experience', 'education', 'skills', 'projects',
+          'github', 'git', 'linkedin', 'contact', 'email', 'mail', 'connect', 'controlspace', 'control space',
+          'chatbot', 'chat', 'mark27', 'jarvis', 'help', 'guide'
+        ];
         const hasKeyword = knownKeywords.some(kw => clean.includes(kw));
         if (!hasKeyword && !wasAwaiting) {
           console.log("Ignoring ambient conversation:", transcript);
@@ -744,11 +753,8 @@ function boot() {
           keywords: ['contact', 'email', 'reach', 'hire', 'send mail', 'send email', 'message', 'connect', 'mail', 'write email', 'email sushant'],
           phrases: ['how to contact sushant', 'send an email to sushant', 'connect with sushant email', 'reach out message hire', 'send mail options'],
           action: () => {
-            const contactBtn = document.getElementById('nav-contact-btn');
-            if (contactBtn) {
-              contactBtn.click();
-            } else if (typeof window.triggerContactRedirect === 'function') {
-              window.triggerContactRedirect();
+            if (typeof window.triggerContactRedirect === 'function') {
+              window.triggerContactRedirect('default', true);
             }
             speakNavigator("Opening email compose window.");
             showToast("Opening email compose...");

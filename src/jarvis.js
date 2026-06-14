@@ -837,7 +837,71 @@ function processQuery(query) {
     return;
   }
 
-  // 2. Query voice response resolver
+  // 2. Explicit navigation/link intents from chatbot
+  if (clean.includes('linkedin')) {
+    const url = 'https://www.linkedin.com/in/sushant-shrimal-017128251/';
+    addSystemMessage("Opening Sushant's LinkedIn profile.");
+    setTimeout(() => {
+      let win = window.open(url, '_blank');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = url;
+      }
+    }, 1000);
+    return;
+  }
+  if (clean.includes('github') || clean.includes('repository') || clean.includes('repo')) {
+    const url = (clean.includes('repository') || clean.includes('repo') || clean.includes('this project') || clean.includes('source code'))
+      ? 'https://github.com/sushant2701/Portfolio.git' 
+      : 'https://github.com/sushant2701';
+    addSystemMessage(url.endsWith('.git')
+      ? "Opening the source code repository for this website."
+      : "Opening Sushant's GitHub profile.");
+    setTimeout(() => {
+      let win = window.open(url, '_blank');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = url;
+      }
+    }, 1000);
+    return;
+  }
+  if (clean.includes('controlspace') || clean.includes('control space') || clean.includes('admin')) {
+    const trigger = document.getElementById('control-trigger');
+    if (trigger) {
+      trigger.click();
+      addSystemMessage("Opening Control Space management console.");
+    }
+    return;
+  }
+  if (clean.includes('skills')) {
+    const el = document.getElementById('skills');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      addSystemMessage("Scrolling to the Technical Skills matrix.");
+    }
+    return;
+  }
+  if (clean.includes('projects') || clean.includes('project')) {
+    // Check if a specific project was asked
+    const isSpecificProject = ['grahak', 'otp', 'disease', 'churn', 'gps', 'sla', 'sales', 'dispenser', 'shoes', 'portfolio'].some(p => clean.includes(p));
+    if (!isSpecificProject) {
+      const el = document.getElementById('projects');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        addSystemMessage("Scrolling to the Featured Projects section.");
+      }
+      return;
+    }
+  }
+  if (clean.includes('education')) {
+    const el = document.getElementById('education');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      addSystemMessage("Scrolling to the Education & Background section.");
+    }
+    return;
+  }
+
+  // 3. Query voice response resolver
   const result = getJarvisVoiceResponse(query);
   if (result) {
     if (result.key === 'contact') {
@@ -876,6 +940,10 @@ function renderConnectionPrompt() {
       <div class="jarvis-form-group">
         <textarea id="${formId}-msg" placeholder="Your Message..." class="jarvis-form-input" rows="2"></textarea>
       </div>
+      <button class="jarvis-form-submit-btn" id="${formId}-submit"
+         style="display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #00d4ff, var(--accent, #7a00ff)); color: white; border: none; padding: 9px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: opacity 0.2s ease;">
+        Transmit Information
+      </button>
       <button class="jarvis-form-submit-btn" id="${formId}-direct-email"
          style="display: block; width: 100%; text-align: center; text-decoration: none; background: rgba(122, 0, 255, 0.08); color: var(--accent); border: 1px solid rgba(122, 0, 255, 0.2); transition: all 0.2s ease; cursor: pointer; margin-top: 8px;">
         Open Mail Application
