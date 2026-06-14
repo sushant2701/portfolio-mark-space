@@ -20,7 +20,7 @@ function initBackgroundMusic() {
     '/audio/music.mp4'
   ];
   
-  let currentSourceIndex = 0;
+  let currentSourceIndex = typeof window.musicTrackIndex === 'number' ? window.musicTrackIndex : 0;
   let music = null;
   let hasStarted = false;
 
@@ -33,10 +33,10 @@ function initBackgroundMusic() {
     const src = sources[currentSourceIndex];
     music = new Audio(src);
     music.loop = true;
-    music.volume = 0.2; // Fixed volume at 20 percent
+    music.volume = typeof window.musicVolume === 'number' ? window.musicVolume : 0.2;
     
     music.play().then(() => {
-      console.log(`Background ambient music started playing from: ${src} at fixed volume ${music.volume}`);
+      console.log(`Background ambient music started playing from: ${src} at volume ${music.volume}`);
     }).catch(err => {
       console.warn(`Failed to play music source: ${src}, trying next...`, err);
       currentSourceIndex++;
@@ -70,6 +70,37 @@ function initBackgroundMusic() {
       music.play().then(() => {
         console.log("Speech ended: resumed background music.");
       }).catch(err => console.warn("Failed to resume background music:", err));
+    }
+  };
+
+  // Expose global hooks to adjust volume and tracks from Control Space on the fly
+  window.updateBgMusicVolume = (vol) => {
+    if (music) {
+      music.volume = vol;
+      console.log("Updated background music volume to:", vol);
+    }
+  };
+
+  window.changeBgMusicTrack = (index) => {
+    currentSourceIndex = index;
+    if (music) {
+      const wasPlaying = !music.paused;
+      music.pause();
+      
+      const src = sources[currentSourceIndex];
+      music = new Audio(src);
+      music.loop = true;
+      music.volume = typeof window.musicVolume === 'number' ? window.musicVolume : 0.2;
+      
+      if (wasPlaying || hasStarted) {
+        music.play().then(() => {
+          console.log(`Switched background music to source: ${src}`);
+        }).catch(err => {
+          console.warn(`Failed to play switched music source: ${src}, trying fallback...`, err);
+          currentSourceIndex++;
+          tryPlaySource();
+        });
+      }
     }
   };
 
@@ -990,8 +1021,10 @@ function boot() {
       });
     }
 
-    // Initialize global voice volume statically at 80% fixed
-    window.speechVolume = 0.8;
+    // Hydrate audio and assistant settings from localStorage (or set default fallbacks)
+    window.speechVolume = parseFloat(localStorage.getItem('cs_speech_volume') || '0.8');
+    window.musicVolume = parseFloat(localStorage.getItem('cs_music_volume') || '0.2');
+    window.musicTrackIndex = parseInt(localStorage.getItem('cs_music_track_index') || '0', 10);
 
     const navHelpBtn = document.getElementById('nav-navigator-help-btn');
     const navInstr = document.getElementById('nav-voice-instr');

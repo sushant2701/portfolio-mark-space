@@ -537,6 +537,35 @@ function renderDrawer() {
             ${plusIcon} Add Milestone
           </button>
         </div>
+
+        <!-- ── Audio & Voice Controls ── -->
+        <div class="drawer-section" style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: var(--space-md); margin-top: var(--space-lg);">
+          <h3 class="drawer-section-title">Audio &amp; Voice Controls</h3>
+          
+          <div class="form-group">
+            <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>Assistant Voice Volume</span>
+              <span id="cs-voice-volume-label" style="font-weight:700; color:var(--accent);">80%</span>
+            </label>
+            <input type="range" id="cs-voice-volume-slider" min="0" max="100" value="80" class="form-input" style="height:6px; cursor:pointer; accent-color:var(--accent); padding:0; background:rgba(255,255,255,0.05);" />
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-md);">
+            <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>Background Music Volume</span>
+              <span id="cs-music-volume-label" style="font-weight:700; color:var(--accent);">20%</span>
+            </label>
+            <input type="range" id="cs-music-volume-slider" min="0" max="100" value="20" class="form-input" style="height:6px; cursor:pointer; accent-color:var(--accent); padding:0; background:rgba(255,255,255,0.05);" />
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-md);">
+            <label class="form-label">Background Music Track</label>
+            <select class="form-input" id="cs-music-track-select" style="cursor:pointer;">
+              <option value="0">Ambient Track (ambient.mp3 / ambient.mp4)</option>
+              <option value="2">Music Track (music.mp3 / music.mp4)</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <div class="drawer-footer">
@@ -650,6 +679,61 @@ function bindDrawerEvents() {
       refreshDrawerContent();
     }
   });
+
+  // ── Audio & Assistant Controls ──
+  const voiceSlider = document.getElementById('cs-voice-volume-slider');
+  const voiceLabel = document.getElementById('cs-voice-volume-label');
+  const musicSlider = document.getElementById('cs-music-volume-slider');
+  const musicLabel = document.getElementById('cs-music-volume-label');
+  const trackSelect = document.getElementById('cs-music-track-select');
+
+  // Sync initial values from global state
+  if (voiceSlider) {
+    voiceSlider.value = Math.round((window.speechVolume || 0.8) * 100);
+    if (voiceLabel) voiceLabel.textContent = `${voiceSlider.value}%`;
+  }
+  if (musicSlider) {
+    musicSlider.value = Math.round((window.musicVolume || 0.2) * 100);
+    if (musicLabel) musicLabel.textContent = `${musicSlider.value}%`;
+  }
+  if (trackSelect) {
+    const defaultIdx = typeof window.musicTrackIndex === 'number' ? window.musicTrackIndex : 0;
+    // Normalize to exact option value: if 0/1 use 0, if 2/3 use 2
+    trackSelect.value = defaultIdx >= 2 ? '2' : '0';
+  }
+
+  // Bind inputs
+  if (voiceSlider) {
+    voiceSlider.addEventListener('input', (e) => {
+      const vol = parseFloat(e.target.value) / 100;
+      window.speechVolume = vol;
+      if (voiceLabel) voiceLabel.textContent = `${e.target.value}%`;
+      localStorage.setItem('cs_speech_volume', vol.toString());
+    });
+  }
+
+  if (musicSlider) {
+    musicSlider.addEventListener('input', (e) => {
+      const vol = parseFloat(e.target.value) / 100;
+      window.musicVolume = vol;
+      if (window.updateBgMusicVolume) {
+        window.updateBgMusicVolume(vol);
+      }
+      if (musicLabel) musicLabel.textContent = `${e.target.value}%`;
+      localStorage.setItem('cs_music_volume', vol.toString());
+    });
+  }
+
+  if (trackSelect) {
+    trackSelect.addEventListener('change', (e) => {
+      const index = parseInt(e.target.value, 10);
+      window.musicTrackIndex = index;
+      if (window.changeBgMusicTrack) {
+        window.changeBgMusicTrack(index);
+      }
+      localStorage.setItem('cs_music_track_index', index.toString());
+    });
+  }
 
   // ── Publish ──
   document.getElementById('btn-publish')?.addEventListener('click', () => {
