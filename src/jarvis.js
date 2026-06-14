@@ -361,12 +361,7 @@ function bindJarvisEvents() {
     const dynamicSuggestions = [
       ...PREDICTION_QUESTIONS,
       ...allSkills.map(s => `Tell me about ${s} skill`),
-      ...projectTitles.map(t => `Show project ${t}`),
-      "Open GitHub repository of this project",
-      "Open LinkedIn profile",
-      "Scroll to skills section",
-      "Scroll to projects section",
-      "Open Control Space"
+      ...projectTitles.map(t => `Show project ${t}`)
     ];
 
     const matches = dynamicSuggestions.filter(q => q.toLowerCase().includes(text));
@@ -843,69 +838,7 @@ function processQuery(query) {
     return;
   }
 
-  // 2. Explicit navigation/link intents from chatbot
-  if (clean.includes('linkedin')) {
-    const url = 'https://www.linkedin.com/in/sushant-shrimal-017128251/';
-    addSystemMessage("Opening Sushant's LinkedIn profile.");
-    setTimeout(() => {
-      let win = window.open(url, '_blank');
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        window.location.href = url;
-      }
-    }, 1000);
-    return;
-  }
-  if (clean.includes('github') || clean.includes('repository') || clean.includes('repo')) {
-    const url = (clean.includes('repository') || clean.includes('repo') || clean.includes('this project') || clean.includes('source code'))
-      ? 'https://github.com/sushant2701/Portfolio.git' 
-      : 'https://github.com/sushant2701';
-    addSystemMessage(url.endsWith('.git')
-      ? "Opening the source code repository for this website."
-      : "Opening Sushant's GitHub profile.");
-    setTimeout(() => {
-      let win = window.open(url, '_blank');
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        window.location.href = url;
-      }
-    }, 1000);
-    return;
-  }
-  if (clean.includes('controlspace') || clean.includes('control space') || clean.includes('admin')) {
-    const trigger = document.getElementById('control-trigger');
-    if (trigger) {
-      trigger.click();
-      addSystemMessage("Opening Control Space management console.");
-    }
-    return;
-  }
-  if (clean.includes('skills')) {
-    const el = document.getElementById('skills');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      addSystemMessage("Scrolling to the Technical Skills matrix.");
-    }
-    return;
-  }
-  if (clean.includes('projects') || clean.includes('project')) {
-    // Check if a specific project was asked
-    const isSpecificProject = ['grahak', 'otp', 'disease', 'churn', 'gps', 'sla', 'sales', 'dispenser', 'shoes', 'portfolio'].some(p => clean.includes(p));
-    if (!isSpecificProject) {
-      const el = document.getElementById('projects');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        addSystemMessage("Scrolling to the Featured Projects section.");
-      }
-      return;
-    }
-  }
-  if (clean.includes('education')) {
-    const el = document.getElementById('education');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      addSystemMessage("Scrolling to the Education & Background section.");
-    }
-    return;
-  }
+
 
   // 3. Query voice response resolver
   const result = getJarvisVoiceResponse(query);
