@@ -82,6 +82,7 @@ function correctSpelling(text) {
   const multiWordCorrections = {
     'git hub': 'github',
     'got hub': 'github',
+    'it hub': 'github',
     'linked in': 'linkedin',
     'link in': 'linkedin',
     'control space': 'controlspace',
@@ -98,7 +99,7 @@ function correctSpelling(text) {
     'projcts': 'projects', 'pjct': 'projects', 'projets': 'projects', 'projec': 'projects',
     'educaton': 'education', 'educatn': 'education', 'eduation': 'education',
     'contect': 'contact', 'contac': 'contact', 'conatnt': 'contact', 'conatct': 'contact', 'contat': 'contact',
-    'githb': 'github', 'gitb': 'github',
+    'githb': 'github', 'gitb': 'github', 'ithub': 'github',
     'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
     'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin',
     'certificats': 'certifications', 'certif': 'certifications',

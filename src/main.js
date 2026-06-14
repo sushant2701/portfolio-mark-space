@@ -177,7 +177,15 @@ window.triggerContactRedirect = function(type = 'default') {
   } else {
     // Desktop Gmail compose tab using active Google profile composing
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
-    window.open(gmailUrl, '_blank');
+    let win = null;
+    try {
+      win = window.open(gmailUrl, '_blank');
+    } catch (e) {
+      console.warn("Popup blocked or failed:", e);
+    }
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = gmailUrl;
+    }
   }
 };
 
@@ -472,6 +480,7 @@ function boot() {
         'got hub': 'github',
         'gut hub': 'github',
         'get hub': 'github',
+        'it hub': 'github',
         'linked in': 'linkedin',
         'link in': 'linkedin',
         'limked in': 'linkedin',
@@ -491,7 +500,7 @@ function boot() {
         'projcts': 'projects', 'pjct': 'projects', 'projets': 'projects', 'projec': 'projects',
         'educaton': 'education', 'educatn': 'education', 'eduation': 'education',
         'contect': 'contact', 'contac': 'contact', 'conatnt': 'contact', 'conatct': 'contact', 'contat': 'contact',
-        'githb': 'github', 'gitb': 'github',
+        'githb': 'github', 'gitb': 'github', 'ithub': 'github',
         'guthub': 'github', 'gut': 'github', 'limked': 'linkedin', 'limkedin': 'linkedin',
         'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
         'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin', 'linked': 'linkedin',
@@ -755,14 +764,7 @@ function boot() {
             const url = 'https://github.com/sushant2701/Portfolio.git';
             speakNavigator("Opening repository of this portfolio website.");
             showToast("Opening GitHub Repository for this portfolio...");
-            try {
-              const win = window.open(url, '_blank');
-              if (!win || win.closed || typeof win.closed === 'undefined') {
-                window.location.href = url;
-              }
-            } catch (e) {
-              window.location.href = url;
-            }
+            window.location.href = url;
           }
         },
         {
@@ -775,14 +777,7 @@ function boot() {
             const url = 'https://github.com/sushant2701';
             speakNavigator("Opening Sushant's GitHub profile.");
             showToast("Opening Sushant's GitHub profile...");
-            try {
-              const win = window.open(url, '_blank');
-              if (!win || win.closed || typeof win.closed === 'undefined') {
-                window.location.href = url;
-              }
-            } catch (e) {
-              window.location.href = url;
-            }
+            window.location.href = url;
           }
         },
         {
@@ -795,14 +790,7 @@ function boot() {
             const url = 'https://www.linkedin.com/in/sushant-shrimal-017128251/';
             speakNavigator("Opening Sushant's LinkedIn profile.");
             showToast("Opening LinkedIn profile...");
-            try {
-              const win = window.open(url, '_blank');
-              if (!win || win.closed || typeof win.closed === 'undefined') {
-                window.location.href = url;
-              }
-            } catch (e) {
-              window.location.href = url;
-            }
+            window.location.href = url;
           }
         },
         {
