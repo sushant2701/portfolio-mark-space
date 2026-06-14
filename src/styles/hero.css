@@ -850,6 +850,18 @@
   transform: translateY(0);
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.voice-status-overlay.active:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: rgba(123, 0, 255, 0.4);
+  box-shadow: 0 12px 32px rgba(123, 0, 255, 0.16);
+}
+
+.voice-status-overlay.active:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .voice-mic-orb {

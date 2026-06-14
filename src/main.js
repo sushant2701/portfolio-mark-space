@@ -258,6 +258,7 @@ function boot() {
   let commandTimeoutId = null;
   let navRecognition = null;
   let isAssistantSpeaking = false;
+  let initNavigatorRecognition = null;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -267,6 +268,7 @@ function boot() {
     overlay = document.createElement('div');
     overlay.id = 'voice-status-overlay';
     overlay.className = 'voice-status-overlay';
+    overlay.title = "Click mic orb to refresh Voice Assistant";
     overlay.innerHTML = `
       <div class="voice-mic-orb">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mic-svg"><path d="M12 1v11a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
@@ -274,6 +276,14 @@ function boot() {
       <div class="voice-status-text" id="voice-status-text">Mark is listening...</div>
     `;
     document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const refreshBtn = document.getElementById('nav-navigator-refresh-btn');
+      if (refreshBtn) {
+        refreshBtn.click();
+      }
+    });
   }
 
   function updateOverlayStatus(status) {
@@ -371,6 +381,9 @@ function boot() {
         updateOverlayStatus('listening');
         setTimeout(() => {
           try {
+            if (typeof initNavigatorRecognition === 'function') {
+              initNavigatorRecognition();
+            }
             navRecognition.start();
           } catch (err) {
             console.warn("Failed to restart voice navigator after speaking:", err);
@@ -401,7 +414,7 @@ function boot() {
   }
 
   if (SpeechRecognition && navBtn) {
-    const initNavigatorRecognition = () => {
+    initNavigatorRecognition = () => {
       if (navRecognition) {
         try {
           navRecognition.abort();
@@ -1083,8 +1096,12 @@ function boot() {
 
     navRecognition.onend = () => {
       if (isVoiceNavigatorEnabled && !isAssistantSpeaking) {
+        updateOverlayStatus('listening');
         setTimeout(() => {
           try {
+            if (typeof initNavigatorRecognition === 'function') {
+              initNavigatorRecognition();
+            }
             navRecognition.start();
           } catch (err) {
             console.warn("Failed to restart voice navigator:", err);
