@@ -157,11 +157,20 @@ if (typeof window !== 'undefined') {
 }
 
 // Global contact redirection helper (Desktop: compose in Gmail; Mobile: launch native Mail app)
-window.triggerContactRedirect = function() {
+window.triggerContactRedirect = function(type = 'default') {
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
   const recipient = "sushantshrimal08@gmail.com";
-  const subject = encodeURIComponent("Portfolio Connection Request");
-  const body = encodeURIComponent("Hello Sushant,\n\nI saw your portfolio and wanted to reach out.\n\nMy Details:\nName: \nContact Email/Phone: \nCompany/Affiliation: \nMessage: ");
+  
+  let subjectText = "Portfolio Connection Request";
+  let bodyText = "Hello Sushant,\n\nI saw your portfolio and wanted to reach out.\n\nMy Details:\nName: \nContact Email/Phone: \nCompany/Affiliation: \nMessage: ";
+  
+  if (type === 'project') {
+    subjectText = "Project Collaboration Proposal — Sushant Shrimal";
+    bodyText = "Hello Sushant,\n\nI saw that you are available for projects on your portfolio and would love to discuss a potential collaboration / contract role.\n\nProject / Opportunity Details:\n- Project Title / Scope: \n- Organization / Client: \n- Estimated Duration / Timeline: \n- Key Skills Needed: \n- Compensation / Budget (Optional): \n\nLooking forward to discussing further!\n\nBest regards,\n";
+  }
+  
+  const subject = encodeURIComponent(subjectText);
+  const body = encodeURIComponent(bodyText);
 
   if (isMobile) {
     window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
@@ -1175,6 +1184,16 @@ function boot() {
       e.preventDefault();
       if (typeof window.triggerContactRedirect === 'function') {
         window.triggerContactRedirect();
+      }
+    });
+  }
+
+  const availableBtn = document.getElementById('hero-available-btn');
+  if (availableBtn) {
+    availableBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (typeof window.triggerContactRedirect === 'function') {
+        window.triggerContactRedirect('project');
       }
     });
   }

@@ -152,7 +152,7 @@ function renderHero() {
               </div>
               <div class="rainbow-ring"></div>
             </div>
-            <a href="#projects" class="float-card float-available">
+            <a href="#" id="hero-available-btn" class="float-card float-available">
               <span class="float-dot"></span>
               Available for projects
             </a>
