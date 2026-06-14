@@ -1119,6 +1119,8 @@ function boot() {
 
     initNavigatorRecognition();
 
+    let hasGreetedNavigator = false;
+
     function getTimeGreeting() {
       const hour = new Date().getHours();
       if (hour < 12) return "Good morning";
@@ -1134,10 +1136,13 @@ function boot() {
         isVoiceNavigatorEnabled = true;
         navRecognition.start();
         
-        // Time-based oral greeting on activation
-        const greeting = `${getTimeGreeting()}! Voice assistant active. How can I help you today?`;
-        speakNavigator(greeting);
-        showToast(greeting);
+        // Time-based oral greeting on FIRST activation only
+        if (!hasGreetedNavigator) {
+          hasGreetedNavigator = true;
+          const greeting = `${getTimeGreeting()}! Voice assistant active. How can I help you today?`;
+          speakNavigator(greeting);
+          showToast(greeting);
+        }
       }
     });
 
