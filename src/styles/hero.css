@@ -859,13 +859,7 @@
   }
 
   .float-key-project {
-    display: flex !important;
-    left: 50% !important;
-    top: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-    margin-left: 50px !important;
-    margin-top: -65px !important;
+    display: none !important;
   }
 
   .float-credential {
