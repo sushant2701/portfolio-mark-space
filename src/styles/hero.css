@@ -748,8 +748,8 @@
 
   /* Compact and display all floating cards around the portrait */
   .hero-portrait-container {
-    width: 290px !important;
-    height: 290px !important;
+    width: 280px !important;
+    height: 280px !important;
     flex-shrink: 0 !important;
   }
 
@@ -773,7 +773,7 @@
     flex-direction: column !important;
     align-items: flex-start !important;
     white-space: normal !important;
-    max-width: 140px !important;
+    max-width: 130px !important;
   }
 
   .float-card > div:first-child {
@@ -864,8 +864,8 @@
     top: 50% !important;
     right: auto !important;
     bottom: auto !important;
-    margin-left: 35px !important;
-    margin-top: -55px !important;
+    margin-left: 50px !important;
+    margin-top: -65px !important;
   }
 
   .float-credential {
@@ -874,8 +874,8 @@
     top: 50% !important;
     right: auto !important;
     bottom: auto !important;
-    margin-left: -150px !important;
-    margin-top: 70px !important;
+    margin-left: -180px !important;
+    margin-top: 95px !important;
   }
 
   .float-testimonial {
@@ -884,8 +884,8 @@
     top: 50% !important;
     right: auto !important;
     bottom: auto !important;
-    margin-left: 10px !important;
-    margin-top: 70px !important;
+    margin-left: 50px !important;
+    margin-top: 95px !important;
   }
   
   /* Hero typography and padding */
