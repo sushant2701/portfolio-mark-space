@@ -369,183 +369,236 @@ function boot() {
         }
       }
 
-      // Specific Project: Grahak
-      if (clean.includes('grahak')) {
-        const targetEl = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Grahak is a WhatsApp integrated customer relationship management and ticketing system with automatic SLA escalations.");
-        showToast("Navigated to Grahak Project");
-        return;
-      }
+      // Let's implement semantic vector scoring
+      const tokens = clean.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim().split(/\s+/).filter(Boolean);
+      const tokenSet = new Set(tokens);
 
-      // Specific Project: OTP Auth
-      if (clean.includes('otp') || clean.includes('one time password')) {
-        const targetEl = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The OTP Authentication System is a secure, lightweight student login verification system built using standard web technologies.");
-        showToast("Navigated to OTP Auth Project");
-        return;
-      }
-
-      // Specific Project: GenAI Assistant
-      if (clean.includes('genai') || clean.includes('csv') || clean.includes('data analysis assistant')) {
-        const targetEl = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The GenAI Data Analysis Assistant enables querying CSV datasets in natural language using OpenAI APIs and Streamlit.");
-        showToast("Navigated to GenAI Assistant");
-        return;
-      }
-
-      // Specific Project: Disease Prediction
-      if (clean.includes('disease') || clean.includes('healthcare prediction') || clean.includes('risk scoring')) {
-        const targetEl = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The Disease Risk Scoring System uses machine learning classification algorithms to predict student health risks.");
-        showToast("Navigated to Disease Prediction Project");
-        return;
-      }
-
-      // Specific Project: Churn Prediction
-      if (clean.includes('churn') || clean.includes('retention') || clean.includes('customer churn')) {
-        const targetEl = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The Customer Churn Prediction dashboard uses machine learning to segment customers and improve retention strategy.");
-        showToast("Navigated to Churn Prediction Project");
-        return;
-      }
-
-      // Specific Project: GPS SOS Band
-      if (clean.includes('gps') || clean.includes('sos') || clean.includes('wearable distress')) {
-        const targetEl = document.querySelector('#projects-iot-embedded-systems') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The GPS enabled SOS Band is an IoT distress wearable utilizing GPS and GSM modules for real-time tracking.");
-        showToast("Navigated to GPS SOS Band Project");
-        return;
-      }
-
-      // Specific Project: SLA Operations Dashboard
-      if (clean.includes('sla') || clean.includes('service level agreement')) {
-        const targetEl = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The SLA Operations Dashboard automates ticket ETL pipelines for compliance and KPI performance tracking.");
-        showToast("Navigated to SLA Dashboard");
-        return;
-      }
-
-      // Specific Project: Sales MIS Dashboard
-      if (clean.includes('sales') || clean.includes('revenue mis')) {
-        const targetEl = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("The Sales Revenue MIS Dashboard provides interactive analytics and automated reporting for sales pipelines.");
-        showToast("Navigated to Sales MIS Dashboard");
-        return;
-      }
-
-      // Education & CGPA Details
-      if (clean.includes('education') || clean.includes('college') || clean.includes('study') || clean.includes('grades') || clean.includes('cgpa') || clean.includes('gpa')) {
-        const targetEl = document.querySelector('#education');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Sushant is pursuing B.Tech in Electronics and Telecommunication Engineering at NK Orchid College, Solapur, with a CGPA of 7.34.");
-        showToast("Navigated to Education");
-        return;
-      }
-
-      // Experience Details
-      if (clean.includes('experience') || clean.includes('work') || clean.includes('internship') || clean.includes('qspiders')) {
-        const targetEl = document.querySelector('#about');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Sushant is a Python Full Stack and Data Analytics Intern at QSpiders, building ETL pipelines and dashboards.");
-        showToast("Navigated to Experience");
-        return;
-      }
-
-      if (clean.includes('what skills') || clean.includes('sushant skills') || clean.includes('what are his skills') || clean.includes('what are sushant skills') || clean.includes('show skills')) {
-        const targetEl = document.querySelector('#skills');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Sushant has advanced skills in Python, SQL, Generative AI engineering, Machine Learning, exploratory data analysis, and Power BI dashboards.");
-        showToast("Navigated to Skills");
-        return;
-      }
-
-      if (clean.includes('what projects') || clean.includes('sushant projects') || clean.includes('tell about projects') || clean.includes('tell me about projects') || clean.includes('show projects')) {
-        const targetEl = document.querySelector('#projects');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Sushant has built several key engineering projects, including a GenAI-Powered Data Analysis Assistant, a Disease Risk Scoring System, a customer churn prediction model, and a GPS-enabled emergency SOS band.");
-        showToast("Navigated to Projects");
-        return;
-      }
-
-      // 1. Spoken introductions & direct queries (about me, projects, skills)
-      if (clean.includes('tell about sushant') || clean.includes('who is sushant') || clean.includes('tell me about sushant') || clean.includes('introduce sushant') || clean.includes('tell about yourself')) {
-        const targetEl = document.querySelector('#about');
-        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        speakNavigator("Sushant Shrimal is an AI Engineer and Data Scientist, and Former GDG Cloud Lead. He is currently an intern at QSpiders.");
-        showToast("Navigated to About");
-        return;
-      }
-
-      let targetSelector = null;
-      let targetName = "";
-      let speakMessage = "";
-
-      // 2. Git/Github checking
-      if (clean.includes('git') || clean.includes('github') || clean.includes('repo')) {
-        if (clean.includes('this project') || clean.includes('this portfolio') || clean.includes('of this') || clean.includes('source code')) {
-          const url = 'https://github.com/sushant2701/Portfolio.git';
-          speakNavigator("Opening repository of this portfolio website.");
-          showToast("Opening GitHub Repository for this portfolio...");
-          try {
-            const win = window.open(url, '_blank');
-            if (!win || win.closed || typeof win.closed === 'undefined') {
+      const voiceIntents = [
+        {
+          key: 'grahak',
+          keywords: ['grahak', 'crm', 'ticketing', 'whatsapp'],
+          phrases: ['grahak project', 'tell me about grahak', 'show grahak project', 'explain grahak', 'grahak crm'],
+          action: () => {
+            const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Grahak is a WhatsApp integrated customer relationship management and ticketing system with automatic SLA escalations.");
+            showToast("Navigated to Grahak Project");
+          }
+        },
+        {
+          key: 'otp',
+          keywords: ['otp', 'auth', 'authentication', 'login', 'student login', 'problem solver'],
+          phrases: ['otp auth system', 'student problem solver project', 'one time password authentication', 'show otp auth'],
+          action: () => {
+            const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The OTP Authentication System is a secure, lightweight student login verification system built using standard web technologies.");
+            showToast("Navigated to OTP Auth Project");
+          }
+        },
+        {
+          key: 'genai',
+          keywords: ['genai', 'csv', 'analysis', 'assistant', 'streamlit', 'natural language query'],
+          phrases: ['genai analysis assistant', 'data analysis assistant', 'query csv in natural language', 'streamlit assistant'],
+          action: () => {
+            const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The GenAI Data Analysis Assistant enables querying CSV datasets in natural language using OpenAI APIs and Streamlit.");
+            showToast("Navigated to GenAI Assistant");
+          }
+        },
+        {
+          key: 'disease',
+          keywords: ['disease', 'healthcare', 'medical', 'risk', 'scoring', 'prediction', 'classifier'],
+          phrases: ['disease prediction project', 'healthcare prediction risk scoring', 'risk scoring system', 'disease classifier'],
+          action: () => {
+            const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The Disease Risk Scoring System uses machine learning classification algorithms to predict student health risks.");
+            showToast("Navigated to Disease Prediction Project");
+          }
+        },
+        {
+          key: 'churn',
+          keywords: ['churn', 'retention', 'segmentation', 'customer churn', 'customer segmentation'],
+          phrases: ['customer churn prediction', 'churn analytics segmentation', 'churn prediction model', 'retention dashboard'],
+          action: () => {
+            const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The Customer Churn Prediction dashboard uses machine learning to segment customers and improve retention strategy.");
+            showToast("Navigated to Churn Prediction Project");
+          }
+        },
+        {
+          key: 'gps',
+          keywords: ['gps', 'sos', 'wearable', 'distress', 'band', 'emergency', 'coordinates', 'tracking'],
+          phrases: ['gps enabled sos band', 'wearable distress band', 'emergency communication coordinates', 'sos tracker'],
+          action: () => {
+            const el = document.querySelector('#projects-iot-embedded-systems') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The GPS enabled SOS Band is an IoT distress wearable utilizing GPS and GSM modules for real-time tracking.");
+            showToast("Navigated to GPS SOS Band Project");
+          }
+        },
+        {
+          key: 'sla',
+          keywords: ['sla', 'service level agreement', 'ticket', 'operations', 'etl'],
+          phrases: ['support sla operations dashboard', 'ticket operations compliance', 'sla tracking dashboard', 'ticket etl pipeline'],
+          action: () => {
+            const el = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The SLA Operations Dashboard automates ticket ETL pipelines for compliance and KPI performance tracking.");
+            showToast("Navigated to SLA Dashboard");
+          }
+        },
+        {
+          key: 'sales',
+          keywords: ['sales', 'revenue', 'mis', 'reporting', 'target', 'targets'],
+          phrases: ['automated sales revenue mis', 'sales pipeline analytics dashboard', 'sales targets performance', 'mis reporting dashboard'],
+          action: () => {
+            const el = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("The Sales Revenue MIS Dashboard provides interactive analytics and automated reporting for sales pipelines.");
+            showToast("Navigated to Sales MIS Dashboard");
+          }
+        },
+        {
+          key: 'education',
+          keywords: ['education', 'college', 'study', 'grades', 'cgpa', 'gpa', 'academic', 'degree', 'qualification', 'engineering', 'nkocet', 'orchid'],
+          phrases: ['education details', 'where did sushant study', 'what is sushants cgpa', 'orchid college solapur', 'academic credentials'],
+          action: () => {
+            const el = document.querySelector('#education');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant is pursuing B.Tech in Electronics and Telecommunication Engineering at NK Orchid College, Solapur, with a CGPA of 7.34.");
+            showToast("Navigated to Education");
+          }
+        },
+        {
+          key: 'experience',
+          keywords: ['experience', 'work', 'job', 'internship', 'qspiders', 'aicte', 'internships', 'working', 'career', 'role'],
+          phrases: ['work experience', 'professional experience', 'where does sushant work', 'qspiders internship details', 'aicte internship details'],
+          action: () => {
+            const el = document.querySelector('#about');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant is a Python Full Stack and Data Analytics Intern at QSpiders, building ETL pipelines and dashboards.");
+            showToast("Navigated to Experience");
+          }
+        },
+        {
+          key: 'skills',
+          keywords: ['skills', 'skill', 'expertise', 'know', 'toolkit', 'programming', 'languages', 'python', 'sql', 'stack', 'technologies', 'tools'],
+          phrases: ['what are sushants skills', 'show technical skills matrix', 'programming languages sushant knows', 'technical expertise toolkits'],
+          action: () => {
+            const el = document.querySelector('#skills');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant has advanced skills in Python, SQL, Generative AI engineering, Machine Learning, exploratory data analysis, and Power BI dashboards.");
+            showToast("Navigated to Skills");
+          }
+        },
+        {
+          key: 'projects',
+          keywords: ['projects', 'project', 'works', 'creations', 'built', 'made', 'developed', 'portfolio list', 'list projects', 'all projects'],
+          phrases: ['what projects has sushant built', 'show all featured projects list', 'tell about projects', 'projects portfolio show', 'creations and implementations'],
+          action: () => {
+            const el = document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant has built several key engineering projects, including a GenAI-Powered Data Analysis Assistant, a Disease Risk Scoring System, a customer churn prediction model, and a GPS-enabled emergency SOS band.");
+            showToast("Navigated to Projects");
+          }
+        },
+        {
+          key: 'about',
+          keywords: ['about', 'who is sushant', 'introduce sushant', 'bio', 'yourself', 'background', 'identity', 'creator', 'person', 'sushant shrimal'],
+          phrases: ['tell about sushant', 'who is sushant shrimal', 'introduce sushant shrimal', 'creator bio details', 'background profile summary'],
+          action: () => {
+            const el = document.querySelector('#about');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant Shrimal is an AI Engineer and Data Scientist, and Former GDG Cloud Lead. He is currently an intern at QSpiders.");
+            showToast("Navigated to About");
+          }
+        },
+        {
+          key: 'contact',
+          keywords: ['contact', 'email', 'reach', 'hire', 'send mail', 'send email', 'message', 'connect', 'mail', 'write email', 'email sushant'],
+          phrases: ['how to contact sushant', 'send an email to sushant', 'connect with sushant email', 'reach out message hire', 'send mail options'],
+          action: () => {
+            speakNavigator("Opening email compose window.");
+            showToast("Opening email compose...");
+            if (typeof window.triggerContactRedirect === 'function') {
+              window.triggerContactRedirect();
+            }
+          }
+        },
+        {
+          key: 'github_portfolio',
+          keywords: ['source code', 'repository', 'repo', 'of this', 'this project', 'this portfolio', 'source code portfolio'],
+          phrases: ['show source code of this website', 'open repository of this project', 'this portfolio repository git', 'where is the code for this'],
+          action: () => {
+            const url = 'https://github.com/sushant2701/Portfolio.git';
+            speakNavigator("Opening repository of this portfolio website.");
+            showToast("Opening GitHub Repository for this portfolio...");
+            try {
+              const win = window.open(url, '_blank');
+              if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = url;
+              }
+            } catch (e) {
               window.location.href = url;
             }
-          } catch (e) {
-            window.location.href = url;
           }
-        } else {
-          const url = 'https://github.com/sushant2701';
-          speakNavigator("Opening Sushant's GitHub profile.");
-          showToast("Opening Sushant's GitHub profile...");
-          try {
-            const win = window.open(url, '_blank');
-            if (!win || win.closed || typeof win.closed === 'undefined') {
+        },
+        {
+          key: 'github_profile',
+          keywords: ['github', 'git', 'repo', 'guthub', 'gut hub'],
+          phrases: ['open sushants github profile', 'show github projects list', 'sushant git repository url', 'github page link'],
+          action: () => {
+            const url = 'https://github.com/sushant2701';
+            speakNavigator("Opening Sushant's GitHub profile.");
+            showToast("Opening Sushant's GitHub profile...");
+            try {
+              const win = window.open(url, '_blank');
+              if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = url;
+              }
+            } catch (e) {
               window.location.href = url;
             }
-          } catch (e) {
-            window.location.href = url;
+          }
+        },
+        {
+          key: 'linkedin',
+          keywords: ['linkedin', 'linked in', 'limked', 'limkedin'],
+          phrases: ['open sushants linkedin profile', 'connect on linkedin url', 'linkedin network page', 'show linkedin info'],
+          action: () => {
+            const url = 'https://www.linkedin.com/in/sushant-shrimal-017128251/';
+            speakNavigator("Opening Sushant's LinkedIn profile.");
+            showToast("Opening LinkedIn profile...");
+            try {
+              const win = window.open(url, '_blank');
+              if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = url;
+              }
+            } catch (e) {
+              window.location.href = url;
+            }
+          }
+        },
+        {
+          key: 'control_space',
+          keywords: ['control space', 'controlspace', 'admin', 'drawer', 'login', 'management'],
+          phrases: ['open control space login drawer', 'admin panel credentials screen', 'admin drawer database credentials', 'open management dashboard'],
+          action: () => {
+            const trigger = document.getElementById('control-trigger');
+            if (trigger) {
+              trigger.click();
+              speakNavigator("Opening Control Space management console.");
+              showToast("Opening Control Space...");
+            }
           }
         }
-        return;
-      }
+      ];
 
-      // 3. LinkedIn checking
-      if (clean.includes('linkedin')) {
-        const url = 'https://www.linkedin.com/in/sushant-shrimal-017128251/';
-        speakNavigator("Opening Sushant's LinkedIn profile.");
-        showToast("Opening LinkedIn profile...");
-        try {
-          const win = window.open(url, '_blank');
-          if (!win || win.closed || typeof win.closed === 'undefined') {
-            window.location.href = url;
-          }
-        } catch (e) {
-          window.location.href = url;
-        }
-        return;
-      }
-
-      // 4. Control Space checking
-      if (clean.includes('control space') || clean.includes('admin') || clean.includes('drawer') || clean.includes('login') || clean.includes('management')) {
-        const trigger = document.getElementById('control-trigger');
-        if (trigger) {
-          trigger.click();
-          speakNavigator("Opening Control Space management console.");
-          showToast("Opening Control Space...");
-        }
-        return;
-      }
-
-      // 5. Skill tooltip trigger checking
+      // 1. Resolve Skill Tooltip directly if query specifically targets a skill details
       const skillsList = [
         'Large Language Models (LLMs)', 'Prompt Engineering', 'RAG', 'OpenAI API', 'Anthropic API',
         'Scikit-Learn', 'TensorFlow', 'Logistic Regression', 'Random Forest', 'Feature Engineering',
@@ -558,12 +611,89 @@ function boot() {
       let matchedSkill = null;
       for (const skill of skillsList) {
         const skillLower = skill.toLowerCase();
-        if (clean.includes(skillLower) || (skillLower.includes('llm') && clean.includes('llm')) || (skillLower.includes('scikit') && clean.includes('scikit'))) {
+        if (clean.includes(skillLower) || 
+            (skillLower.includes('llm') && clean.includes('llm')) || 
+            (skillLower.includes('scikit') && clean.includes('scikit'))) {
           matchedSkill = skill;
           break;
         }
       }
 
+      // Check if this is a direct skill explanation query
+      const isSkillQuery = matchedSkill && (
+        clean.includes('explain') || 
+        clean.includes('what is') || 
+        clean.includes('tell about') || 
+        clean.includes('definition') || 
+        clean.includes('info') || 
+        tokens.length <= 3
+      );
+
+      if (isSkillQuery) {
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+          skillsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setTimeout(() => {
+          const pills = document.querySelectorAll('.skill-pill');
+          let foundPill = null;
+          pills.forEach(pill => {
+            const skillAttr = pill.getAttribute('data-skill') || '';
+            if (skillAttr.toLowerCase() === matchedSkill.toLowerCase() || pill.textContent.trim().toLowerCase() === matchedSkill.toLowerCase()) {
+              foundPill = pill;
+            }
+          });
+          if (foundPill) {
+            foundPill.click();
+            const tooltipContent = SKILL_DEFINITIONS[matchedSkill] || `Sushant's skill in ${matchedSkill}`;
+            speakNavigator(`${matchedSkill}: ${tooltipContent}`);
+            showToast(`Showing details for ${matchedSkill}`);
+          }
+        }, 600);
+        return;
+      }
+
+      // 2. Score General voice intents using Jaccard Similarity and Keyword Density
+      let bestIntent = null;
+      let highestScore = 0;
+
+      voiceIntents.forEach(intent => {
+        let bestPhraseScore = 0;
+        intent.phrases.forEach(phrase => {
+          const phraseTokens = phrase.toLowerCase().split(/\s+/);
+          const phraseSet = new Set(phraseTokens);
+          
+          const intersection = new Set([...tokenSet].filter(t => phraseSet.has(t)));
+          const union = new Set([...tokenSet, ...phraseSet]);
+          
+          const Jaccard = intersection.size / union.size;
+          if (Jaccard > bestPhraseScore) {
+            bestPhraseScore = Jaccard;
+          }
+        });
+
+        let keywordMatches = 0;
+        intent.keywords.forEach(kw => {
+          if (tokenSet.has(kw) || clean.includes(kw)) {
+            keywordMatches++;
+          }
+        });
+        const keywordScore = keywordMatches / intent.keywords.length;
+
+        const finalScore = (bestPhraseScore * 0.7) + (keywordScore * 0.3);
+        if (finalScore > highestScore) {
+          highestScore = finalScore;
+          bestIntent = intent;
+        }
+      });
+
+      // Execute matched semantic intent
+      if (highestScore >= 0.2 && bestIntent) {
+        bestIntent.action();
+        return;
+      }
+
+      // Fallback: If Jaccard did not pass threshold, but we matched a skill, show tooltip
       if (matchedSkill) {
         const skillsSection = document.getElementById('skills');
         if (skillsSection) {
@@ -588,44 +718,8 @@ function boot() {
         return;
       }
 
-      // 6. Section Scrolling & Email Client triggers
-      if (clean.includes('skill')) {
-        targetSelector = '#skills';
-        targetName = 'Skills';
-        speakMessage = "Showing Technical Skills matrix.";
-      } else if (clean.includes('project') || clean.includes('work') || clean.includes('portfolio') || clean.includes('creations')) {
-        targetSelector = '#projects';
-        targetName = 'Projects';
-        speakMessage = "Showing Featured Projects.";
-      } else if (clean.includes('educat') || clean.includes('credential') || clean.includes('college') || clean.includes('study')) {
-        targetSelector = '#education';
-        targetName = 'Education';
-        speakMessage = "Showing Education details.";
-      } else if (clean.includes('contact') || clean.includes('email') || clean.includes('reach') || clean.includes('hire') || clean.includes('send mail') || clean.includes('send email')) {
-        speakNavigator("Opening email compose window.");
-        showToast("Opening email...");
-        if (typeof window.triggerContactRedirect === 'function') {
-          window.triggerContactRedirect();
-        }
-        return;
-      } else if (clean.includes('footer') || clean.includes('connect')) {
-        targetSelector = '#footer';
-        targetName = 'Contact';
-        speakMessage = "Showing Contact section and email connections.";
-      } else if (clean.includes('about') || clean.includes('sushant') || clean.includes('introduce')) {
-        targetSelector = '#about';
-        targetName = 'About';
-        speakMessage = "Showing About section.";
-      }
-
-      if (targetSelector) {
-        const targetEl = document.querySelector(targetSelector);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          speakNavigator(speakMessage);
-          showToast(`Navigated to ${targetName}`);
-        }
-      } else if (hasWakeWord || wasAwaiting) {
+      // Unrecognized commands
+      if (hasWakeWord || wasAwaiting) {
         speakNavigator("Sorry, command not recognized. Try saying 'go to projects' or 'tell about sushant'.");
         showToast("Command unrecognized. Try: 'go to projects' or 'tell about sushant'");
       } else {
