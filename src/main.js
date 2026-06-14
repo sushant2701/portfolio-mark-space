@@ -33,7 +33,7 @@ function initBackgroundMusic() {
     const src = sources[currentSourceIndex];
     music = new Audio(src);
     music.loop = true;
-    music.volume = 0.5; // Fixed volume at 50 percent
+    music.volume = 0.2; // Fixed volume at 20 percent
     
     music.play().then(() => {
       console.log(`Background ambient music started playing from: ${src} at fixed volume ${music.volume}`);
