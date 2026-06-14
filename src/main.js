@@ -1263,42 +1263,103 @@ function initSkillTooltips() {
 async function trackVisitor() {
   let locationData = null;
 
-  try {
-    // 1. Fetch location from ipapi.co
-    const res = await Promise.race([
-      fetch('https://ipapi.co/json/'),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-    ]);
-    if (res.ok) {
-      locationData = await res.json();
-    } else {
-      throw new Error('ipapi failed');
-    }
-  } catch (e) {
-    console.warn("ipapi failed, attempting fallback...", e);
+  const getIpLocation = async () => {
     try {
-      // Fallback to ipwhois
+      // 1. Fetch location from ipapi.co
       const res = await Promise.race([
-        fetch('https://ipwhois.app/json/'),
+        fetch('https://ipapi.co/json/'),
         new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
       ]);
       if (res.ok) {
-        const raw = await res.json();
-        if (raw && raw.success !== false) {
-          locationData = {
-            ip: raw.ip,
-            city: raw.city,
-            region: raw.region,
-            country_name: raw.country,
-            org: raw.org || raw.isp,
-            latitude: raw.latitude,
-            longitude: raw.longitude
-          };
-        }
+        return await res.json();
+      } else {
+        throw new Error('ipapi failed');
       }
-    } catch (err) {
-      console.error("All geolocation APIs failed:", err);
+    } catch (e) {
+      console.warn("ipapi failed, attempting fallback...", e);
+      try {
+        // Fallback to ipwhois
+        const res = await Promise.race([
+          fetch('https://ipwhois.app/json/'),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
+        ]);
+        if (res.ok) {
+          const raw = await res.json();
+          if (raw && raw.success !== false) {
+            return {
+              ip: raw.ip,
+              city: raw.city,
+              region: raw.region,
+              country_name: raw.country,
+              org: raw.org || raw.isp,
+              latitude: raw.latitude,
+              longitude: raw.longitude
+            };
+          }
+        }
+      } catch (err) {
+        console.error("All geolocation APIs failed:", err);
+      }
     }
+    return null;
+  };
+
+  const getGpsLocation = () => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        resolve(null);
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          try {
+            // Reverse geocode using Nominatim OpenStreetMap API
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.address) {
+                const city = data.address.city || data.address.town || data.address.village || data.address.suburb || 'Unknown City';
+                const country = data.address.country || 'Unknown Country';
+                resolve({
+                  city: city,
+                  country_name: country,
+                  latitude: lat,
+                  longitude: lon,
+                  gps: true
+                });
+                return;
+              }
+            }
+          } catch (err) {
+            console.warn("Reverse geocoding failed, falling back to coordinates:", err);
+          }
+          resolve({
+            city: 'GPS Location',
+            latitude: lat,
+            longitude: lon,
+            gps: true
+          });
+        },
+        (error) => {
+          console.warn("GPS Geolocation permission denied or failed:", error);
+          resolve(null);
+        },
+        { timeout: 5000 }
+      );
+    });
+  };
+
+  // Attempt GPS first for high accuracy, fallback to IP location
+  try {
+    locationData = await getGpsLocation();
+  } catch (err) {
+    console.warn("GPS geolocation function threw error:", err);
+  }
+
+  if (!locationData) {
+    locationData = await getIpLocation();
   }
 
   // Initialize J.A.R.V.I.S. with location data

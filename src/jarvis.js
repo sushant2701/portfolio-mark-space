@@ -652,32 +652,32 @@ const intentsConfig = [
   },
   {
     key: 'skills_ai',
-    phrases: ['generative ai skills', 'llm skills', 'prompt engineering expertise', 'rag knowledge', 'openai api experience'],
-    keywords: ['genai', 'generative', 'llm', 'llms', 'prompt', 'rag', 'openai', 'anthropic', 'claude', 'gpt'],
+    phrases: ['generative ai skills', 'llm skills', 'large language models', 'large language model', 'prompt engineering expertise', 'rag knowledge', 'openai api experience', 'anthropic api'],
+    keywords: ['genai', 'generative', 'llm', 'llms', 'prompt', 'rag', 'openai', 'anthropic', 'claude', 'gpt', 'large', 'language', 'models', 'model'],
     response: KNOWLEDGE_BASE.skills_ai
   },
   {
     key: 'skills_ml',
-    phrases: ['machine learning skills', 'scikit learn experience', 'tensorflow projects', 'regression models', 'random forest expertise'],
-    keywords: ['ml', 'machine', 'learning', 'tensorflow', 'scikit', 'regression', 'classification', 'clustering', 'ensemble', 'forest'],
+    phrases: ['machine learning skills', 'scikit learn experience', 'tensorflow projects', 'regression models', 'random forest expertise', 'logistic regression', 'model evaluation', 'predictive modeling', 'feature engineering'],
+    keywords: ['ml', 'machine', 'learning', 'tensorflow', 'scikit', 'regression', 'classification', 'clustering', 'ensemble', 'forest', 'logistic', 'evaluation', 'predictive', 'feature'],
     response: KNOWLEDGE_BASE.skills_ml
   },
   {
     key: 'skills_python',
-    phrases: ['python programming skills', 'sql database skills', 'coding in python', 'python query'],
-    keywords: ['python', 'sql', 'databases', 'programming', 'languages', 'scripting'],
+    phrases: ['python programming skills', 'sql database skills', 'coding in python', 'python query', 'r basics'],
+    keywords: ['python', 'sql', 'databases', 'programming', 'languages', 'scripting', 'r', 'basics'],
     response: KNOWLEDGE_BASE.skills_python
   },
   {
     key: 'skills_data',
-    phrases: ['data analytics skills', 'pandas and numpy', 'data cleaning experience', 'exploratory data analysis', 'ab testing experience'],
-    keywords: ['pandas', 'numpy', 'eda', 'wrangling', 'cleaning', 'testing', 'hypothesis', 'stats', 'statistics', 'statistical'],
+    phrases: ['data analytics skills', 'pandas and numpy', 'data cleaning experience', 'exploratory data analysis', 'ab testing experience', 'data wrangling', 'hypothesis testing', 'statistical analysis'],
+    keywords: ['pandas', 'numpy', 'eda', 'wrangling', 'cleaning', 'testing', 'hypothesis', 'stats', 'statistics', 'statistical', 'analysis'],
     response: KNOWLEDGE_BASE.skills_data
   },
   {
     key: 'skills_viz',
-    phrases: ['power bi visualization', 'streamlit deployment', 'git and github skills', 'google cloud skills'],
-    keywords: ['powerbi', 'bi', 'visualization', 'matplotlib', 'seaborn', 'streamlit', 'git', 'github', 'gcp', 'cloud', 'colab', 'jupyter'],
+    phrases: ['power bi visualization', 'streamlit deployment', 'git and github skills', 'google cloud skills', 'matplotlib and seaborn', 'jupyter notebook', 'google colab'],
+    keywords: ['powerbi', 'bi', 'visualization', 'matplotlib', 'seaborn', 'streamlit', 'git', 'github', 'gcp', 'cloud', 'colab', 'jupyter', 'notebook'],
     response: KNOWLEDGE_BASE.skills_viz
   },
   {
@@ -808,8 +808,16 @@ export function getJarvisVoiceResponse(query) {
     });
 
     let keyMatch = 0;
-    if (clean.includes(intent.key.replace(/_/g, ' '))) {
-      keyMatch = 1.0;
+    const keyString = intent.key.replace(/_/g, ' ');
+    if (clean.includes(keyString)) {
+      if (intent.key === 'about') {
+        // Only trigger direct key match if it refers to Sushant/creator specifically, not general prepositions
+        if (clean === 'about' || clean.includes('about you') || clean.includes('about yourself') || clean.includes('about sushant') || clean.includes('about creator')) {
+          keyMatch = 1.0;
+        }
+      } else {
+        keyMatch = 1.0;
+      }
     }
 
     const finalScore = (directSubstringMatch * 0.4) + (keyMatch * 0.2) + (bestPhraseScore * 0.3) + (keywordScore * 0.1);
