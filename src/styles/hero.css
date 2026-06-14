@@ -726,7 +726,7 @@
   .nav-actions {
     display: flex !important;
     align-items: center !important;
-    gap: var(--space-xs) !important;
+    gap: var(--space-2xs) !important;
   }
   
   /* Hide Voice Command Text on mobile */
@@ -747,72 +747,84 @@
 
   /* Compact and display all floating cards around the portrait */
   .hero-portrait-container {
-    width: 300px !important;
-    height: 300px !important;
+    width: 210px !important;
+    height: 210px !important;
   }
 
   .float-card {
-    padding: 8px 14px !important;
-    font-size: 11.5px !important;
-    border-radius: var(--radius-md) !important;
-    box-shadow: 0 6px 20px rgba(30, 17, 53, 0.08) !important;
-    max-width: 170px !important;
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: 0 4px 15px rgba(30, 17, 53, 0.05) !important;
+    max-width: 130px !important;
     white-space: nowrap !important;
+    z-index: 5 !important;
   }
   
   .float-card.float-key-project,
   .float-card.float-credential,
   .float-card.float-testimonial {
+    flex-direction: column !important;
+    align-items: flex-start !important;
     white-space: normal !important;
+    max-width: 140px !important;
   }
 
   .float-card > div:first-child {
-    margin-bottom: 0 !important;
+    margin-bottom: 3px !important;
   }
 
+  /* Keep quotes visible but scale them down */
   .float-quote {
-    display: none !important;
+    display: block !important;
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+    margin-top: 3px !important;
+    font-style: italic !important;
+    color: var(--text-secondary) !important;
+    white-space: normal !important;
   }
   
   .float-dot {
-    width: 8px !important;
-    height: 8px !important;
+    width: 6px !important;
+    height: 6px !important;
   }
 
   .float-avatar {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 9px !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 8px !important;
   }
 
   .float-card .float-avatar svg {
-    width: 13px !important;
-    height: 13px !important;
+    width: 11px !important;
+    height: 11px !important;
   }
 
   .float-card .float-name {
-    font-size: 10.5px !important;
+    font-size: 9px !important;
     line-height: 1.1 !important;
   }
 
   .float-card .float-role {
-    font-size: 8.5px !important;
+    font-size: 8px !important;
     line-height: 1 !important;
   }
   
-  /* Positions - brought closer to hug the circular portrait */
+  /* Positions - Exact desktop mapping, scaled to fit */
   .float-available {
     display: flex !important;
-    top: -15px !important;
-    left: 50% !important;
+    top: -25px !important;
+    left: -20px !important;
     right: auto !important;
-    transform: translateX(-50%) !important;
+    bottom: auto !important;
+    transform: none !important;
   }
 
   .float-location {
     display: flex !important;
-    top: 15px !important;
-    right: -10px !important;
+    top: -25px !important;
+    right: -20px !important;
     left: auto !important;
     bottom: auto !important;
     transform: none !important;
@@ -820,8 +832,8 @@
 
   .float-linkedin {
     display: flex !important;
-    top: 80px !important;
-    left: -10px !important;
+    top: 45px !important;
+    left: -35px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -829,8 +841,8 @@
 
   .float-github {
     display: flex !important;
-    top: 145px !important;
-    left: -10px !important;
+    top: 110px !important;
+    left: -35px !important;
     bottom: auto !important;
     right: auto !important;
     transform: none !important;
@@ -838,10 +850,8 @@
 
   .float-key-project {
     display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    top: 90px !important;
-    right: -10px !important;
+    top: 45px !important;
+    right: -35px !important;
     bottom: auto !important;
     left: auto !important;
     transform: none !important;
@@ -849,10 +859,8 @@
 
   .float-credential {
     display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    bottom: -10px !important;
-    left: -5px !important;
+    bottom: -40px !important;
+    left: -15px !important;
     top: auto !important;
     right: auto !important;
     transform: none !important;
@@ -860,10 +868,8 @@
 
   .float-testimonial {
     display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    bottom: -10px !important;
-    right: -5px !important;
+    bottom: -40px !important;
+    right: -15px !important;
     top: auto !important;
     left: auto !important;
     transform: none !important;
@@ -894,11 +900,13 @@
 }
 
 @media (max-width: 480px) {
-  /* On extremely narrow screens, hide help and refresh buttons in navbar to fit logo and CTA */
+  /* On extremely narrow screens, hide help and refresh buttons, keep speaker visible next to mic */
   #nav-navigator-help-btn,
-  #nav-navigator-refresh-btn,
-  #nav-navigator-speaker-btn {
+  #nav-navigator-refresh-btn {
     display: none !important;
+  }
+  #nav-navigator-speaker-btn {
+    display: inline-flex !important;
   }
   .nav-logo-text {
     font-size: 14px !important;
