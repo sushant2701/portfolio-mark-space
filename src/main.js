@@ -466,7 +466,7 @@ function boot() {
       // Do not process commands unless we have a final transcript
       if (!finalTranscript.trim()) return;
 
-      const transcript = finalTranscript.toLowerCase().trim();
+      const transcript = finalTranscript.toLowerCase().replace(/'s\b/g, '').trim();
       console.log("Navigator voice command:", transcript);
 
       let clean = transcript;
@@ -508,7 +508,7 @@ function boot() {
         'guthub': 'github', 'gut': 'github', 'limked': 'linkedin', 'limkedin': 'linkedin',
         'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
         'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin', 'linked': 'linkedin',
-        'sushamnt': 'sushant'
+        'sushamnt': 'sushant', 'sushants': 'sushant'
       };
 
       clean.split(/\s+/).forEach(w => {
@@ -948,7 +948,21 @@ function boot() {
         });
         const keywordScore = keywordMatches / intent.keywords.length;
 
-        const finalScore = (bestPhraseScore * 0.7) + (keywordScore * 0.3);
+        let finalScore = (bestPhraseScore * 0.7) + (keywordScore * 0.3);
+
+        // Hijack prevention for 'about' intent
+        if (intent.key === 'about') {
+          const otherIntentKeywords = [
+            'skills', 'skill', 'projects', 'project', 'education', 'college', 'cgpa', 'gpa',
+            'contact', 'email', 'linkedin', 'github', 'experience', 'internship',
+            'certifications', 'awards', 'gdg'
+          ];
+          const hasOtherKeyword = otherIntentKeywords.some(kw => tokenSet.has(kw) || clean.includes(kw));
+          if (hasOtherKeyword) {
+            finalScore = 0;
+          }
+        }
+
         if (finalScore > highestScore) {
           highestScore = finalScore;
           bestIntent = intent;
@@ -1056,8 +1070,6 @@ function boot() {
 
     initNavigatorRecognition();
 
-    let hasGreetedNavigator = false;
-
     function getTimeGreeting() {
       const hour = new Date().getHours();
       if (hour < 12) return "Good morning";
@@ -1073,9 +1085,9 @@ function boot() {
         isVoiceNavigatorEnabled = true;
         navRecognition.start();
         
-        // Time-based oral greeting on FIRST activation only
-        if (!hasGreetedNavigator) {
-          hasGreetedNavigator = true;
+        // Time-based oral greeting on FIRST activation only per session
+        if (!sessionStorage.getItem('voice_navigator_greeted')) {
+          sessionStorage.setItem('voice_navigator_greeted', 'true');
           const greeting = `${getTimeGreeting()}! Voice assistant active. How can I help you today?`;
           speakNavigator(greeting);
           showToast(greeting);
@@ -1360,6 +1372,31 @@ async function trackVisitor() {
 
   if (!locationData) {
     locationData = await getIpLocation();
+  }
+
+  // Developer helper / ISP routing override: if city is Pune or running on localhost, override to Solapur
+  if (locationData) {
+    const isLocal = window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1' ||
+                    window.location.hostname.startsWith('192.168.') ||
+                    window.location.hostname.startsWith('10.') ||
+                    window.location.hostname.startsWith('172.') ||
+                    window.location.hostname === '::1';
+    
+    if (isLocal || (locationData.city && locationData.city.toLowerCase() === 'pune')) {
+      locationData.city = "Solapur";
+      locationData.region = "Maharashtra";
+      locationData.country_name = "India";
+    }
+  } else {
+    // Ultimate fallback if geolocation services are offline
+    locationData = {
+      city: "Solapur",
+      region: "Maharashtra",
+      country_name: "India",
+      latitude: 17.6599,
+      longitude: 75.9064
+    };
   }
 
   // Initialize J.A.R.V.I.S. with location data

@@ -103,7 +103,7 @@ function correctSpelling(text) {
     'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
     'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin',
     'certificats': 'certifications', 'certif': 'certifications',
-    'sushamnt': 'sushant'
+    'sushamnt': 'sushant', 'sushants': 'sushant'
   };
 
   return clean.split(/\s+/).map(w => corrections[w] || w).join(' ');
@@ -592,25 +592,25 @@ const intentsConfig = [
   },
   {
     key: 'education',
-    phrases: ['where did you study', 'your education', 'academic background', 'college details', 'your btech', 'what is your cgpa', 'cgpa score', 'where is your college', 'which college'],
+    phrases: ['where did you study', 'your education', 'academic background', 'college details', 'your btech', 'what is your cgpa', 'cgpa score', 'where is your college', 'which college', 'sushant education', 'about sushant education', 'your education', 'about your education'],
     keywords: ['education', 'college', 'degree', 'qualification', 'btech', 'orchid', 'nkocet', 'university', 'academics', 'study', 'school'],
     response: KNOWLEDGE_BASE.education
   },
   {
     key: 'cgpa',
-    phrases: ['what is your cgpa', 'cgpa score', 'gpa score', 'your cgpa', 'how much cgpa', 'cgpa details'],
+    phrases: ['what is your cgpa', 'cgpa score', 'gpa score', 'your cgpa', 'how much cgpa', 'cgpa details', 'sushant cgpa', 'about sushant cgpa', 'your cgpa', 'about your cgpa'],
     keywords: ['cgpa', 'gpa', 'grades', 'score', 'percentage', 'marks'],
     response: KNOWLEDGE_BASE.cgpa
   },
   {
     key: 'contact',
-    phrases: ['how to contact sushant', 'send an email', 'your email', 'linkedin profile', 'connect with you', 'how to reach you', 'contact details', 'github url', 'social links', 'reach sushant'],
+    phrases: ['how to contact sushant', 'send an email', 'your email', 'linkedin profile', 'connect with you', 'how to reach you', 'contact details', 'github url', 'social links', 'reach sushant', 'sushant contact', 'about sushant contact', 'your contact', 'about your contact'],
     keywords: ['contact', 'email', 'linkedin', 'github', 'phone', 'reach', 'message', 'connect', 'mail', 'hire', 'socials', 'links'],
     response: KNOWLEDGE_BASE.contact
   },
   {
     key: 'experience',
-    phrases: ['your experience', 'work history', 'your internships', 'where did you work', 'professional experience', 'milestones', 'where are you working'],
+    phrases: ['your experience', 'work history', 'your internships', 'where did you work', 'professional experience', 'milestones', 'where are you working', 'sushant experience', 'about sushant experience', 'your experience', 'about your experience'],
     keywords: ['experience', 'work', 'job', 'internship', 'qspiders', 'aicte', 'role', 'milestone', 'career', 'internships', 'working'],
     response: KNOWLEDGE_BASE.experience
   },
@@ -646,7 +646,7 @@ const intentsConfig = [
   },
   {
     key: 'skills',
-    phrases: ['what are your skills', 'show me your skills', 'technical skills', 'skills matrix', 'your expertise', 'what languages', 'programming languages', 'what technologies'],
+    phrases: ['what are your skills', 'show me your skills', 'technical skills', 'skills matrix', 'your expertise', 'what languages', 'programming languages', 'what technologies', 'sushant skills', 'about sushant skills', 'your skills', 'about your skills'],
     keywords: ['skills', 'skill', 'toolkit', 'programming', 'languages', 'python', 'sql', 'ml', 'ai', 'cloud', 'technology', 'expert', 'expertise'],
     response: KNOWLEDGE_BASE.skills
   },
@@ -682,7 +682,7 @@ const intentsConfig = [
   },
   {
     key: 'projects',
-    phrases: ['what projects have you built', 'show me your projects', 'show projects', 'view projects', 'projects lists', 'what did you build', 'your works', 'your projects', 'tell me about your projects'],
+    phrases: ['what projects have you built', 'show me your projects', 'show projects', 'view projects', 'projects lists', 'what did you build', 'your works', 'your projects', 'tell me about your projects', 'sushant projects', 'about sushant projects', 'your projects', 'about your projects'],
     keywords: ['project', 'projects', 'built', 'made', 'develop', 'portfolio', 'list', 'works', 'creations'],
     response: KNOWLEDGE_BASE.projects
   },
@@ -754,8 +754,29 @@ const intentsConfig = [
   }
 ];
 
+function hasWholePhrase(text, phrase) {
+  const cleanText = text.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim();
+  const cleanPhrase = phrase.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim();
+  const textWords = cleanText.split(/\s+/).filter(Boolean);
+  const phraseWords = cleanPhrase.split(/\s+/).filter(Boolean);
+  
+  if (phraseWords.length === 0) return false;
+  
+  for (let i = 0; i <= textWords.length - phraseWords.length; i++) {
+    let match = true;
+    for (let j = 0; j < phraseWords.length; j++) {
+      if (textWords[i + j] !== phraseWords[j]) {
+        match = false;
+        break;
+      }
+    }
+    if (match) return true;
+  }
+  return false;
+}
+
 export function getJarvisVoiceResponse(query) {
-  const rawClean = query.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
+  const rawClean = query.toLowerCase().replace(/'s\b/g, '').replace(/[^\w\s]/g, ' ').trim();
   const clean = correctSpelling(rawClean);
   if (!clean) return null;
 
@@ -802,17 +823,17 @@ export function getJarvisVoiceResponse(query) {
 
     let directSubstringMatch = 0;
     intent.phrases.forEach(phrase => {
-      if (clean.includes(phrase)) {
+      if (hasWholePhrase(clean, phrase)) {
         directSubstringMatch = 1.0;
       }
     });
 
     let keyMatch = 0;
     const keyString = intent.key.replace(/_/g, ' ');
-    if (clean.includes(keyString)) {
+    if (hasWholePhrase(clean, keyString) || (keyString.endsWith('s') && hasWholePhrase(clean, keyString.slice(0, -1)))) {
       if (intent.key === 'about') {
         // Only trigger direct key match if it refers to Sushant/creator specifically, not general prepositions
-        if (clean === 'about' || clean.includes('about you') || clean.includes('about yourself') || clean.includes('about sushant') || clean.includes('about creator')) {
+        if (clean === 'about' || hasWholePhrase(clean, 'about you') || hasWholePhrase(clean, 'about yourself') || hasWholePhrase(clean, 'about sushant') || hasWholePhrase(clean, 'about creator')) {
           keyMatch = 1.0;
         }
       } else {
@@ -820,7 +841,22 @@ export function getJarvisVoiceResponse(query) {
       }
     }
 
-    const finalScore = (directSubstringMatch * 0.4) + (keyMatch * 0.2) + (bestPhraseScore * 0.3) + (keywordScore * 0.1);
+    let finalScore = (directSubstringMatch * 0.4) + (keyMatch * 0.2) + (bestPhraseScore * 0.3) + (keywordScore * 0.1);
+
+    // Hijack prevention for 'about' intent: if clean query contains specific words from other intents, suppress 'about' matches
+    if (intent.key === 'about') {
+      const otherIntentKeywords = [
+        'skills', 'skill', 'projects', 'project', 'education', 'college', 'cgpa', 'gpa',
+        'contact', 'email', 'linkedin', 'github', 'experience', 'internship',
+        'certifications', 'awards', 'gdg'
+      ];
+      const hasOtherKeyword = otherIntentKeywords.some(kw => hasWholePhrase(clean, kw) || clean.includes(kw));
+      if (hasOtherKeyword) {
+        directSubstringMatch = 0;
+        keyMatch = 0;
+        finalScore = (bestPhraseScore * 0.3) + (keywordScore * 0.1);
+      }
+    }
 
     if (finalScore > maxScore) {
       maxScore = finalScore;
@@ -835,7 +871,7 @@ export function getJarvisVoiceResponse(query) {
 }
 
 function processQuery(query) {
-  const rawClean = query.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
+  const rawClean = query.toLowerCase().replace(/'s\b/g, '').replace(/[^\w\s]/g, ' ').trim();
   const clean = correctSpelling(rawClean);
   
   if (!clean) return;
