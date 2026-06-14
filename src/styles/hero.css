@@ -412,6 +412,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .hero-portrait-wrapper {
@@ -747,16 +748,21 @@
 
   /* Compact and display all floating cards around the portrait */
   .hero-portrait-container {
-    width: 210px !important;
-    height: 210px !important;
+    width: 290px !important;
+    height: 290px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .hero-visual {
+    min-height: 410px !important;
   }
 
   .float-card {
-    padding: 5px 8px !important;
-    font-size: 10px !important;
+    padding: 7px 11px !important;
+    font-size: 10.5px !important;
     border-radius: var(--radius-sm) !important;
     box-shadow: 0 4px 15px rgba(30, 17, 53, 0.05) !important;
-    max-width: 130px !important;
+    max-width: 135px !important;
     white-space: nowrap !important;
     z-index: 5 !important;
   }
@@ -777,7 +783,7 @@
   /* Keep quotes visible but scale them down */
   .float-quote {
     display: block !important;
-    font-size: 8px !important;
+    font-size: 8.5px !important;
     line-height: 1.25 !important;
     margin-top: 3px !important;
     font-style: italic !important;
@@ -811,68 +817,75 @@
     line-height: 1 !important;
   }
   
-  /* Positions - Exact desktop mapping, scaled to fit */
+  /* Positions - Exact desktop mapping relative to portrait center using margins */
   .float-available {
     display: flex !important;
-    top: -25px !important;
-    left: -20px !important;
+    left: 50% !important;
+    top: 50% !important;
     right: auto !important;
     bottom: auto !important;
-    transform: none !important;
+    margin-left: -145px !important;
+    margin-top: -160px !important;
   }
 
   .float-location {
     display: flex !important;
-    top: -25px !important;
-    right: -20px !important;
-    left: auto !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
     bottom: auto !important;
-    transform: none !important;
+    margin-left: 10px !important;
+    margin-top: -160px !important;
   }
 
   .float-linkedin {
     display: flex !important;
-    top: 45px !important;
-    left: -35px !important;
-    bottom: auto !important;
+    left: 50% !important;
+    top: 50% !important;
     right: auto !important;
-    transform: none !important;
+    bottom: auto !important;
+    margin-left: -175px !important;
+    margin-top: -70px !important;
   }
 
   .float-github {
     display: flex !important;
-    top: 110px !important;
-    left: -35px !important;
-    bottom: auto !important;
+    left: 50% !important;
+    top: 50% !important;
     right: auto !important;
-    transform: none !important;
+    bottom: auto !important;
+    margin-left: -175px !important;
+    margin-top: -10px !important;
   }
 
   .float-key-project {
     display: flex !important;
-    top: 45px !important;
-    right: -35px !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
     bottom: auto !important;
-    left: auto !important;
-    transform: none !important;
+    margin-left: 35px !important;
+    margin-top: -55px !important;
   }
 
   .float-credential {
     display: flex !important;
-    bottom: -40px !important;
-    left: -15px !important;
-    top: auto !important;
+    left: 50% !important;
+    top: 50% !important;
     right: auto !important;
-    transform: none !important;
+    bottom: auto !important;
+    margin-left: -150px !important;
+    margin-top: 70px !important;
   }
 
   .float-testimonial {
     display: flex !important;
-    bottom: -40px !important;
-    right: -15px !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-left: 10px !important;
+    margin-top: 70px !important;
   }
   
   /* Hero typography and padding */
