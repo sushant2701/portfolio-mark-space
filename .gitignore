@@ -28,6 +28,3 @@ dist-ssr
 .env.*
 !.env.example
 
-# User Audio Assets
-public/audio/*
-!public/audio/.gitkeep

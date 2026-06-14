@@ -107,6 +107,30 @@ function initBackgroundMusic() {
   ['click', 'touchstart', 'keydown'].forEach(evt => {
     document.addEventListener(evt, startMusic, { once: true, passive: true });
   });
+
+  // ── Page Visibility: pause when user leaves tab, resume when they come back ──
+  document.addEventListener('visibilitychange', () => {
+    if (!music || !hasStarted) return;
+
+    if (document.hidden) {
+      // User switched away — pause only if currently playing
+      if (!music.paused) {
+        music.pause();
+        music._pausedByVisibility = true;
+        console.log('Page hidden: paused background music.');
+      }
+    } else {
+      // User returned — resume only if we paused it AND speech isn't playing
+      if (music._pausedByVisibility && !music.wasPlayingBeforeSpeech) {
+        music._pausedByVisibility = false;
+        music.play().then(() => {
+          console.log('Page visible: resumed background music.');
+        }).catch(err => console.warn('Failed to resume music on visibility change:', err));
+      } else {
+        music._pausedByVisibility = false;
+      }
+    }
+  });
 }
 
 // Dynamically Synthesized Ping Sound Pluck
@@ -238,10 +262,17 @@ function boot() {
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const href = link.getAttribute('href');
+      if (href && href.length > 1) {
+        try {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } catch (err) {
+          console.warn("Invalid anchor selector:", href, err);
+        }
       }
     });
   });
@@ -396,7 +427,11 @@ function boot() {
             if (typeof initNavigatorRecognition === 'function') {
               initNavigatorRecognition();
             }
-            navRecognition.start();
+            try {
+              navRecognition.start();
+            } catch (err) {
+              console.warn("Failed to start voice navigator in onSpeechEnd:", err);
+            }
           } catch (err) {
             console.warn("Failed to restart voice navigator after speaking:", err);
           }
@@ -1137,7 +1172,11 @@ function boot() {
             if (typeof initNavigatorRecognition === 'function') {
               initNavigatorRecognition();
             }
-            navRecognition.start();
+            try {
+              navRecognition.start();
+            } catch (err) {
+              console.warn("Failed to start voice navigator in onend:", err);
+            }
           } catch (err) {
             console.warn("Failed to restart voice navigator:", err);
           }
@@ -1169,7 +1208,11 @@ function boot() {
         navRecognition.stop();
       } else {
         isVoiceNavigatorEnabled = true;
-        navRecognition.start();
+        try {
+          navRecognition.start();
+        } catch (err) {
+          console.warn("Navigator recognition start error in click handler:", err);
+        }
         
         // Time-based oral greeting on FIRST activation only per session
         if (!sessionStorage.getItem('voice_navigator_greeted')) {
