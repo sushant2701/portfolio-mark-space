@@ -9,7 +9,7 @@ import { initState, SKILL_DEFINITIONS } from './state.js';
 import { renderPortfolio } from './portfolio.js';
 import { initDrawer, openDrawer } from './drawer.js';
 import { initAnimations } from './animations.js';
-import { initJarvis, getJarvisVoiceResponse } from './jarvis.js';
+import { initJarvis } from './jarvis.js';
 
 // Background Ambient Music Manager
 function initBackgroundMusic() {
@@ -859,42 +859,6 @@ function boot() {
               refreshBtn.click();
             }
           }
-        },
-        {
-          key: 'open_chatbot',
-          label: 'open the MARK27 chat assistant console',
-          samplePhrase: 'open chatbot panel',
-          keywords: ['chatbot', 'chat', 'mark27', 'jarvis', 'assistant panel', 'open chatbot'],
-          phrases: ['open mark27 chat console', 'talk to mark27 chatbot', 'open virtual assistant chat window', 'open chat widget', 'start chat conversation'],
-          action: () => {
-            const trigger = document.getElementById('jarvis-trigger');
-            const panel = document.getElementById('jarvis-panel');
-            if (trigger && panel) {
-              if (!panel.classList.contains('open')) {
-                trigger.click();
-              }
-              speakNavigator("Opening MARK27 chat assistant console.");
-              showToast("Opening MARK27 Chatbot...");
-            }
-          }
-        },
-        {
-          key: 'close_chatbot',
-          label: 'minimize the chat assistant console',
-          samplePhrase: 'close chatbot panel',
-          keywords: ['close chatbot', 'minimize chat', 'hide mark27', 'hide assistant panel'],
-          phrases: ['close mark27 chat window', 'minimize chatbot panel', 'hide virtual assistant chat bubble', 'exit chat window'],
-          action: () => {
-            const minimize = document.getElementById('jarvis-minimize');
-            const panel = document.getElementById('jarvis-panel');
-            if (minimize && panel) {
-              if (panel.classList.contains('open')) {
-                minimize.click();
-              }
-              speakNavigator("Minimizing chat assistant console.");
-              showToast("Chatbot minimized.");
-            }
-          }
         }
       ];
 
@@ -1022,34 +986,7 @@ function boot() {
         return;
       }
 
-      // 3. Fallback to Chatbot Voice Response (Dynamic Knowledge Speaking Model)
-      const chatbotResult = getJarvisVoiceResponse(clean);
-      if (chatbotResult) {
-        speakNavigator(chatbotResult.response);
-        showToast(`Mark: Speaking details`);
-        
-        // Auto scroll based on chatbot intent key
-        const key = chatbotResult.key;
-        let scrollTarget = null;
-        if (key === 'education' || key === 'cgpa' || key === 'certifications') {
-          scrollTarget = document.getElementById('education');
-        } else if (key === 'skills' || key.startsWith('skills_')) {
-          scrollTarget = document.getElementById('skills');
-        } else if (key === 'projects' || key === 'grahak' || key.startsWith('project_')) {
-          scrollTarget = document.getElementById('projects');
-        } else if (key === 'about' || key.startsWith('experience') || key === 'gdg' || key === 'awards') {
-          scrollTarget = document.getElementById('about');
-        } else if (key === 'contact') {
-          if (typeof window.triggerContactRedirect === 'function') {
-            window.triggerContactRedirect();
-          }
-        }
-        
-        if (scrollTarget) {
-          scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        return;
-      }
+      // (No chatbot fallback)
 
       // 4. Predictive Overlap Matching Fallback ("Did you mean...?")
       if (highestScore >= 0.05 && bestIntent) {
