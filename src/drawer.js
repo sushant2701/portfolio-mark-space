@@ -14,9 +14,10 @@ const trashIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const publishIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
 const CATEGORY_OPTIONS = [
-  { value: 'programming', label: 'Programming' },
-  { value: 'analytics', label: 'Data Analytics & BI' },
-  { value: 'ai', label: 'AI & Automation' },
+  { value: 'lowLevelCore', label: 'Low-Level & Core Languages' },
+  { value: 'scientificComputing', label: 'Scientific Computing & Data Pipelines' },
+  { value: 'hardwareQuantum', label: 'Hardware Abstraction & Quantum Foundations' },
+  { value: 'devToolsArch', label: 'Dev Tools & Architecture' },
 ];
 
 // ── Supabase Configurations ──

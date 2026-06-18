@@ -23,11 +23,10 @@ const icons = {
 };
 
 const SKILL_CATEGORY_META = {
-  generativeAI: { label: 'Generative AI & LLMs', icon: icons.brain },
-  machineLearning: { label: 'Machine Learning', icon: icons.cube },
-  programmingQuery: { label: 'Programming & Query', icon: icons.code },
-  dataAnalysis: { label: 'Data Analysis & Stats', icon: icons.chart },
-  visualizationDeployment: { label: 'Visualization & Deployment', icon: icons.cloud }
+  lowLevelCore: { label: 'Low-Level & Core Languages', icon: icons.code },
+  scientificComputing: { label: 'Scientific Computing & Data Pipelines', icon: icons.chart },
+  hardwareQuantum: { label: 'Hardware Abstraction & Quantum Foundations', icon: icons.cube },
+  devToolsArch: { label: 'Dev Tools & Architecture', icon: icons.cloud }
 };
 
 /**
@@ -73,7 +72,6 @@ function renderNavbar() {
             <a href="#projects" class="nav-link nav-dropdown-trigger">Projects <span class="chevron-down">▼</span></a>
             <div class="nav-dropdown-menu">
               <a href="#projects-ai-machine-learning" class="nav-dropdown-item">AI &amp; ML</a>
-              <a href="#projects-data-analytics-bi" class="nav-dropdown-item">Data Analytics</a>
               <a href="#projects-web-development-security" class="nav-dropdown-item">Web Dev</a>
               <a href="#projects-iot-embedded-systems" class="nav-dropdown-item">IoT &amp; Systems</a>
             </div>
@@ -98,9 +96,9 @@ function renderNavbar() {
             <ul style="margin: 0; padding-left: 12px; line-height: 1.4; font-size: 10px;">
               <li>"...show skills" (Scrolls to Skills)</li>
               <li>"...tell me about projects"</li>
-              <li>"...tell about grahak project"</li>
-              <li>"...tell about otp auth"</li>
-              <li>"...explain disease prediction"</li>
+              <li>"...tell about genai platform"</li>
+              <li>"...tell about emergency gps"</li>
+              <li>"...explain mark space"</li>
               <li>"...go to education"</li>
               <li>"...open linkedin" / "github"</li>
               <li>"...open control space"</li>
@@ -131,13 +129,15 @@ function renderHero() {
               Hello there <span class="wave">👋</span>
             </div>
             <h1 class="hero-heading" data-animate data-delay="1">
-              I'm <span class="reveal-wrapper"><span class="reveal-content" id="reveal-name">Sushant Shrimal</span><span class="reveal-box"></span></span>
+              I'm <span class="reveal-wrapper"><span class="reveal-content" id="reveal-name">SUSHANT SHRIMAL</span><span class="reveal-box"></span></span>
             </h1>
             <h2 class="hero-subtitle-typing" data-animate data-delay="2">
-              --<span id="typewriter" data-words='["AI Engineer", "Data Scientist", "Prompt Engineer", "ML Developer"]'></span><span class="typewriter-cursor">|</span>
+              --<span id="typewriter" data-words='["Full-Stack Quantum Control Software Engineer", "Systems Software Engineer", "Quantum Control Developer", "Low-Level Systems Programmer"]'></span><span class="typewriter-cursor">|</span>
             </h2>
             <p class="hero-description" data-animate data-delay="3">
-              Final-year B.Tech student and aspiring Data Scientist and AI Engineer with hands-on experience building predictive models, prompt workflows, and automated data pipelines.
+              <strong>Full-Stack Quantum Control Software Engineer</strong><br>
+              Bridging the gap between high-level experiment orchestration software, scalable developer APIs, and low-level hardware control platforms.<br><br>
+              Final-year Electronics & Telecommunication Engineering student specializing in building end-to-end software pipelines, instrument control layers, and data-driven systems applications.
             </p>
             <div class="hero-cta-group" data-animate data-delay="4">
               <a href="#projects" class="btn btn-accent">
@@ -170,13 +170,13 @@ function renderHero() {
             </a>
             <a href="#projects-ai-machine-learning" class="float-card float-key-project">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <div class="float-avatar">AI</div>
+                <div class="float-avatar">QC</div>
                 <div>
                   <div class="float-name">Key Project</div>
-                  <div class="float-role">GenAI Assistant</div>
+                  <div class="float-role">GenAI Platform</div>
                 </div>
               </div>
-              <div class="float-quote">"GenAI-powered Streamlit app for natural language queries."</div>
+              <div class="float-quote">"Data Analysis platform using schema-aware prompt pipelines."</div>
             </a>
             <a href="#education" class="float-card float-credential">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -190,13 +190,13 @@ function renderHero() {
             </a>
             <a href="#about" class="float-card float-testimonial">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <div class="float-avatar">AI</div>
+                <div class="float-avatar">SYS</div>
                 <div>
-                  <div class="float-name">AICTE Intern</div>
-                  <div class="float-role">AI / ML Intern</div>
+                  <div class="float-name">Systems Intern</div>
+                  <div class="float-role">Robotics & AI</div>
                 </div>
               </div>
-              <div class="float-quote">"Building machine learning models and pipelines."</div>
+              <div class="float-quote">"Developed sensor acquisition and hardware abstraction scripts."</div>
             </a>
           </div>
         </div>
@@ -212,20 +212,20 @@ function renderStats() {
       <div class="container">
         <div class="stats-grid">
           <div class="stat-item" data-animate data-delay="1">
-            <div class="stat-value">4+</div>
-            <div class="stat-label">Featured engineering projects delivered</div>
+            <div class="stat-value">3+</div>
+            <div class="stat-label">Key Developer Tools &amp; Systems Repositories</div>
           </div>
           <div class="stat-item" data-animate data-delay="2">
-            <div class="stat-value">3+</div>
-            <div class="stat-label">Technical domains of specialized expertise</div>
+            <div class="stat-value">4+</div>
+            <div class="stat-label">Specialized Technical Domains</div>
           </div>
           <div class="stat-item" data-animate data-delay="3">
             <div class="stat-value">2024</div>
-            <div class="stat-label">Year of professional journey kickoff</div>
+            <div class="stat-label">Year of Hands-On Engineering Impact</div>
           </div>
           <div class="stat-item" data-animate data-delay="4">
-            <div class="stat-value">10+</div>
-            <div class="stat-label">Technical skills across Cloud, AI & Data</div>
+            <div class="stat-value">15+</div>
+            <div class="stat-label">Core Skills in Quantum, Systems &amp; APIs</div>
           </div>
         </div>
       </div>
@@ -255,23 +255,23 @@ function renderAbout(state) {
             <a href="#education" class="about-icon-box" title="View Credentials">${icons.brain}</a>
           </div>
           <div class="about-intro">
-            <h2 class="section-title">Blending data intelligence with machine learning capability.</h2>
+            <h2 class="section-title">Bridging high-level experiment orchestration software with hardware control platforms.</h2>
           </div>
         </div>
         <div class="about-content">
           <div data-animate data-delay="1">
             <p class="about-text">
-              I'm <strong>Sushant Shrimal</strong>, a final-year B.Tech student and aspiring <strong>Data Scientist & AI Engineer</strong> at <strong>NK Orchid College of Engineering & Technology</strong>. I have hands-on experience building end-to-end data solutions, including preprocessing, exploratory data analysis (EDA), and predictive modeling.
+              I'm <strong>Sushant Shrimal</strong>, a final-year Electronics & Telecommunication Engineering student at <strong>NK Orchid College of Engineering & Technology</strong>, Solapur. I specialize in systems programming, software-hardware abstraction layers, and instrument control software pipelines.
             </p>
             <p class="about-text">
-              My expertise spans developing machine learning pipelines (regression, classification, clustering, ensemble methods) and integrating Generative AI APIs. I am passionate about RAG applications, prompt engineering, and translating data into business insights.
+              My engineering focus centers on building reliable developer APIs, real-time control scripts, and data-driven systems applications. I bridge the gap between high-level logic and physical hardware using modern system architecture and scientific pipelines.
             </p>
             <div class="about-tags">
-              <span class="about-tag">🧠 Generative AI</span>
-              <span class="about-tag">🤖 Machine Learning</span>
-              <span class="about-tag">📊 Data Science</span>
-              <span class="about-tag">📈 Statistical Analysis</span>
-              <span class="about-tag">⚡ Prompt Engineering</span>
+              <span class="about-tag">⚛️ Quantum Control</span>
+              <span class="about-tag">🔌 Hardware Abstraction</span>
+              <span class="about-tag">💻 Systems Programming</span>
+              <span class="about-tag">⚙️ Modular API Design</span>
+              <span class="about-tag">📈 Scientific Computing</span>
             </div>
           </div>
           <div class="timeline" data-animate data-delay="2">
@@ -298,9 +298,9 @@ function renderEducation() {
             <div class="edu-card-icon">🎓</div>
             <span class="edu-card-badge education-badge">Education</span>
             <h3 class="edu-card-title">B.Tech — Electronics & Telecommunication Engineering</h3>
-            <p class="edu-card-org">NKOCET, Solapur, Maharashtra</p>
+            <p class="edu-card-org">NK Orchid College of Engineering & Technology, Solapur</p>
             <p class="edu-card-desc">
-              Comprehensive engineering program focused on machine learning models, statistical analysis, and programming logic.
+              Rigorous engineering syllabus covering digital signal processing, microcontrollers, VLSI, and digital logic design applicable to hardware-software co-design.
             </p>
             <div style="font-weight:600;color:var(--accent);margin-bottom:var(--space-md);font-size:13px;">CGPA: 7.34 / 10</div>
             <div class="edu-card-tags">
@@ -314,13 +314,14 @@ function renderEducation() {
             <h3 class="edu-card-title">Professional Certifications</h3>
             <p class="edu-card-org">Verified Credentials</p>
             <p class="edu-card-desc">
-              Industry credentials validating Python programming capability, data analysis, and software workflows.
+              Validating expertise in robotics, APIs, cloud systems, and foundational software engineering methodologies.
             </p>
             <div class="edu-card-tags">
+              <span class="edu-tag">e-Yantra IIT Bombay Robotics</span>
+              <span class="edu-tag">Postman API Fundamentals Student Expert</span>
               <span class="edu-tag">Cisco Data Analytics</span>
-              <span class="edu-tag">HackerRank Python</span>
-              <span class="edu-tag">Accenture SWE (Forage)</span>
-              <span class="edu-tag">Postman API Fundamentals</span>
+              <span class="edu-tag">Accenture SWE Simulation</span>
+              <span class="edu-tag">Google Cloud Qwiklabs</span>
             </div>
           </a>
           <a href="#about" class="edu-card" data-animate data-delay="3">
@@ -329,12 +330,12 @@ function renderEducation() {
             <h3 class="edu-card-title">Leadership & Achievements</h3>
             <p class="edu-card-org">Extracurricular Impact</p>
             <p class="edu-card-desc">
-              Recognized for cloud leadership, best research award, and leadership in student committees.
+              Organizing workshops on cloud systems, managing technical symposiums, and securing research paper recognition.
             </p>
             <div class="edu-card-tags">
               <span class="edu-tag">Best Research Paper Award (ICCSS 2025)</span>
-              <span class="edu-tag">GDG On-Campus Cloud Lead</span>
-              <span class="edu-tag">Vice President — AEXS</span>
+              <span class="edu-tag">GDG Cloud Lead (On-Campus)</span>
+              <span class="edu-tag">Vice President — AEXS NKOCET</span>
             </div>
           </a>
         </div>
@@ -345,11 +346,10 @@ function renderEducation() {
 
 // ── Skills ──
 const SKILL_CATEGORY_ANCHORS = {
-  generativeAI: '#projects-ai-machine-learning',
-  machineLearning: '#projects-ai-machine-learning',
-  programmingQuery: '#projects',
-  dataAnalysis: '#projects-data-analytics-bi',
-  visualizationDeployment: '#projects-data-analytics-bi'
+  lowLevelCore: '#projects',
+  scientificComputing: '#projects',
+  hardwareQuantum: '#projects-iot-embedded-systems',
+  devToolsArch: '#projects-web-development-security'
 };
 
 function renderSkills(state) {
@@ -378,7 +378,7 @@ function renderSkills(state) {
         <div class="skills-header" data-animate>
           <span class="section-eyebrow">Expertise</span>
           <h2 class="section-title">Technical Skills Matrix</h2>
-          <p class="section-subtitle">A comprehensive toolkit spanning programming, data analytics, and AI-powered cloud automation.</p>
+          <p class="section-subtitle">A comprehensive engineering toolkit spanning programming, scientific data pipelines, and hardware control.</p>
         </div>
         <div class="bento-grid">
           ${cards}
@@ -483,7 +483,6 @@ function renderProjects(state) {
         <div class="projects-tabs-container" data-animate data-delay="1">
           <div class="projects-tabs">
             <button class="project-tab-btn" data-target="projects-ai-machine-learning">AI &amp; ML</button>
-            <button class="project-tab-btn" data-target="projects-data-analytics-bi">Data Analytics &amp; BI</button>
             <button class="project-tab-btn" data-target="projects-web-development-security">Web Dev &amp; Security</button>
             <button class="project-tab-btn" data-target="projects-iot-embedded-systems">IoT &amp; Systems</button>
           </div>
@@ -506,8 +505,8 @@ function renderFooter() {
           <div>
             <div class="footer-brand-name">Sushant Shrimal</div>
             <p class="footer-brand-desc">
-              Cloud Lead & Data Analytics Engineer building scalable systems
-              at the intersection of infrastructure and intelligence.
+              Quantum Control &amp; Systems Software Engineer building scalable experiment pipelines
+              at the intersection of high-level APIs and low-level hardware control.
             </p>
           </div>
           <div>

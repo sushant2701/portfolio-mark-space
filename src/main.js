@@ -590,7 +590,7 @@ function boot() {
           
           // Multi-alternative keyword scanning to match voice intents accurately
           const boostWordList = [
-            'grahak', 'otp', 'genai', 'disease', 'churn', 'gps', 'sla', 'sales',
+            'otp', 'genai', 'gps', 'uart', 'serial', 'quantum', 'qiskit', 'fpga', 'hdl', 'verilog',
             'linkedin', 'github', 'guthub', 'source code', 'repository', 'repo',
             'control space', 'controlspace', 'guide', 'instructions', 'commands',
             'mute', 'unmute', 'refresh', 'restart', 'reboot', 'education', 'cgpa', 'gpa',
@@ -664,7 +664,7 @@ function boot() {
         'contect': 'contact', 'contac': 'contact', 'conatnt': 'contact', 'conatct': 'contact', 'contat': 'contact',
         'githb': 'github', 'gitb': 'github', 'ithub': 'github',
         'guthub': 'github', 'gut': 'github', 'limked': 'linkedin', 'limkedin': 'linkedin',
-        'grahk': 'grahak', 'abt': 'about', 'abot': 'about',
+        'abt': 'about', 'abot': 'about',
         'likendin': 'linkedin', 'likendina': 'linkedin', 'linkdin': 'linkedin', 'linked': 'linkedin',
         'sushamnt': 'sushant', 'sushants': 'sushant'
       };
@@ -716,7 +716,7 @@ function boot() {
       } else {
         const knownKeywords = [
           'go to', 'show', 'open', 'view', 'explain', 'click', 'tell', 'introduce', 'who is', 'what', 
-          'grahak', 'otp', 'disease', 'churn', 'gps', 'sla', 'sales', 'experience', 'education', 'skills', 'projects',
+          'quantum', 'qiskit', 'fpga', 'hdl', 'genai', 'gps', 'uart', 'serial', 'experience', 'education', 'skills', 'projects',
           'github', 'git', 'linkedin', 'contact', 'email', 'mail', 'connect', 'controlspace', 'control space',
           'chatbot', 'chat', 'mark27', 'jarvis', 'help', 'guide'
         ];
@@ -736,107 +736,42 @@ function boot() {
 
       const voiceIntents = [
         {
-          key: 'grahak',
-          label: 'check the Grahak CRM project',
-          samplePhrase: 'grahak project',
-          keywords: ['grahak', 'crm', 'ticketing', 'whatsapp'],
-          phrases: ['grahak project', 'tell me about grahak', 'show grahak project', 'explain grahak', 'grahak crm'],
-          action: () => {
-            const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Grahak is a WhatsApp integrated customer relationship management and ticketing system with automatic SLA escalations.");
-            showToast("Navigated to Grahak Project");
-          }
-        },
-        {
-          key: 'otp',
-          label: 'view the Student OTP Authentication project',
-          samplePhrase: 'otp auth project',
-          keywords: ['otp', 'auth', 'authentication', 'login', 'student login', 'problem solver'],
-          phrases: ['otp auth system', 'student problem solver project', 'one time password authentication', 'show otp auth'],
-          action: () => {
-            const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The OTP Authentication System is a secure, lightweight student login verification system built using standard web technologies.");
-            showToast("Navigated to OTP Auth Project");
-          }
-        },
-        {
           key: 'genai',
-          label: 'see the GenAI CSV Analysis Assistant',
-          samplePhrase: 'genai assistant',
-          keywords: ['genai', 'csv', 'analysis', 'assistant', 'streamlit', 'natural language query'],
-          phrases: ['genai analysis assistant', 'data analysis assistant', 'query csv in natural language', 'streamlit assistant'],
+          label: 'see the GenAI Data Analysis Platform',
+          samplePhrase: 'genai platform',
+          keywords: ['genai', 'csv', 'analysis', 'platform', 'streamlit', 'natural language query'],
+          phrases: ['genai analysis assistant', 'data analysis platform', 'query csv in natural language', 'streamlit platform'],
           action: () => {
             const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The GenAI Data Analysis Assistant enables querying CSV datasets in natural language using OpenAI APIs and Streamlit.");
-            showToast("Navigated to GenAI Assistant");
-          }
-        },
-        {
-          key: 'disease',
-          label: 'open the Disease Risk Scoring system',
-          samplePhrase: 'disease prediction',
-          keywords: ['disease', 'healthcare', 'medical', 'risk', 'scoring', 'prediction', 'classifier'],
-          phrases: ['disease prediction project', 'healthcare prediction risk scoring', 'risk scoring system', 'disease classifier'],
-          action: () => {
-            const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The Disease Risk Scoring System uses machine learning classification algorithms to predict student health risks.");
-            showToast("Navigated to Disease Prediction Project");
-          }
-        },
-        {
-          key: 'churn',
-          label: 'check the Customer Churn model',
-          samplePhrase: 'churn prediction',
-          keywords: ['churn', 'retention', 'segmentation', 'customer churn', 'customer segmentation'],
-          phrases: ['customer churn prediction', 'churn analytics segmentation', 'churn prediction model', 'retention dashboard'],
-          action: () => {
-            const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The Customer Churn Prediction dashboard uses machine learning to segment customers and improve retention strategy.");
-            showToast("Navigated to Churn Prediction Project");
+            speakNavigator("The GenAI-Powered Data Analysis Platform enables querying CSV datasets in natural language using the Gemini LLM API and Streamlit with structured output validation.");
+            showToast("Navigated to GenAI Platform");
           }
         },
         {
           key: 'gps',
-          label: 'check the GPS Emergency SOS band project',
-          samplePhrase: 'gps sos band',
-          keywords: ['gps', 'sos', 'wearable', 'distress', 'band', 'emergency', 'coordinates', 'tracking'],
-          phrases: ['gps enabled sos band', 'wearable distress band', 'emergency communication coordinates', 'sos tracker'],
+          label: 'check the Real-Time GPS Emergency Communication System',
+          samplePhrase: 'emergency gps',
+          keywords: ['gps', 'emergency', 'communication', 'system', 'uart', 'serial', 'iot', 'hardware', 'states'],
+          phrases: ['gps emergency system', 'real-time gps emergency communication', 'serial communication layer uart', 'emergency gps band'],
           action: () => {
             const el = document.querySelector('#projects-iot-embedded-systems') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The GPS enabled SOS Band is an IoT distress wearable utilizing GPS and GSM modules for real-time tracking.");
-            showToast("Navigated to GPS SOS Band Project");
+            speakNavigator("The GPS Emergency Communication System interfaces GPS and GSM hardware over UART using a robust Python state machine to manage serial I/O.");
+            showToast("Navigated to GPS Emergency System");
           }
         },
         {
-          key: 'sla',
-          label: 'view the Support SLA Operations dashboard',
-          samplePhrase: 'sla dashboard',
-          keywords: ['sla', 'service level agreement', 'ticket', 'operations', 'etl'],
-          phrases: ['support sla operations dashboard', 'ticket operations compliance', 'sla tracking dashboard', 'ticket etl pipeline'],
+          key: 'mark_space',
+          label: 'explain the MARK_SPACE Interactive Portfolio Hub',
+          samplePhrase: 'explain mark space',
+          keywords: ['mark_space', 'mark space', 'portfolio', 'voice command', 'assistant', 'supabase'],
+          phrases: ['explain mark space', 'tell me about mark space portfolio', 'voice command personal portfolio', 'mark space hub'],
           action: () => {
-            const el = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
+            const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The SLA Operations Dashboard automates ticket ETL pipelines for compliance and KPI performance tracking.");
-            showToast("Navigated to SLA Dashboard");
-          }
-        },
-        {
-          key: 'sales',
-          label: 'view the Sales Revenue MIS dashboard',
-          samplePhrase: 'sales dashboard',
-          keywords: ['sales', 'revenue', 'mis', 'reporting', 'target', 'targets'],
-          phrases: ['automated sales revenue mis', 'sales pipeline analytics dashboard', 'sales targets performance', 'mis reporting dashboard'],
-          action: () => {
-            const el = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The Sales Revenue MIS Dashboard provides interactive analytics and automated reporting for sales pipelines.");
-            showToast("Navigated to Sales MIS Dashboard");
+            speakNavigator("MARK_SPACE is this framework-free personal developer portfolio, featuring native voice commands via the Web Speech API and Supabase database tracking.");
+            showToast("Navigated to MARK_SPACE Project");
           }
         },
         {
@@ -861,7 +796,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#about');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Sushant is a Python Full Stack and Data Analytics Intern at QSpiders, building ETL pipelines and dashboards.");
+            speakNavigator("Sushant has interned at QSpiders as a Python developer, at AICTE in AI and Machine Learning, and at PMS Robotics engineering real-time sensor control scripts.");
             showToast("Navigated to Experience");
           }
         },
@@ -869,12 +804,12 @@ function boot() {
           key: 'skills',
           label: 'see my programming languages and skills',
           samplePhrase: 'skills',
-          keywords: ['skills', 'skill', 'expertise', 'know', 'toolkit', 'programming', 'languages', 'python', 'sql', 'stack', 'technologies', 'tools'],
+          keywords: ['skills', 'skill', 'expertise', 'know', 'toolkit', 'programming', 'languages', 'python', 'sql', 'stack', 'technologies', 'tools', 'quantum', 'qiskit', 'fpga', 'hdl'],
           phrases: ['what are sushants skills', 'show technical skills matrix', 'programming languages sushant knows', 'technical expertise toolkits'],
           action: () => {
             const el = document.querySelector('#skills');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Sushant has advanced skills in Python, SQL, Generative AI engineering, Machine Learning, exploratory data analysis, and Power BI dashboards.");
+            speakNavigator("Sushant has advanced skills in Python, C, C++, systems programming, scientific data pipelines, FPGA concepts, and Qiskit quantum circuit design.");
             showToast("Navigated to Skills");
           }
         },
@@ -887,7 +822,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Sushant has built several key engineering projects, including a GenAI-Powered Data Analysis Assistant, a Disease Risk Scoring System, a customer churn prediction model, and a GPS-enabled emergency SOS band.");
+            speakNavigator("Sushant has built a GenAI-Powered Data Analysis Platform, a Real-Time GPS Emergency Communication System, and the MARK_SPACE voice-navigated portfolio hub.");
             showToast("Navigated to Projects");
           }
         },
@@ -900,7 +835,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#about');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("Sushant Shrimal is an AI Engineer and aspiring Data Scientist, and Former GDG Cloud Lead. He is currently an intern at QSpiders.");
+            speakNavigator("Sushant Shrimal is a Full-Stack Quantum Control Software Engineer and final-year Electronics & Telecommunication Engineering student specializing in experiment orchestration pipelines, low-level hardware control, and modular system design.");
             showToast("Navigated to About");
           }
         },
@@ -1022,12 +957,11 @@ function boot() {
 
       // 1. Resolve Skill Tooltip directly if query specifically targets a skill details
       const skillsList = [
-        'Large Language Models (LLMs)', 'Prompt Engineering', 'RAG', 'OpenAI API', 'Anthropic API',
-        'Scikit-Learn', 'TensorFlow', 'Logistic Regression', 'Random Forest', 'Feature Engineering',
-        'Model Evaluation', 'Predictive Modeling', 'Python', 'SQL', 'R (basics)', 'Pandas', 'NumPy',
-        'Data Cleaning', 'Data Wrangling', 'Exploratory Data Analysis (EDA)', 'Statistical Analysis',
-        'A/B Testing', 'Hypothesis Testing', 'Power BI', 'Matplotlib', 'Seaborn', 'Streamlit',
-        'Git', 'GitHub', 'Google Cloud', 'Jupyter Notebook', 'Google Colab'
+        'Python', 'C', 'C++', 'Bash/Shell Scripting', 'Linux (Ubuntu/Debian) Systems Programming',
+        'NumPy', 'Pandas', 'Matplotlib', 'Statistical Processing', 'SQL/Query Optimization',
+        'FPGA Architecture Fundamentals', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)',
+        'Qiskit', 'Quantum Circuit Basics', 'Git/GitHub', 'CI/CD Pipelines', 'REST APIs',
+        'API Design', 'System Design', 'Modular Architecture'
       ];
       
       let matchedSkill = null;
@@ -1084,14 +1018,9 @@ function boot() {
       let highestScore = 0;
 
       const intentBoostMap = {
-        'grahak': ['grahak'],
-        'otp': ['otp'],
         'genai': ['genai'],
-        'disease': ['disease'],
-        'churn': ['churn'],
-        'gps': ['gps'],
-        'sla': ['sla'],
-        'sales': ['sales'],
+        'gps': ['gps', 'uart', 'serial'],
+        'mark_space': ['mark_space', 'mark space', 'portfolio hub'],
         'linkedin': ['linkedin'],
         'github_portfolio': ['source code', 'repository', 'repo'],
         'github_profile': ['github', 'guthub'],
@@ -1101,7 +1030,7 @@ function boot() {
         'refresh_assistant': ['refresh', 'restart', 'reboot', 'reinitialize'],
         'education': ['education', 'cgpa', 'gpa', 'college'],
         'experience': ['experience', 'internship', 'qspiders', 'aicte'],
-        'skills': ['skills', 'skill'],
+        'skills': ['skills', 'skill', 'quantum', 'qiskit', 'fpga', 'hdl'],
         'projects': ['projects', 'project'],
         'about': ['about sushant', 'who is sushant', 'introduce sushant', 'yourself'],
         'contact': ['contact', 'hire', 'reach sushant', 'send email', 'send mail']
@@ -1145,7 +1074,7 @@ function boot() {
           // Exclusion rules for general intents to avoid conflicts
           if (hasBoostKeyword) {
             if (intent.key === 'projects') {
-              const specificProjectKeywords = ['grahak', 'otp', 'genai', 'disease', 'churn', 'gps', 'sla', 'sales'];
+              const specificProjectKeywords = ['genai', 'gps', 'mark_space', 'mark space'];
               const hasSpecificProject = specificProjectKeywords.some(sp => clean.includes(sp));
               if (hasSpecificProject) {
                 hasBoostKeyword = false;

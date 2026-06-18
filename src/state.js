@@ -5,38 +5,27 @@
 const STORAGE_KEY = 'portfolio_data_v14';
 
 export const SKILL_DEFINITIONS = {
-  'Large Language Models (LLMs)': 'Deep learning algorithms trained on massive datasets to understand and generate human-like text.',
-  'Prompt Engineering': 'Designing and refining inputs to guide Generative AI models to produce optimal, high-quality responses.',
-  'RAG': 'Retrieval-Augmented Generation—combining LLMs with external knowledge sources to provide highly accurate, context-aware answers.',
-  'OpenAI API': 'Cloud-based developer API providing programmatic access to state-of-the-art models like GPT-4o and text embeddings.',
-  'Anthropic API': 'Developer interface for Claude models, specialized in deep reasoning, safety, coding, and large context windows.',
-  'Scikit-Learn': 'The premier Python library for classical machine learning, offering tools for classification, regression, and clustering.',
-  'TensorFlow': 'Google\'s open-source deep learning framework used for building, training, and deploying neural networks.',
-  'Logistic Regression': 'A fundamental classification algorithm used to predict binary outcomes based on probability scoring.',
-  'Random Forest': 'An ensemble machine learning method using decision tree models to increase accuracy and prevent overfitting.',
-  'Feature Engineering': 'The process of selecting, transforming, and creating input variables from raw data to improve model results.',
-  'Model Evaluation': 'Assessing model predictive power using metrics like accuracy, precision, recall, F-score, and ROC-AUC curves.',
-  'Predictive Modeling': 'Developing statistical or machine learning models to forecast future events or uncover hidden trends.',
-  'Python': 'The leading programming language for data science, artificial intelligence, and automation scripts.',
-  'SQL': 'Structured Query Language, the industry standard for managing, querying, and updating relational databases.',
-  'R (basics)': 'Programming language and environment used for statistical computations, graphic representations, and analysis.',
-  'Pandas': 'High-performance Python library used for structured data manipulation, analysis, and cleanup workflows.',
-  'NumPy': 'Fundamental scientific computing library in Python, supporting large, multi-dimensional arrays and mathematical operations.',
-  'Data Cleaning': 'The process of identifying, filtering, and correcting errors, missing records, or duplicates in raw datasets.',
-  'Data Wrangling': 'Transforming raw, messy datasets into structured, clean formats optimized for analytics and modeling.',
-  'Exploratory Data Analysis (EDA)': 'Analyzing datasets to summarize main statistical characteristics, detect anomalies, and form hypotheses.',
-  'Statistical Analysis': 'Applying mathematical models and statistical methods to identify trends, correlations, and confidence intervals.',
-  'A/B Testing': 'Controlled experiments comparing two versions of a webpage or product feature to measure performance differences.',
-  'Hypothesis Testing': 'Determining whether experimental findings have statistical significance or if they happened by random chance.',
-  'Power BI': 'Microsoft\'s business intelligence tool for creating interactive visualizations, data models, and dashboards.',
-  'Matplotlib': 'Python\'s foundational plotting library for generating static, animated, and interactive visualizations.',
-  'Seaborn': 'A statistical data visualization library built on top of Matplotlib, providing beautiful default styling.',
-  'Streamlit': 'An open-source Python framework for building and sharing interactive data web applications in minutes.',
-  'Git': 'Distributed version control system for tracking source code history and coordinating developer tasks.',
-  'GitHub': 'Cloud-based platform for hosting repositories, managing pull requests, and running CI/CD automation.',
-  'Google Cloud': 'A suite of cloud infrastructure services for deploying models, hosting applications, and data storage.',
-  'Jupyter Notebook': 'Interactive computing dashboard for writing code, documenting notes, and plotting visualizations.',
-  'Google Colab': 'A cloud-based Jupyter Notebook environment with free access to GPUs for training machine learning models.'
+  'Python': 'High-level programming language used for quantum experiment orchestration, rapid scripting, and scientific computing.',
+  'C': 'Procedural language used for high-performance low-level firmware, kernel modules, and hardware drivers.',
+  'C++': 'Object-oriented language used for high-frequency instrument communication, low-latency control software, and performance-critical systems.',
+  'Bash/Shell Scripting': 'Automation scripting for Linux systems, build pipelines, environment configuration, and task scheduling.',
+  'Linux (Ubuntu/Debian) Systems Programming': 'System-level software development using POSIX APIs, multi-threading, socket programming, and inter-process communication.',
+  'NumPy': 'Fundamental scientific computing library in Python, supporting large multidimensional arrays, matrices, and linear algebra operations.',
+  'Pandas': 'High-performance Python library for data manipulation, analysis, structured cleaning, and parsing experiment telemetry logs.',
+  'Matplotlib': 'Foundational visualization library in Python for generating static, animated, and interactive signal plots.',
+  'Statistical Processing': 'Applying mathematical and statistical methods to filter noise, fit calibration curves, and analyze instrument output datasets.',
+  'SQL/Query Optimization': 'Designing, querying, and indexing relational database schemas to efficiently manage calibration constants and metadata.',
+  'FPGA Architecture Fundamentals': 'Basic principles of reconfigurable digital hardware, lookup tables (LUTs), flip-flops, block RAM, and clock domain crossing.',
+  'Digital Logic Design': 'Designing combination and sequential logic circuits, registers, multiplexers, and hardware state machines.',
+  'HDL Concepts (Verilog/VHDL basics)': 'Hardware Description Language concepts for modeling digital system behavior, register-transfer level (RTL) logic, and timing checks.',
+  'Qiskit': 'IBM\'s open-source SDK for writing, simulating, and running quantum circuits and algorithms on simulator backends and real devices.',
+  'Quantum Circuit Basics': 'Foundations of qubits, quantum logic gates, superposition, entanglement, measurement operations, and circuit depth.',
+  'Git/GitHub': 'Distributed version control and collaboration platform for managing codebases, code review pull requests, and release tracking.',
+  'CI/CD Pipelines': 'Continuous Integration and Continuous Deployment workflows for automated testing, packaging, and deploying software modules.',
+  'REST APIs': 'Designing stateless, resource-oriented HTTP interfaces for remote monitoring, telemetry retrieval, and orchestration commands.',
+  'API Design': 'Structuring clean, developer-friendly interfaces for low-level instrument wrappers, libraries, and web services.',
+  'System Design': 'Architecting scalable, reliable, and low-latency systems coordinating high-speed control logic and distributed data processing.',
+  'Modular Architecture': 'Decoupling software systems into independent, reusable modules to minimize technical debt and maximize extensibility.'
 };
 
 // ── Default Data ──
@@ -44,136 +33,69 @@ const DEFAULT_STATE = {
   projects: [
     {
       id: 'p1',
-      title: 'GenAI-Powered Data Analysis Assistant',
+      title: 'GenAI-Powered Data Analysis Platform',
       domain: 'AI & Machine Learning',
-      description: 'Developed and deployed a Generative AI application enabling users to analyze CSV datasets through natural language queries via a Streamlit interface. Integrated LLM APIs to convert user questions into executable Pandas and SQL operations, implementing prompt engineering workflows to improve response accuracy and reduce hallucinations.',
-      tags: ['Python', 'LLM API', 'Streamlit', 'Pandas', 'SQL', 'Prompt Engineering', 'RAG'],
-      github: 'https://github.com/sushant2701/Gen-Ai-Powered-Data-Analysis-Assistant.git',
+      description: 'Built a full-stack Python application enabling natural language queries over arbitrary CSV datasets using schema-aware prompt pipelines. Integrated Gemini LLM API with structured system prompting, output validation, and error handling demonstrating production-quality developer tooling.',
+      tags: ['Python', 'Streamlit', 'LLM API', 'SQL', 'Prompt Engineering', 'Error Handling'],
+      github: 'https://github.com/sushant2701/Gen-Ai-Powered-Data-Analysis-Assistant',
       live: 'https://gen-ai-powered-data-analysis-assistant-dgjgbhxbw6hliwhcorymc7.streamlit.app/',
       image: '',
       isKey: true
     },
     {
       id: 'p2',
-      title: 'Disease Prediction & Risk Scoring System',
-      domain: 'AI & Machine Learning',
-      description: 'Processed healthcare datasets containing 10,000+ records; performed EDA, feature engineering, missing-value treatment, and class balancing to prepare data for modeling. Developed and compared Logistic Regression, Random Forest, and Neural Network classification models, achieving 85% prediction accuracy. Conducted A/B testing and statistical experiments to evaluate model variants and optimize outcomes.',
-      tags: ['Python', 'Scikit-Learn', 'TensorFlow', 'Pandas', 'SQL', 'A/B Testing', 'Statistical Experiments'],
-      github: 'https://github.com/sushant2701/AI-in-the-Health-Care.git',
+      title: 'Real-Time GPS Emergency Communication System',
+      domain: 'IoT & Embedded Systems',
+      description: 'Designed a Python system to interface GPS/GSM hardware, parsing NMEA data on a single-button trigger. Built a low-level serial communication layer (UART) in Python to manage hardware I/O comparable to quantum instrument control API design, utilizing a reliable state machine.',
+      tags: ['Python', 'Systems Programming', 'IoT Software', 'UART', 'State Machines', 'Hardware I/O'],
+      github: '',
       image: ''
     },
     {
       id: 'p3',
-      title: 'Customer Churn Prediction & Segmentation Dashboard',
-      domain: 'AI & Machine Learning',
-      description: 'Built a customer churn prediction model using supervised machine learning (Logistic Regression, Random Forest, Ensemble Methods). Performed customer segmentation using clustering to identify distinct behavioral groups and high-risk cohorts. Developed Power BI dashboards to visualize customer behavior, retention KPIs, and segmentation insights.',
-      tags: ['Python', 'SQL', 'Scikit-Learn', 'Power BI', 'Customer Segmentation'],
-      github: 'https://github.com/sushant2701/customer-churn-risk-analytics.git',
-      image: ''
-    },
-    {
-      id: 'p4',
-      title: 'Customer Support SLA & Operations Dashboard',
-      domain: 'Data Analytics & BI',
-      description: 'Designed and implemented an ETL pipeline to extract and clean 40,000+ support ticket records, standardizing SLA fields and resolving timestamp gaps. Built an interactive Power BI dashboard with DAX measures for real-time compliance tracking, and delivered Excel reports to improve routing efficiency.',
-      tags: ['Python', 'SQL', 'Power BI', 'DAX', 'Advanced Excel', 'ETL', 'Data Pipeline'],
-      github: 'https://github.com/sushant2701/sla-operations-dashboard.git',
-      image: ''
-    },
-    {
-      id: 'p5',
-      title: 'Automated Sales Revenue MIS Dashboard',
-      domain: 'Data Analytics & BI',
-      description: 'Created an automated sales revenue Management Information System (MIS) dashboard in Power BI, integrating monthly revenue KPIs, sales pipeline analytics, monthly performance targets, and historical sales trends.',
-      tags: ['Power BI', 'Advanced Excel', 'MIS Reporting', 'Data Analytics', 'KPI Dashboards'],
-      github: 'https://github.com/sushant2701/Automated-Sales-Revenue-MIS-Dashboard.git',
-      image: ''
-    },
-    {
-      id: 'p7',
-      title: 'OTP Auth System (Student Problem Solver)',
+      title: 'MARK_SPACE — Interactive Portfolio Hub',
       domain: 'Web Development & Security',
-      description: 'Developed a secure and lightweight OTP authentication system designed to solve student login friction. Features a simplified verification process and clean dashboard frontend built using standard web technologies.',
-      tags: ['HTML', 'CSS', 'JavaScript', 'Security', 'Authentication', 'UI Design'],
-      github: 'https://github.com/sushant2701/otp-auth-system.git',
-      live: 'https://otp-auth-system.onrender.com/',
-      video: 'https://drive.google.com/file/d/1vF8jhGc3LQl41uj79TgXnClE37_jp_Ay/view',
-      image: ''
-    },
-    {
-      id: 'p9',
-      title: 'Portfolio Website',
-      domain: 'Web Development & Security',
-      description: 'Designed and built this responsive, high-performance portfolio website to showcase machine learning, cloud engineering, and data analytics work. Implemented a glassmorphic user interface using vanilla HTML/CSS and JavaScript, featuring dynamic mouse-parallax trails, typing animations, bento grid configurations, and smooth section routing.',
-      tags: ['HTML', 'CSS', 'JavaScript', 'Vite', 'Animations', 'Responsive Design'],
-      github: 'https://github.com/sushant2701/Portfolio.git',
-      image: ''
-    },
-    {
-      id: 'p10',
-      title: 'Branded Shoes E-Commerce Website',
-      domain: 'Web Development & Security',
-      description: 'Developed a fully responsive e-commerce web portal for branded shoes. Features a clean product catalog interface, cart management functionality, and dynamic search/filter features built using standard web technologies.',
-      tags: ['HTML', 'CSS', 'JavaScript', 'E-Commerce', 'Responsive UI'],
-      github: 'https://github.com/sushant2701/Branded-Shoes-ECommerce-Website.git',
-      image: ''
-    },
-    {
-      id: 'p6',
-      title: 'GPS-Enabled SOS Band: A User-Friendly Approach to Real-Time Emergency Communication',
-      domain: 'IoT & Embedded Systems',
-      description: 'Designed and developed a wearable SOS distress communication band integrating a GPS tracking module and GSM technology. Upon single-button activation, the system satellite-locks the user\'s location and dispatches real-time coordinates via emergency SMS alerts. Employs a low-power hardware cycle design to optimize battery performance, providing a highly reliable safety communication channel resilient to cellular data network outages.',
-      tags: ['GPS', 'SMS', 'IoT', 'Wearable Devices', 'Emergency Communication', 'Low-Power Design'],
-      github: '',
-      image: ''
-    },
-    {
-      id: 'p8',
-      title: 'Design and Implementation of a Dual-Controller Closed-Loop Smart Ingredient Dispensing System with Conveyor-Assisted Positioning',
-      domain: 'IoT & Embedded Systems',
-      description: 'Developed an automated kitchen dispensing system leveraging a Raspberry Pi for high-level script execution/GUI and an ESP32 microcontroller for closed-loop container positioning and hardware actuation. Features an IR-triggered conveyor belt positioning mechanism, load cell weight feedback, and servo/stepper-driven dispensing units achieving high gram-level measurement precision.',
-      tags: ['Raspberry Pi', 'ESP32', 'Load Cell Feedback', 'Conveyor Positioning', 'Kitchen Automation', 'Embedded Systems'],
-      github: '',
+      description: 'Designed and deployed this framework-free personal developer portfolio. Features native voice commands via the Web Speech API, a live real-time interaction analytics database layer using Supabase, and a hidden "Control Space" dashboard drawer for seamless local updates.',
+      tags: ['Vanilla JS', 'Vite v8', 'Web Speech API', 'Supabase', 'Secure Analytics', 'Control Space'],
+      github: 'https://github.com/sushant2701/Portfolio',
+      live: '',
       image: ''
     }
   ],
 
   skills: {
-    generativeAI: [
-      'Large Language Models (LLMs)', 'Prompt Engineering', 'RAG', 'OpenAI API', 'Anthropic API'
+    lowLevelCore: [
+      'Python', 'C', 'C++', 'Bash/Shell Scripting', 'Linux (Ubuntu/Debian) Systems Programming'
     ],
-    machineLearning: [
-      'Scikit-Learn', 'TensorFlow', 'Logistic Regression', 'Random Forest', 'Feature Engineering', 'Model Evaluation', 'Predictive Modeling'
+    scientificComputing: [
+      'NumPy', 'Pandas', 'Matplotlib', 'Statistical Processing', 'SQL/Query Optimization'
     ],
-    programmingQuery: [
-      'Python', 'SQL', 'R (basics)'
+    hardwareQuantum: [
+      'FPGA Architecture Fundamentals', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Quantum Circuit Basics'
     ],
-    dataAnalysis: [
-      'Pandas', 'NumPy', 'Data Cleaning', 'Data Wrangling', 'Exploratory Data Analysis (EDA)', 'Statistical Analysis', 'A/B Testing', 'Hypothesis Testing'
-    ],
-    visualizationDeployment: [
-      'Power BI', 'Matplotlib', 'Seaborn', 'Streamlit', 'Git', 'GitHub', 'Google Cloud', 'Jupyter Notebook', 'Google Colab'
+    devToolsArch: [
+      'Git/GitHub', 'CI/CD Pipelines', 'REST APIs', 'API Design', 'System Design', 'Modular Architecture'
     ]
   },
 
   milestones: [
     {
       id: 'm1',
-      date: 'Feb 2026 – Present',
-      title: 'Python Full Stack Developer — Data Analytics at QSpiders',
-      description: 'Building end-to-end data pipelines integrating SQL backends with Power BI dashboards for real-time KPI and SLA reporting. Developing ETL workflows and implementing CI/CD-aligned deployment for Python data processes in Agile sprint cycles.'
+      date: '2026',
+      title: 'Python Full Stack Developer & Data Analytics | QSpiders Training Institute',
+      description: 'Developed end-to-end data pipelines integrating SQL backends with Power BI; focused on ETL workflows and CI/CD-aligned deployment in Agile sprint cycles applicable to experiment data pipelines.'
     },
     {
       id: 'm2',
-      date: 'Jan 2025 – Mar 2025',
-      title: 'Frontend Web Development Intern — Web Portal Development Internship',
-      description: 'Developed and tested responsive web modules using HTML, CSS, and JavaScript in an Agile development environment. Collaborated with cross-functional teams in code reviews and sprint cycles to improve platform functionality.'
+      date: 'Jul 2024 - Sep 2024',
+      title: 'AI/ML Software Intern | AICTE AI Internship',
+      description: 'Built end-to-end ML pipelines in Python for preprocessing and feature engineering; benchmarked classification models; produced structured technical documentation for calibration reporting.'
     },
     {
       id: 'm3',
-      date: 'Jul 2024 – Sep 2024',
-      title: 'AI & Machine Learning Intern — Government of India (AICTE)',
-      description: 'Performed data preprocessing, cleaning, and exploratory data analysis (EDA) on real-world large datasets to extract trends. Built/evaluated ML models (regression, classification, ensemble) using Scikit-Learn and TensorFlow; assessed accuracy, precision, recall, and ROC-AUC.'
+      date: 'Apr 2024 & Jul 2024',
+      title: 'Robotics & AI Software Intern | PMS RoBoTiCs, Pune',
+      description: 'Developed Python-based control scripts for real-time sensor data acquisition; engineered software-hardware abstraction layers translating high-level Python commands into low-level device actions.'
     }
   ]
 };
