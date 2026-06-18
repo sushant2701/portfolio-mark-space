@@ -26,6 +26,9 @@ export const SKILL_DEFINITIONS = {
   'Digital Logic Design': 'Constructing combinational and sequential digital systems (gates, flip-flops, state machines) to control signals.',
   'HDL Concepts (Verilog/VHDL basics)': 'Designing RTL logic for digital systems to manage high-speed pulse timing and hardware trigger routing.',
   'Qiskit': 'IBM\'s software development kit for writing quantum circuits, simulating quantum operations, and executing algorithms on hardware backends.',
+  'Qiskit (Familiar)': 'IBM\'s software development kit for writing, simulating, and executing quantum circuits on real hardware and simulators.',
+  'Quantum Circuit Basics': 'Foundational concepts of quantum gates, superposition, entanglement, and representation of quantum states.',
+  'Quantum Computing Fundamentals': 'Core theoretical concepts of quantum information theory, qubits, and quantum algorithm paradigms.',
   'Cirq': 'Google\'s software library for writing, manipulating, and optimizing quantum circuits on NISQ computers.',
   'Pulse scheduling': 'Defining custom microwave and radio-frequency analog waveforms to control physical qubit state operations.',
   'Calibration automation': 'Automating closed-loop measurement feedback cycles to correct drift and optimize qubit control gate fidelities.',
@@ -105,7 +108,7 @@ const DEFAULT_STATE = {
       'NumPy', 'SciPy', 'Pandas', 'Matplotlib', 'Data Analysis', 'Statistical Processing', 'SQL Backend Query Optimization', 'ETL Pipelines', 'Power BI'
     ],
     hardwareQuantum: [
-      'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation'
+      'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit (Familiar)', 'Quantum Circuit Basics', 'Quantum Computing Fundamentals', 'Cirq', 'Pulse scheduling', 'Calibration automation'
     ],
     aiPromptEng: [
       'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs'
@@ -132,7 +135,7 @@ const DEFAULT_STATE = {
       id: 'm3',
       date: '2024',
       title: 'Robotics & AI Software Intern | PMS RoBoTiCs, Pune',
-      description: 'Developed Python-based control scripts for real-time sensor data acquisition; engineered software-hardware abstraction layers translating high-level Python instructions into low-level device commands for hardware interfacing.'
+      description: '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.'
     }
   ]
 };
@@ -204,12 +207,42 @@ async function saveStateToSupabase(stateData) {
  * Initialize state from Supabase, LocalStorage or defaults
  */
 export async function initState() {
+  let needsSync = false;
   if (isSupabaseConfigured) {
     const cloudState = await fetchStateFromSupabase();
     if (cloudState) {
       state = cloudState;
+      
+      // Auto-purge old milestones
+      if (state.milestones) {
+        const originalLen = state.milestones.length;
+        state.milestones = state.milestones.filter(m => 
+          !m.title.toLowerCase().includes('frontend web') && 
+          !m.title.toLowerCase().includes('web portal')
+        );
+        if (state.milestones.length !== originalLen) {
+          needsSync = true;
+        }
+        
+        // Update PMS Robotics milestone description in cloud state
+        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
+        const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
+        if (pmsMilestone && pmsMilestone.description !== targetDesc) {
+          pmsMilestone.description = targetDesc;
+          needsSync = true;
+        }
+      }
+      
+      // Ensure skills match the latest set defined in DEFAULT_STATE
+      state.skills = JSON.parse(JSON.stringify(DEFAULT_STATE.skills));
+      needsSync = true;
+      
       // Backup to LocalStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      
+      if (needsSync) {
+        saveStateToSupabase(state);
+      }
       return;
     }
   }
@@ -219,10 +252,25 @@ export async function initState() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       state = JSON.parse(stored);
-      // Ensure all keys exist
       if (!state.projects) state.projects = DEFAULT_STATE.projects;
-      if (!state.skills) state.skills = DEFAULT_STATE.skills;
-      if (!state.milestones) state.milestones = DEFAULT_STATE.milestones;
+      
+      // Auto-purge milestones in local fallback
+      if (state.milestones) {
+        state.milestones = state.milestones.filter(m => 
+          !m.title.toLowerCase().includes('frontend web') && 
+          !m.title.toLowerCase().includes('web portal')
+        );
+        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
+        const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
+        if (pmsMilestone && pmsMilestone.description !== targetDesc) {
+          pmsMilestone.description = targetDesc;
+        }
+      } else {
+        state.milestones = DEFAULT_STATE.milestones;
+      }
+      
+      state.skills = JSON.parse(JSON.stringify(DEFAULT_STATE.skills));
+      syncToStorage();
     } else {
       state = JSON.parse(JSON.stringify(DEFAULT_STATE));
       syncToStorage();

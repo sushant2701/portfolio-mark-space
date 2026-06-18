@@ -986,7 +986,7 @@ function boot() {
       const skillsList = [
         'Python', 'C', 'C++', 'Linux (Ubuntu/Debian)', 'Bash/Shell Scripting', 'Command-Line Tools', 'Debugging and performance optimization',
         'NumPy', 'SciPy', 'Pandas', 'Matplotlib', 'Data Analysis', 'Statistical Processing', 'SQL Backend Query Optimization', 'ETL Pipelines', 'Power BI',
-        'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation',
+        'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Qiskit (Familiar)', 'Quantum Circuit Basics', 'Quantum Computing Fundamentals', 'Cirq', 'Pulse scheduling', 'Calibration automation',
         'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs',
         'Git', 'GitHub', 'CI/CD Pipelines', 'REST APIs', 'API Design', 'System Design', 'Modular Architecture', 'Object-oriented and scalable software design'
       ];
