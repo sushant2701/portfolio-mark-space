@@ -213,7 +213,7 @@ export async function initState() {
     if (cloudState) {
       state = cloudState;
       
-      // Auto-purge old milestones
+      // Auto-purge old milestones and ensure all default milestones are present
       if (state.milestones) {
         const originalLen = state.milestones.length;
         state.milestones = state.milestones.filter(m => 
@@ -224,6 +224,18 @@ export async function initState() {
           needsSync = true;
         }
         
+        // Ensure all DEFAULT_STATE milestones are present in the state loaded from DB
+        DEFAULT_STATE.milestones.forEach(defMilestone => {
+          const exists = state.milestones.some(m => 
+            m.id === defMilestone.id || 
+            m.title.toLowerCase().replace(/[^a-z0-9]/g, '').includes('pmsrobotics')
+          );
+          if (!exists) {
+            state.milestones.push(JSON.parse(JSON.stringify(defMilestone)));
+            needsSync = true;
+          }
+        });
+
         // Update PMS Robotics milestone description in cloud state
         const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
         const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
@@ -231,6 +243,17 @@ export async function initState() {
           pmsMilestone.description = targetDesc;
           needsSync = true;
         }
+
+        // Sort milestones to maintain newest-first order (m1, m2, m3)
+        const idOrder = { 'm1': 1, 'm2': 2, 'm3': 3 };
+        state.milestones.sort((a, b) => {
+          const orderA = idOrder[a.id] || 99;
+          const orderB = idOrder[b.id] || 99;
+          return orderA - orderB;
+        });
+      } else {
+        state.milestones = JSON.parse(JSON.stringify(DEFAULT_STATE.milestones));
+        needsSync = true;
       }
       
       // Ensure skills match the latest set defined in DEFAULT_STATE
@@ -254,19 +277,37 @@ export async function initState() {
       state = JSON.parse(stored);
       if (!state.projects) state.projects = DEFAULT_STATE.projects;
       
-      // Auto-purge milestones in local fallback
+      // Auto-purge milestones and restore missing default ones in local fallback
       if (state.milestones) {
         state.milestones = state.milestones.filter(m => 
           !m.title.toLowerCase().includes('frontend web') && 
           !m.title.toLowerCase().includes('web portal')
         );
+        
+        DEFAULT_STATE.milestones.forEach(defMilestone => {
+          const exists = state.milestones.some(m => 
+            m.id === defMilestone.id || 
+            m.title.toLowerCase().replace(/[^a-z0-9]/g, '').includes('pmsrobotics')
+          );
+          if (!exists) {
+            state.milestones.push(JSON.parse(JSON.stringify(defMilestone)));
+          }
+        });
+
         const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
         const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
         if (pmsMilestone && pmsMilestone.description !== targetDesc) {
           pmsMilestone.description = targetDesc;
         }
+
+        const idOrder = { 'm1': 1, 'm2': 2, 'm3': 3 };
+        state.milestones.sort((a, b) => {
+          const orderA = idOrder[a.id] || 99;
+          const orderB = idOrder[b.id] || 99;
+          return orderA - orderB;
+        });
       } else {
-        state.milestones = DEFAULT_STATE.milestones;
+        state.milestones = JSON.parse(JSON.stringify(DEFAULT_STATE.milestones));
       }
       
       state.skills = JSON.parse(JSON.stringify(DEFAULT_STATE.skills));
