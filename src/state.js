@@ -8,33 +8,40 @@ export const SKILL_DEFINITIONS = {
   'Python': 'High-level programming language used for quantum experiment orchestration, rapid scripting, and scientific computing.',
   'C': 'Procedural language used for high-performance low-level firmware, kernel modules, and hardware drivers.',
   'C++': 'Object-oriented language used for high-frequency instrument communication, low-latency control software, and performance-critical systems.',
-  'Linux-based systems development': 'Building system-level software on Linux environments, optimizing multi-threading, IPC, and POSIX compliance.',
+  'Linux (Ubuntu/Debian)': 'Operating system platform for deploying systems programming, IPC, socket scripting, and hardware controllers.',
   'Bash/Shell Scripting': 'Automation scripting for Linux systems, build pipelines, environment configuration, and task scheduling.',
-  'Debugging and performance optimization': 'Profiling execution paths, resolving race conditions, and optimizing CPU/memory allocation for low-latency pipelines.',
+  'Command-Line Tools': 'Using CLI scripts, core utilities, and text processing tools to manage environments and compile code.',
+  'Debugging and performance optimization': 'Profiling code execution, resolving race conditions, and optimizing CPU/memory usage for real-time systems.',
   'NumPy': 'Fundamental scientific computing library in Python, supporting large multidimensional arrays, matrices, and linear algebra operations.',
   'SciPy': 'Open-source Python library used for scientific computations, containing modules for optimization, linear algebra, integration, and statistics.',
   'Pandas': 'High-performance Python library for data manipulation, analysis, structured cleaning, and parsing experiment telemetry logs.',
-  'Scientific computing and data analysis': 'Applying numerical analysis, model fitting, and statistical processing to extract signals from noisy experiment data.',
-  'SQL backend query optimization': 'Designing and tuning relational database schemas to efficiently query large-scale historical calibration datasets.',
-  'Power BI': 'Microsoft\'s business intelligence tool for creating interactive visualizations, data models, and dashboards.',
-  'ETL pipelines': 'Extracting, transforming, and loading high-volume experiment and system logs into structured analytics data stores.',
-  'FPGA Architecture & HW/SW Interfaces': 'Configuring reconfigurable hardware logic gates, memory blocks, and high-speed PCIe/AXI hardware-software communication buses.',
-  'Digital Logic Design': 'Designing combinational and sequential logic circuits, clock domain crossings, and hardware state machines.',
-  'HDL Concepts': 'Hardware Description Language (Verilog/VHDL) methodologies for describing register-transfer level (RTL) systems and logic simulation.',
-  'Qiskit': 'IBM\'s open-source SDK for writing, simulating, and running quantum circuits and algorithms on simulator backends and real devices.',
-  'Cirq': 'Google\'s software library for writing, manipulating, and optimizing quantum circuits on NISQ quantum computers.',
-  'Pulse scheduling': 'Defining exact microwave and radio-frequency analog waveforms to control physical qubit state operations.',
+  'Matplotlib': 'Primary visualization engine for plotting calibration curves, real-time sensor streams, and signal measurements.',
+  'Data Analysis': 'Transforming raw datasets into structured formats to extract insights, patterns, and validation metrics.',
+  'Statistical Processing': 'Applying mathematical and statistical metrics (e.g. noise analysis, fitting algorithms) to clean raw instrument readings.',
+  'SQL Backend Query Optimization': 'Designing, querying, and indexing relational database schemas to efficiently manage calibration constants and metadata.',
+  'ETL Pipelines': 'Extracting, transforming, and loading high-volume system and experiment logs into structured data stores.',
+  'Power BI': 'Creating interactive dashboards and reports to track project SLA metrics and analytics KPIs.',
+  'FPGA Architecture Fundamentals': 'Basic principles of reconfigurable digital hardware, lookup tables, and clock domain crossings in real-time controllers.',
+  'HW/SW Interfaces': 'Configuring PCIe, AXI, and memory bus communication protocols between hardware boards and software control scripts.',
+  'Digital Logic Design': 'Constructing combinational and sequential digital systems (gates, flip-flops, state machines) to control signals.',
+  'HDL Concepts (Verilog/VHDL basics)': 'Designing RTL logic for digital systems to manage high-speed pulse timing and hardware trigger routing.',
+  'Qiskit': 'IBM\'s software development kit for writing quantum circuits, simulating quantum operations, and executing algorithms on hardware backends.',
+  'Cirq': 'Google\'s software library for writing, manipulating, and optimizing quantum circuits on NISQ computers.',
+  'Pulse scheduling': 'Defining custom microwave and radio-frequency analog waveforms to control physical qubit state operations.',
   'Calibration automation': 'Automating closed-loop measurement feedback cycles to correct drift and optimize qubit control gate fidelities.',
-  'Generative AI': 'Utilizing artificial intelligence models to generate novel data, code, or structured responses based on training patterns.',
-  'Large Language Models': 'Deep learning neural networks trained on massive textual data to understand and generate natural language.',
-  'System Prompt Engineering': 'Designing robust system instructions, multi-turn contexts, and templates to align Generative AI behaviors.',
-  'Output Validation': 'Enforcing structural, type-safe schema constraints on LLM responses to ensure integration stability in developer tooling.',
-  'Gemini/Claude developer APIs': 'Leveraging state-of-the-art developer APIs for language generation, reasoning, and context window operations.',
-  'Git/GitHub': 'Distributed version control and collaboration platform for managing codebases, code review pull requests, and release tracking.',
-  'CI/CD pipelines': 'Continuous Integration and Continuous Deployment workflows for automated testing, packaging, and deploying software modules.',
-  'Software engineering best practices': 'Writing clean, documented, peer-reviewed, and unit-tested code aligned with style guides and production safety.',
-  'REST APIs': 'Designing stateless, resource-oriented HTTP interfaces for remote monitoring, telemetry retrieval, and orchestration commands.',
-  'Object-oriented and scalable software design': 'Structuring complex software systems into reusable, decoupled components using OOP design patterns and design principles.'
+  'Generative AI': 'Building intelligent tools and assistants powered by Generative AI models.',
+  'Large Language Models': 'Integrating large-scale neural networks to process natural language queries and generate structured answers.',
+  'System Prompt Engineering': 'Designing, testing, and refining system-level prompts to align LLM agent behavior and reduce hallucination.',
+  'Output Validation': 'Verifying and formatting LLM outputs using structured schemas to ensure runtime stability in production systems.',
+  'Gemini/Claude developer APIs': 'Orchestrating multi-modal calls to state-of-the-art models for code generation and reasoning.',
+  'Git': 'Distributed version control system for tracking source code changes and branching histories.',
+  'GitHub': 'Hosting platform for collaborative software engineering workflows, pull reviews, and CI/CD actions.',
+  'CI/CD Pipelines': 'Automated testing and deployment routines ensuring instrument control drivers meet safety and regression specs.',
+  'REST APIs': 'Architecting stateless, resource-oriented HTTP interfaces for remote monitoring, telemetry retrieval, and orchestration commands.',
+  'API Design': 'Structuring clean, developer-friendly interfaces for low-level instrument control wrappers and backend systems.',
+  'System Design': 'Architecting reliable, low-latency, and distributed systems to coordinate high-speed control logic and telemetry.',
+  'Modular Architecture': 'Decoupling system logic into self-contained drivers, APIs, and frontends to maximize reuse and maintainability.',
+  'Object-oriented and scalable software design': 'Structuring codebases into clear, modular interfaces using OOP design patterns for production environments.'
 };
 
 // ── Default Data ──
@@ -44,7 +51,7 @@ const DEFAULT_STATE = {
       id: 'p1',
       title: 'GenAI-Powered Data Analysis Platform',
       domain: 'AI & Machine Learning',
-      description: 'Built a full-stack Python application utilizing Gemini LLM API schema-aware prompt pipelines for natural language queries, demonstrating production-quality developer tooling, structured system prompting, Python API/SDK design, and runtime error handling.',
+      description: 'Full-stack Python application enabling natural language queries over arbitrary datasets using schema-aware prompt pipelines to translate NL to executable code.',
       tags: ['Python', 'Streamlit', 'Gemini API', 'SQL', 'Prompt Engineering', 'API Design', 'Error Handling'],
       github: 'https://github.com/sushant2701/Gen-Ai-Powered-Data-Analysis-Assistant',
       live: 'https://gen-ai-powered-data-analysis-assistant-dgjgbhxbw6hliwhcorymc7.streamlit.app/',
@@ -55,7 +62,7 @@ const DEFAULT_STATE = {
       id: 'p2',
       title: 'Real-Time GPS Emergency Communication System',
       domain: 'IoT & Embedded Systems',
-      description: 'Designed a Python system to interface GPS/GSM hardware, parsing NMEA coordinate data on a single-button trigger. Built a low-level serial communication layer (UART) in Python to manage hardware I/O and register states, utilizing reliable state-machine logic as a core hardware-software abstraction capability.',
+      description: 'Python software system interfacing GPS/GSM hardware modules, managing low-level serial communication layers (UART) for hardware I/O instrument control.',
       tags: ['Python', 'Systems Programming', 'IoT Software', 'UART', 'State Machines', 'Hardware I/O'],
       github: '',
       image: ''
@@ -64,7 +71,7 @@ const DEFAULT_STATE = {
       id: 'p3',
       title: 'MARK_SPACE — Interactive Portfolio Hub',
       domain: 'Web Development & Security',
-      description: 'Created this framework-free personal developer portfolio utilizing native browser API integration, clean asset delivery pipelines, and live database state synchronization via Supabase. Features native voice commands via the Web Speech API and a hidden Control Space drawer.',
+      description: 'Zero-framework modular developer architecture engineered with native browser APIs, Web Speech voice navigation, and live data backend state tracking.',
       tags: ['Vanilla JS', 'Vite v8', 'Web Speech API', 'Supabase', 'Secure Analytics', 'Control Space'],
       github: 'https://github.com/sushant2701/Portfolio',
       live: '',
@@ -92,19 +99,19 @@ const DEFAULT_STATE = {
 
   skills: {
     lowLevelCore: [
-      'Python', 'C', 'C++', 'Linux-based systems development', 'Bash/Shell Scripting', 'Debugging and performance optimization'
+      'Python', 'C', 'C++', 'Linux (Ubuntu/Debian)', 'Bash/Shell Scripting', 'Command-Line Tools', 'Debugging and performance optimization'
     ],
     scientificComputing: [
-      'NumPy', 'SciPy', 'Pandas', 'Scientific computing and data analysis', 'SQL backend query optimization', 'Power BI', 'ETL pipelines'
+      'NumPy', 'SciPy', 'Pandas', 'Matplotlib', 'Data Analysis', 'Statistical Processing', 'SQL Backend Query Optimization', 'ETL Pipelines', 'Power BI'
     ],
     hardwareQuantum: [
-      'FPGA Architecture & HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation'
+      'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation'
     ],
     aiPromptEng: [
       'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs'
     ],
     devToolsArch: [
-      'Git/GitHub', 'CI/CD pipelines', 'Software engineering best practices', 'REST APIs', 'Object-oriented and scalable software design'
+      'Git', 'GitHub', 'CI/CD Pipelines', 'REST APIs', 'API Design', 'System Design', 'Modular Architecture', 'Object-oriented and scalable software design'
     ]
   },
 
@@ -112,20 +119,20 @@ const DEFAULT_STATE = {
     {
       id: 'm1',
       date: '2026',
-      title: 'Python Full Stack Developer (Data Analytics Focus) | QSpiders Training Institute',
-      description: 'Building data pipelines, SQL backends, Power BI KPI reporting, and implementing CI/CD deployment.'
+      title: 'Python Full Stack Developer (Data Analytics) | QSpiders Training Institute',
+      description: 'Building end-to-end data pipelines integrating SQL backends with Power BI dashboards for real-time KPI reporting and implementing ETL workflows in Agile sprint cycles.'
     },
     {
       id: 'm2',
       date: 'Jul 2024 - Sep 2024',
       title: 'AI/ML Software Intern | AICTE AI Internship',
-      description: 'Building end-to-end ML pipelines in Python, preprocessing, feature engineering, and documenting calibration metrics.'
+      description: 'Built end-to-end ML pipelines in Python (Pandas, NumPy, Scikit-learn) for data preprocessing, feature engineering, and model evaluation.'
     },
     {
       id: 'm3',
       date: '2024',
       title: 'Robotics & AI Software Intern | PMS RoBoTiCs, Pune',
-      description: 'Developing Python control algorithms to interface hardware via software commands and managing abstraction layers.'
+      description: 'Developed Python-based control scripts for real-time sensor data acquisition; engineered software-hardware abstraction layers translating high-level Python instructions into low-level device commands for hardware interfacing.'
     }
   ]
 };

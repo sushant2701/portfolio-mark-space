@@ -984,11 +984,11 @@ function boot() {
 
       // 1. Resolve Skill Tooltip directly if query specifically targets a skill details
       const skillsList = [
-        'Python', 'C', 'C++', 'Linux-based systems development', 'Bash/Shell Scripting', 'Debugging and performance optimization',
-        'NumPy', 'SciPy', 'Pandas', 'Scientific computing and data analysis', 'SQL backend query optimization', 'Power BI', 'ETL pipelines',
-        'FPGA Architecture & HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation',
+        'Python', 'C', 'C++', 'Linux (Ubuntu/Debian)', 'Bash/Shell Scripting', 'Command-Line Tools', 'Debugging and performance optimization',
+        'NumPy', 'SciPy', 'Pandas', 'Matplotlib', 'Data Analysis', 'Statistical Processing', 'SQL Backend Query Optimization', 'ETL Pipelines', 'Power BI',
+        'FPGA Architecture Fundamentals', 'HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation',
         'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs',
-        'Git/GitHub', 'CI/CD pipelines', 'Software engineering best practices', 'REST APIs', 'Object-oriented and scalable software design'
+        'Git', 'GitHub', 'CI/CD Pipelines', 'REST APIs', 'API Design', 'System Design', 'Modular Architecture', 'Object-oriented and scalable software design'
       ];
       
       let matchedSkill = null;

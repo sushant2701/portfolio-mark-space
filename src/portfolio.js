@@ -134,7 +134,7 @@ function renderHero() {
               I'm <span class="reveal-wrapper"><span class="reveal-content" id="reveal-name">SUSHANT SHRIMAL</span><span class="reveal-box"></span></span>
             </h1>
             <h2 class="hero-subtitle-typing" data-animate data-delay="2">
-              --<span id="typewriter" data-words='["Full-Stack Quantum Control Engineer", "AI & Prompt Engineer", "Data Analytics Specialist", "Systems Programmer"]'></span><span class="typewriter-cursor">|</span>
+              --<span id="typewriter" data-words='["Software Developer", "AI & Prompt Engineer", "Data Analytics Specialist"]'></span><span class="typewriter-cursor">|</span>
             </h2>
             <p class="hero-description" data-animate data-delay="3">
               Electronics & Telecommunication Engineering student building end-to-end software pipelines, experiment orchestration systems, and low-level hardware control platforms.
