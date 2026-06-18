@@ -8,24 +8,33 @@ export const SKILL_DEFINITIONS = {
   'Python': 'High-level programming language used for quantum experiment orchestration, rapid scripting, and scientific computing.',
   'C': 'Procedural language used for high-performance low-level firmware, kernel modules, and hardware drivers.',
   'C++': 'Object-oriented language used for high-frequency instrument communication, low-latency control software, and performance-critical systems.',
+  'Linux-based systems development': 'Building system-level software on Linux environments, optimizing multi-threading, IPC, and POSIX compliance.',
   'Bash/Shell Scripting': 'Automation scripting for Linux systems, build pipelines, environment configuration, and task scheduling.',
-  'Linux (Ubuntu/Debian) Systems Programming': 'System-level software development using POSIX APIs, multi-threading, socket programming, and inter-process communication.',
+  'Debugging and performance optimization': 'Profiling execution paths, resolving race conditions, and optimizing CPU/memory allocation for low-latency pipelines.',
   'NumPy': 'Fundamental scientific computing library in Python, supporting large multidimensional arrays, matrices, and linear algebra operations.',
+  'SciPy': 'Open-source Python library used for scientific computations, containing modules for optimization, linear algebra, integration, and statistics.',
   'Pandas': 'High-performance Python library for data manipulation, analysis, structured cleaning, and parsing experiment telemetry logs.',
-  'Matplotlib': 'Foundational visualization library in Python for generating static, animated, and interactive signal plots.',
-  'Statistical Processing': 'Applying mathematical and statistical methods to filter noise, fit calibration curves, and analyze instrument output datasets.',
-  'SQL/Query Optimization': 'Designing, querying, and indexing relational database schemas to efficiently manage calibration constants and metadata.',
-  'FPGA Architecture Fundamentals': 'Basic principles of reconfigurable digital hardware, lookup tables (LUTs), flip-flops, block RAM, and clock domain crossing.',
-  'Digital Logic Design': 'Designing combination and sequential logic circuits, registers, multiplexers, and hardware state machines.',
-  'HDL Concepts (Verilog/VHDL basics)': 'Hardware Description Language concepts for modeling digital system behavior, register-transfer level (RTL) logic, and timing checks.',
+  'Scientific computing and data analysis': 'Applying numerical analysis, model fitting, and statistical processing to extract signals from noisy experiment data.',
+  'SQL backend query optimization': 'Designing and tuning relational database schemas to efficiently query large-scale historical calibration datasets.',
+  'Power BI': 'Microsoft\'s business intelligence tool for creating interactive visualizations, data models, and dashboards.',
+  'ETL pipelines': 'Extracting, transforming, and loading high-volume experiment and system logs into structured analytics data stores.',
+  'FPGA Architecture & HW/SW Interfaces': 'Configuring reconfigurable hardware logic gates, memory blocks, and high-speed PCIe/AXI hardware-software communication buses.',
+  'Digital Logic Design': 'Designing combinational and sequential logic circuits, clock domain crossings, and hardware state machines.',
+  'HDL Concepts': 'Hardware Description Language (Verilog/VHDL) methodologies for describing register-transfer level (RTL) systems and logic simulation.',
   'Qiskit': 'IBM\'s open-source SDK for writing, simulating, and running quantum circuits and algorithms on simulator backends and real devices.',
-  'Quantum Circuit Basics': 'Foundations of qubits, quantum logic gates, superposition, entanglement, measurement operations, and circuit depth.',
+  'Cirq': 'Google\'s software library for writing, manipulating, and optimizing quantum circuits on NISQ quantum computers.',
+  'Pulse scheduling': 'Defining exact microwave and radio-frequency analog waveforms to control physical qubit state operations.',
+  'Calibration automation': 'Automating closed-loop measurement feedback cycles to correct drift and optimize qubit control gate fidelities.',
+  'Generative AI': 'Utilizing artificial intelligence models to generate novel data, code, or structured responses based on training patterns.',
+  'Large Language Models': 'Deep learning neural networks trained on massive textual data to understand and generate natural language.',
+  'System Prompt Engineering': 'Designing robust system instructions, multi-turn contexts, and templates to align Generative AI behaviors.',
+  'Output Validation': 'Enforcing structural, type-safe schema constraints on LLM responses to ensure integration stability in developer tooling.',
+  'Gemini/Claude developer APIs': 'Leveraging state-of-the-art developer APIs for language generation, reasoning, and context window operations.',
   'Git/GitHub': 'Distributed version control and collaboration platform for managing codebases, code review pull requests, and release tracking.',
-  'CI/CD Pipelines': 'Continuous Integration and Continuous Deployment workflows for automated testing, packaging, and deploying software modules.',
+  'CI/CD pipelines': 'Continuous Integration and Continuous Deployment workflows for automated testing, packaging, and deploying software modules.',
+  'Software engineering best practices': 'Writing clean, documented, peer-reviewed, and unit-tested code aligned with style guides and production safety.',
   'REST APIs': 'Designing stateless, resource-oriented HTTP interfaces for remote monitoring, telemetry retrieval, and orchestration commands.',
-  'API Design': 'Structuring clean, developer-friendly interfaces for low-level instrument wrappers, libraries, and web services.',
-  'System Design': 'Architecting scalable, reliable, and low-latency systems coordinating high-speed control logic and distributed data processing.',
-  'Modular Architecture': 'Decoupling software systems into independent, reusable modules to minimize technical debt and maximize extensibility.'
+  'Object-oriented and scalable software design': 'Structuring complex software systems into reusable, decoupled components using OOP design patterns and design principles.'
 };
 
 // ── Default Data ──
@@ -35,8 +44,8 @@ const DEFAULT_STATE = {
       id: 'p1',
       title: 'GenAI-Powered Data Analysis Platform',
       domain: 'AI & Machine Learning',
-      description: 'Built a full-stack Python application enabling natural language queries over arbitrary CSV datasets using schema-aware prompt pipelines. Integrated Gemini LLM API with structured system prompting, output validation, and error handling demonstrating production-quality developer tooling.',
-      tags: ['Python', 'Streamlit', 'LLM API', 'SQL', 'Prompt Engineering', 'Error Handling'],
+      description: 'Built a full-stack Python application utilizing Gemini LLM API schema-aware prompt pipelines for natural language queries, demonstrating production-quality developer tooling, structured system prompting, Python API/SDK design, and runtime error handling.',
+      tags: ['Python', 'Streamlit', 'Gemini API', 'SQL', 'Prompt Engineering', 'API Design', 'Error Handling'],
       github: 'https://github.com/sushant2701/Gen-Ai-Powered-Data-Analysis-Assistant',
       live: 'https://gen-ai-powered-data-analysis-assistant-dgjgbhxbw6hliwhcorymc7.streamlit.app/',
       image: '',
@@ -46,7 +55,7 @@ const DEFAULT_STATE = {
       id: 'p2',
       title: 'Real-Time GPS Emergency Communication System',
       domain: 'IoT & Embedded Systems',
-      description: 'Designed a Python system to interface GPS/GSM hardware, parsing NMEA data on a single-button trigger. Built a low-level serial communication layer (UART) in Python to manage hardware I/O comparable to quantum instrument control API design, utilizing a reliable state machine.',
+      description: 'Designed a Python system to interface GPS/GSM hardware, parsing NMEA coordinate data on a single-button trigger. Built a low-level serial communication layer (UART) in Python to manage hardware I/O and register states, utilizing reliable state-machine logic as a core hardware-software abstraction capability.',
       tags: ['Python', 'Systems Programming', 'IoT Software', 'UART', 'State Machines', 'Hardware I/O'],
       github: '',
       image: ''
@@ -55,26 +64,47 @@ const DEFAULT_STATE = {
       id: 'p3',
       title: 'MARK_SPACE — Interactive Portfolio Hub',
       domain: 'Web Development & Security',
-      description: 'Designed and deployed this framework-free personal developer portfolio. Features native voice commands via the Web Speech API, a live real-time interaction analytics database layer using Supabase, and a hidden "Control Space" dashboard drawer for seamless local updates.',
+      description: 'Created this framework-free personal developer portfolio utilizing native browser API integration, clean asset delivery pipelines, and live database state synchronization via Supabase. Features native voice commands via the Web Speech API and a hidden Control Space drawer.',
       tags: ['Vanilla JS', 'Vite v8', 'Web Speech API', 'Supabase', 'Secure Analytics', 'Control Space'],
       github: 'https://github.com/sushant2701/Portfolio',
       live: '',
+      image: ''
+    },
+    {
+      id: 'p4',
+      title: 'Customer Support SLA & Operations Dashboard',
+      domain: 'Data Analytics & BI',
+      description: 'Designed and implemented an ETL pipeline to extract and clean 40,000+ support ticket records, standardizing SLA fields and resolving timestamp gaps. Built an interactive Power BI dashboard with DAX measures for real-time compliance tracking, and delivered Excel reports to improve routing efficiency.',
+      tags: ['Python', 'SQL', 'Power BI', 'DAX', 'Advanced Excel', 'ETL', 'Data Pipeline'],
+      github: 'https://github.com/sushant2701/sla-operations-dashboard.git',
+      image: ''
+    },
+    {
+      id: 'p5',
+      title: 'Automated Sales Revenue MIS Dashboard',
+      domain: 'Data Analytics & BI',
+      description: 'Created an automated sales revenue Management Information System (MIS) dashboard in Power BI, integrating monthly revenue KPIs, sales pipeline analytics, monthly performance targets, and historical sales trends.',
+      tags: ['Power BI', 'Advanced Excel', 'MIS Reporting', 'Data Analytics', 'KPI Dashboards'],
+      github: 'https://github.com/sushant2701/Automated-Sales-Revenue-MIS-Dashboard.git',
       image: ''
     }
   ],
 
   skills: {
     lowLevelCore: [
-      'Python', 'C', 'C++', 'Bash/Shell Scripting', 'Linux (Ubuntu/Debian) Systems Programming'
+      'Python', 'C', 'C++', 'Linux-based systems development', 'Bash/Shell Scripting', 'Debugging and performance optimization'
     ],
     scientificComputing: [
-      'NumPy', 'Pandas', 'Matplotlib', 'Statistical Processing', 'SQL/Query Optimization'
+      'NumPy', 'SciPy', 'Pandas', 'Scientific computing and data analysis', 'SQL backend query optimization', 'Power BI', 'ETL pipelines'
     ],
     hardwareQuantum: [
-      'FPGA Architecture Fundamentals', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)', 'Qiskit', 'Quantum Circuit Basics'
+      'FPGA Architecture & HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation'
+    ],
+    aiPromptEng: [
+      'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs'
     ],
     devToolsArch: [
-      'Git/GitHub', 'CI/CD Pipelines', 'REST APIs', 'API Design', 'System Design', 'Modular Architecture'
+      'Git/GitHub', 'CI/CD pipelines', 'Software engineering best practices', 'REST APIs', 'Object-oriented and scalable software design'
     ]
   },
 
@@ -82,20 +112,20 @@ const DEFAULT_STATE = {
     {
       id: 'm1',
       date: '2026',
-      title: 'Python Full Stack Developer & Data Analytics | QSpiders Training Institute',
-      description: 'Developed end-to-end data pipelines integrating SQL backends with Power BI; focused on ETL workflows and CI/CD-aligned deployment in Agile sprint cycles applicable to experiment data pipelines.'
+      title: 'Python Full Stack Developer (Data Analytics Focus) | QSpiders Training Institute',
+      description: 'Building data pipelines, SQL backends, Power BI KPI reporting, and implementing CI/CD deployment.'
     },
     {
       id: 'm2',
       date: 'Jul 2024 - Sep 2024',
       title: 'AI/ML Software Intern | AICTE AI Internship',
-      description: 'Built end-to-end ML pipelines in Python for preprocessing and feature engineering; benchmarked classification models; produced structured technical documentation for calibration reporting.'
+      description: 'Building end-to-end ML pipelines in Python, preprocessing, feature engineering, and documenting calibration metrics.'
     },
     {
       id: 'm3',
-      date: 'Apr 2024 & Jul 2024',
+      date: '2024',
       title: 'Robotics & AI Software Intern | PMS RoBoTiCs, Pune',
-      description: 'Developed Python-based control scripts for real-time sensor data acquisition; engineered software-hardware abstraction layers translating high-level Python commands into low-level device actions.'
+      description: 'Developing Python control algorithms to interface hardware via software commands and managing abstraction layers.'
     }
   ]
 };

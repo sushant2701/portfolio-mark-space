@@ -591,6 +591,7 @@ function boot() {
           // Multi-alternative keyword scanning to match voice intents accurately
           const boostWordList = [
             'otp', 'genai', 'gps', 'uart', 'serial', 'quantum', 'qiskit', 'fpga', 'hdl', 'verilog',
+            'qbit force', 'calibration', 'orchestration', 'pulse', 'latency', 'sdk', 'api design', 'cirq', 'scipy',
             'linkedin', 'github', 'guthub', 'source code', 'repository', 'repo',
             'control space', 'controlspace', 'guide', 'instructions', 'commands',
             'mute', 'unmute', 'refresh', 'restart', 'reboot', 'education', 'cgpa', 'gpa',
@@ -718,7 +719,7 @@ function boot() {
           'go to', 'show', 'open', 'view', 'explain', 'click', 'tell', 'introduce', 'who is', 'what', 
           'quantum', 'qiskit', 'fpga', 'hdl', 'genai', 'gps', 'uart', 'serial', 'experience', 'education', 'skills', 'projects',
           'github', 'git', 'linkedin', 'contact', 'email', 'mail', 'connect', 'controlspace', 'control space',
-          'chatbot', 'chat', 'mark27', 'jarvis', 'help', 'guide'
+          'chatbot', 'chat', 'mark27', 'jarvis', 'help', 'guide', 'calibration', 'orchestration', 'pulse', 'latency', 'sdk', 'cirq', 'scipy', 'qbit force', 'pipeline'
         ];
         const hasKeyword = knownKeywords.some(kw => clean.includes(kw));
         if (!hasKeyword && !wasAwaiting) {
@@ -744,7 +745,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#projects-ai-machine-learning') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The GenAI-Powered Data Analysis Platform enables querying CSV datasets in natural language using the Gemini LLM API and Streamlit with structured output validation.");
+            speakNavigator("The GenAI-Powered Data Analysis Platform is a production-quality developer tool featuring structured system prompting, Python API/SDK design, and robust runtime error handling for querying arbitrary CSV files.");
             showToast("Navigated to GenAI Platform");
           }
         },
@@ -757,7 +758,7 @@ function boot() {
           action: () => {
             const el = document.querySelector('#projects-iot-embedded-systems') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("The GPS Emergency Communication System interfaces GPS and GSM hardware over UART using a robust Python state machine to manage serial I/O.");
+            speakNavigator("The Real-Time GPS Emergency Communication System implements low-level serial communication over UART, hardware I/O interfacing, and reliable state-machine logic as core hardware-software abstraction capabilities.");
             showToast("Navigated to GPS Emergency System");
           }
         },
@@ -770,8 +771,34 @@ function boot() {
           action: () => {
             const el = document.querySelector('#projects-web-development-security') || document.querySelector('#projects');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            speakNavigator("MARK_SPACE is this framework-free personal developer portfolio, featuring native voice commands via the Web Speech API and Supabase database tracking.");
+            speakNavigator("MARK_SPACE is a personal portfolio hub built on a zero-framework modular architecture, featuring native browser API integration, clean asset delivery pipelines, and live database state synchronization via Supabase.");
             showToast("Navigated to MARK_SPACE Project");
+          }
+        },
+        {
+          key: 'hardware_integration',
+          label: 'explain hardware integration and systems programming',
+          samplePhrase: 'systems programming',
+          keywords: ['hardware integration', 'systems programming', 'low-level', 'uart', 'serial', 'fpga', 'hdl'],
+          phrases: ['tell me about hardware integration', 'explain systems programming capability', 'low level device control', 'fpga hdl engineering'],
+          action: () => {
+            const el = document.querySelector('#projects-iot-embedded-systems') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant bridges high-level software with hardware control platforms, specializing in low-level serial communication, FPGA architectures, and custom device abstraction layers.");
+            showToast("Navigated to Systems & IoT Projects");
+          }
+        },
+        {
+          key: 'data_pipelines',
+          label: 'show data pipelines and analytics dashboards',
+          samplePhrase: 'data pipelines',
+          keywords: ['data pipelines', 'data analytics', 'etl', 'sql', 'power bi', 'pipeline'],
+          phrases: ['show data pipelines', 'explain data analytics work', 'etl workflow reporting', 'power bi dashboards'],
+          action: () => {
+            const el = document.querySelector('#projects-data-analytics-bi') || document.querySelector('#projects');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            speakNavigator("Sushant engineers end-to-end data pipelines, utilizing optimized SQL backends, custom ETL workflows, and interactive Power BI dashboards for calibration and operational reporting.");
+            showToast("Navigated to Data Analytics Projects");
           }
         },
         {
@@ -957,11 +984,11 @@ function boot() {
 
       // 1. Resolve Skill Tooltip directly if query specifically targets a skill details
       const skillsList = [
-        'Python', 'C', 'C++', 'Bash/Shell Scripting', 'Linux (Ubuntu/Debian) Systems Programming',
-        'NumPy', 'Pandas', 'Matplotlib', 'Statistical Processing', 'SQL/Query Optimization',
-        'FPGA Architecture Fundamentals', 'Digital Logic Design', 'HDL Concepts (Verilog/VHDL basics)',
-        'Qiskit', 'Quantum Circuit Basics', 'Git/GitHub', 'CI/CD Pipelines', 'REST APIs',
-        'API Design', 'System Design', 'Modular Architecture'
+        'Python', 'C', 'C++', 'Linux-based systems development', 'Bash/Shell Scripting', 'Debugging and performance optimization',
+        'NumPy', 'SciPy', 'Pandas', 'Scientific computing and data analysis', 'SQL backend query optimization', 'Power BI', 'ETL pipelines',
+        'FPGA Architecture & HW/SW Interfaces', 'Digital Logic Design', 'HDL Concepts', 'Qiskit', 'Cirq', 'Pulse scheduling', 'Calibration automation',
+        'Generative AI', 'Large Language Models', 'System Prompt Engineering', 'Output Validation', 'Gemini/Claude developer APIs',
+        'Git/GitHub', 'CI/CD pipelines', 'Software engineering best practices', 'REST APIs', 'Object-oriented and scalable software design'
       ];
       
       let matchedSkill = null;
@@ -1021,6 +1048,8 @@ function boot() {
         'genai': ['genai'],
         'gps': ['gps', 'uart', 'serial'],
         'mark_space': ['mark_space', 'mark space', 'portfolio hub'],
+        'hardware_integration': ['hardware integration', 'systems programming', 'low-level', 'device control'],
+        'data_pipelines': ['data pipelines', 'data analytics', 'etl', 'power bi'],
         'linkedin': ['linkedin'],
         'github_portfolio': ['source code', 'repository', 'repo'],
         'github_profile': ['github', 'guthub'],
@@ -1074,7 +1103,7 @@ function boot() {
           // Exclusion rules for general intents to avoid conflicts
           if (hasBoostKeyword) {
             if (intent.key === 'projects') {
-              const specificProjectKeywords = ['genai', 'gps', 'mark_space', 'mark space'];
+              const specificProjectKeywords = ['genai', 'gps', 'mark_space', 'mark space', 'hardware_integration', 'data_pipelines'];
               const hasSpecificProject = specificProjectKeywords.some(sp => clean.includes(sp));
               if (hasSpecificProject) {
                 hasBoostKeyword = false;

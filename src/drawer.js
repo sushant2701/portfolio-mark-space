@@ -15,8 +15,9 @@ const publishIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 
 const CATEGORY_OPTIONS = [
   { value: 'lowLevelCore', label: 'Low-Level & Core Languages' },
-  { value: 'scientificComputing', label: 'Scientific Computing & Data Pipelines' },
+  { value: 'scientificComputing', label: 'Data Analytics & Scientific Computing' },
   { value: 'hardwareQuantum', label: 'Hardware Abstraction & Quantum Foundations' },
+  { value: 'aiPromptEng', label: 'AI & Prompt Engineering' },
   { value: 'devToolsArch', label: 'Dev Tools & Architecture' },
 ];
 

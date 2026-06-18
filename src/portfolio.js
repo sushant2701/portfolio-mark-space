@@ -24,8 +24,9 @@ const icons = {
 
 const SKILL_CATEGORY_META = {
   lowLevelCore: { label: 'Low-Level & Core Languages', icon: icons.code },
-  scientificComputing: { label: 'Scientific Computing & Data Pipelines', icon: icons.chart },
+  scientificComputing: { label: 'Data Analytics & Scientific Computing', icon: icons.chart },
   hardwareQuantum: { label: 'Hardware Abstraction & Quantum Foundations', icon: icons.cube },
+  aiPromptEng: { label: 'AI & Prompt Engineering', icon: icons.brain },
   devToolsArch: { label: 'Dev Tools & Architecture', icon: icons.cloud }
 };
 
@@ -72,6 +73,7 @@ function renderNavbar() {
             <a href="#projects" class="nav-link nav-dropdown-trigger">Projects <span class="chevron-down">▼</span></a>
             <div class="nav-dropdown-menu">
               <a href="#projects-ai-machine-learning" class="nav-dropdown-item">AI &amp; ML</a>
+              <a href="#projects-data-analytics-bi" class="nav-dropdown-item">Data Analytics</a>
               <a href="#projects-web-development-security" class="nav-dropdown-item">Web Dev</a>
               <a href="#projects-iot-embedded-systems" class="nav-dropdown-item">IoT &amp; Systems</a>
             </div>
@@ -99,8 +101,8 @@ function renderNavbar() {
               <li>"...tell about genai platform"</li>
               <li>"...tell about emergency gps"</li>
               <li>"...explain mark space"</li>
+              <li>"...show SLA dashboard"</li>
               <li>"...go to education"</li>
-              <li>"...open linkedin" / "github"</li>
               <li>"...open control space"</li>
             </ul>
             <div style="font-size: 9px; margin-top: 6px; color: var(--text-muted); font-style: italic;">* Plays double-beep confirmation tone on activation. Turn on speaker (🔊) for voice guide narration.</div>
@@ -132,17 +134,22 @@ function renderHero() {
               I'm <span class="reveal-wrapper"><span class="reveal-content" id="reveal-name">SUSHANT SHRIMAL</span><span class="reveal-box"></span></span>
             </h1>
             <h2 class="hero-subtitle-typing" data-animate data-delay="2">
-              --<span id="typewriter" data-words='["Full-Stack Quantum Control Software Engineer", "Systems Software Engineer", "Quantum Control Developer", "Low-Level Systems Programmer"]'></span><span class="typewriter-cursor">|</span>
+              --<span id="typewriter" data-words='["Full-Stack Quantum Control Engineer", "AI & Prompt Engineer", "Data Analytics Specialist", "Systems Programmer"]'></span><span class="typewriter-cursor">|</span>
             </h2>
             <p class="hero-description" data-animate data-delay="3">
-              <strong>Full-Stack Quantum Control Software Engineer</strong><br>
-              Bridging the gap between high-level experiment orchestration software, scalable developer APIs, and low-level hardware control platforms.<br><br>
-              Final-year Electronics & Telecommunication Engineering student specializing in building end-to-end software pipelines, instrument control layers, and data-driven systems applications.
+              Electronics & Telecommunication Engineering student building end-to-end software pipelines, experiment orchestration systems, and low-level hardware control platforms.
             </p>
-            <div class="hero-cta-group" data-animate data-delay="4">
+            <div class="hero-cta-group" data-animate data-delay="4" style="margin-bottom: var(--space-lg);">
               <a href="#projects" class="btn btn-accent">
                 View Work
               </a>
+            </div>
+            <div class="hero-pipeline-tags" data-animate data-delay="5" style="display: flex; gap: var(--space-xs); flex-wrap: wrap; margin-top: var(--space-md);">
+              <span class="about-tag" style="background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">Software Development</span>
+              <span class="about-tag" style="background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">Control Systems</span>
+              <span class="about-tag" style="background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">FPGA Integration</span>
+              <span class="about-tag" style="background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">Quantum Hardware</span>
+              <span class="about-tag" style="background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 500;">Quantum Computers</span>
             </div>
           </div>
           <div class="hero-visual" data-animate data-delay="2">
@@ -176,7 +183,7 @@ function renderHero() {
                   <div class="float-role">GenAI Platform</div>
                 </div>
               </div>
-              <div class="float-quote">"Data Analysis platform using schema-aware prompt pipelines."</div>
+              <div class="float-quote">"Translating quantum experiments into hardware-executable instructions."</div>
             </a>
             <a href="#education" class="float-card float-credential">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -196,7 +203,7 @@ function renderHero() {
                   <div class="float-role">Robotics & AI</div>
                 </div>
               </div>
-              <div class="float-quote">"Developed sensor acquisition and hardware abstraction scripts."</div>
+              <div class="float-quote">"Optimizing latency, throughput, and real-time execution reliability."</div>
             </a>
           </div>
         </div>
@@ -347,8 +354,9 @@ function renderEducation() {
 // ── Skills ──
 const SKILL_CATEGORY_ANCHORS = {
   lowLevelCore: '#projects',
-  scientificComputing: '#projects',
+  scientificComputing: '#projects-data-analytics-bi',
   hardwareQuantum: '#projects-iot-embedded-systems',
+  aiPromptEng: '#projects-ai-machine-learning',
   devToolsArch: '#projects-web-development-security'
 };
 
@@ -483,6 +491,7 @@ function renderProjects(state) {
         <div class="projects-tabs-container" data-animate data-delay="1">
           <div class="projects-tabs">
             <button class="project-tab-btn" data-target="projects-ai-machine-learning">AI &amp; ML</button>
+            <button class="project-tab-btn" data-target="projects-data-analytics-bi">Data Analytics &amp; BI</button>
             <button class="project-tab-btn" data-target="projects-web-development-security">Web Dev &amp; Security</button>
             <button class="project-tab-btn" data-target="projects-iot-embedded-systems">IoT &amp; Systems</button>
           </div>
