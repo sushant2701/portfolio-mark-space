@@ -213,38 +213,53 @@ export async function initState() {
     if (cloudState) {
       state = cloudState;
       
-      // Auto-purge old milestones and ensure all default milestones are present
+      // Auto-heal, deduplicate and align milestones
       if (state.milestones) {
-        const originalLen = state.milestones.length;
-        state.milestones = state.milestones.filter(m => 
-          !m.title.toLowerCase().includes('frontend web') && 
-          !m.title.toLowerCase().includes('web portal')
-        );
-        if (state.milestones.length !== originalLen) {
+        const healedMilestones = [];
+        
+        // 1. QSpiders
+        const qspidersMilestone = state.milestones.find(m => m.title.toLowerCase().includes('qspiders'));
+        if (qspidersMilestone) {
+          qspidersMilestone.id = 'm1';
+          qspidersMilestone.description = DEFAULT_STATE.milestones[0].description;
+          qspidersMilestone.title = DEFAULT_STATE.milestones[0].title;
+          healedMilestones.push(qspidersMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[0])));
+          needsSync = true;
+        }
+
+        // 2. AICTE
+        const aicteMilestone = state.milestones.find(m => m.title.toLowerCase().includes('aicte'));
+        if (aicteMilestone) {
+          aicteMilestone.id = 'm2';
+          aicteMilestone.description = DEFAULT_STATE.milestones[1].description;
+          aicteMilestone.title = DEFAULT_STATE.milestones[1].title;
+          healedMilestones.push(aicteMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[1])));
+          needsSync = true;
+        }
+
+        // 3. PMS Robotics
+        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms') || m.title.toLowerCase().includes('robotics'));
+        if (pmsMilestone) {
+          pmsMilestone.id = 'm3';
+          pmsMilestone.description = DEFAULT_STATE.milestones[2].description;
+          pmsMilestone.title = DEFAULT_STATE.milestones[2].title;
+          healedMilestones.push(pmsMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[2])));
+          needsSync = true;
+        }
+
+        if (state.milestones.length !== healedMilestones.length) {
           needsSync = true;
         }
         
-        // Ensure all DEFAULT_STATE milestones are present in the state loaded from DB
-        DEFAULT_STATE.milestones.forEach(defMilestone => {
-          const exists = state.milestones.some(m => 
-            m.id === defMilestone.id || 
-            m.title.toLowerCase().replace(/[^a-z0-9]/g, '').includes('pmsrobotics')
-          );
-          if (!exists) {
-            state.milestones.push(JSON.parse(JSON.stringify(defMilestone)));
-            needsSync = true;
-          }
-        });
+        state.milestones = healedMilestones;
 
-        // Update PMS Robotics milestone description in cloud state
-        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
-        const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
-        if (pmsMilestone && pmsMilestone.description !== targetDesc) {
-          pmsMilestone.description = targetDesc;
-          needsSync = true;
-        }
-
-        // Sort milestones to maintain newest-first order (m1, m2, m3)
+        // Sort milestones to maintain newest-first order
         const idOrder = { 'm1': 1, 'm2': 2, 'm3': 3 };
         state.milestones.sort((a, b) => {
           const orderA = idOrder[a.id] || 99;
@@ -277,28 +292,40 @@ export async function initState() {
       state = JSON.parse(stored);
       if (!state.projects) state.projects = DEFAULT_STATE.projects;
       
-      // Auto-purge milestones and restore missing default ones in local fallback
       if (state.milestones) {
-        state.milestones = state.milestones.filter(m => 
-          !m.title.toLowerCase().includes('frontend web') && 
-          !m.title.toLowerCase().includes('web portal')
-        );
+        const healedMilestones = [];
         
-        DEFAULT_STATE.milestones.forEach(defMilestone => {
-          const exists = state.milestones.some(m => 
-            m.id === defMilestone.id || 
-            m.title.toLowerCase().replace(/[^a-z0-9]/g, '').includes('pmsrobotics')
-          );
-          if (!exists) {
-            state.milestones.push(JSON.parse(JSON.stringify(defMilestone)));
-          }
-        });
-
-        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms robotics'));
-        const targetDesc = '• 2 Weeks on-site learning based training (1week in April and 1week in July,2024).<br>• Hands On-session on Robotics and AI and Advanced Robotics Hand Cluster.';
-        if (pmsMilestone && pmsMilestone.description !== targetDesc) {
-          pmsMilestone.description = targetDesc;
+        const qspidersMilestone = state.milestones.find(m => m.title.toLowerCase().includes('qspiders'));
+        if (qspidersMilestone) {
+          qspidersMilestone.id = 'm1';
+          qspidersMilestone.description = DEFAULT_STATE.milestones[0].description;
+          qspidersMilestone.title = DEFAULT_STATE.milestones[0].title;
+          healedMilestones.push(qspidersMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[0])));
         }
+
+        const aicteMilestone = state.milestones.find(m => m.title.toLowerCase().includes('aicte'));
+        if (aicteMilestone) {
+          aicteMilestone.id = 'm2';
+          aicteMilestone.description = DEFAULT_STATE.milestones[1].description;
+          aicteMilestone.title = DEFAULT_STATE.milestones[1].title;
+          healedMilestones.push(aicteMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[1])));
+        }
+
+        const pmsMilestone = state.milestones.find(m => m.title.toLowerCase().includes('pms') || m.title.toLowerCase().includes('robotics'));
+        if (pmsMilestone) {
+          pmsMilestone.id = 'm3';
+          pmsMilestone.description = DEFAULT_STATE.milestones[2].description;
+          pmsMilestone.title = DEFAULT_STATE.milestones[2].title;
+          healedMilestones.push(pmsMilestone);
+        } else {
+          healedMilestones.push(JSON.parse(JSON.stringify(DEFAULT_STATE.milestones[2])));
+        }
+
+        state.milestones = healedMilestones;
 
         const idOrder = { 'm1': 1, 'm2': 2, 'm3': 3 };
         state.milestones.sort((a, b) => {
